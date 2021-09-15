@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "gitbook": "^2.6.9",
+    "graceful-fs": "^4.2.8"
+  }
+}
