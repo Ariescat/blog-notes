@@ -5,7 +5,13 @@
 
 <br>
 
+感谢 [GitBook 简明教程](https://www.mapull.com/gitbook/comscore/)
+
+<br>
+
 要想MarkDown中插入复杂表格时，可以先在word或excel中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
+
+在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)
 
 <br>
 
