@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ariescat.github.io/Metis-Awesome/",
+  "homepage": "https://github.com/Ariescat/Metis-Awesome/",
   "scripts": {
     "predeploy": "npm run build",
     "build": "gitbook build . ./build",
