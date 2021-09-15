@@ -1,7 +1,10 @@
 # Awesome
 程序员秃头区
 
-该项目还在构建中，目前的Awesome还在写在blog里
+该项目还在构建中，目前的Awesome还是写在blog里
+
+<br>
+
 
 
 ### Github 一些不错的项目
