@@ -1,5 +1,35 @@
 {
+  "title": "Ariescat Awesome",
+  "author": "Ariescat",
+  "description": "记录一些令人秃头的知识",
+  "links": {
+    "sidebar": {
+      "Home": "/"
+    }
+  },
   "plugins": [
-    "summary"
-  ]
+    "-lunr", "-search", "search-pro",
+    "github",
+    "code",
+    "back-to-top-button",
+    "tbfed-pagefooter",
+    "popup",
+    "page-toc-button",
+    "chapter-fold",
+    "splitter"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/Ariescat/Metis-Awesome/"
+    },
+    "tbfed-pagefooter": {
+      "copyright": "Copyright &copy Ariescat",
+      "modify_label": "最后修改时间：",
+      "modify_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    "page-toc-button": {
+      "maxTocDepth": 2,
+      "minTocSize": 2
+    }
+  }
 }
