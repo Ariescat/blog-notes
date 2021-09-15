@@ -1,35 +1,50 @@
 {
-  "title": "Ariescat Awesome",
+  "title": "Awesome",
   "author": "Ariescat",
-  "description": "记录一些令人秃头的知识",
+  "description": "记录一些令人头秃的知识",
   "links": {
     "sidebar": {
-      "Home": "/"
+      "Home": "/",
+      "开通了个小破站": "https://ariescat.top/"
     }
   },
   "plugins": [
-    "-lunr", "-search", "search-pro",
+    "-lunr",
+    "-search",
+    "search-pro",
+    "-highlight",
+    "prism",
     "github",
     "code",
-    "back-to-top-button",
-    "tbfed-pagefooter",
     "popup",
-    "page-toc-button",
+    "splitter",
     "chapter-fold",
-    "splitter"
+    "anchor-navigation-ex",
+    "tbfed-pagefooter",
+    "hide-element"
   ],
   "pluginsConfig": {
     "github": {
       "url": "https://github.com/Ariescat/Metis-Awesome/"
     },
+    "anchor-navigation-ex": {
+      "showLevel": false,
+      "showGoTop": true,
+      "isRewritePageTitle": false,
+      "isShowTocTitleIcon": true,
+      "tocLevel1Icon": "fa fa-hand-o-right",
+      "tocLevel2Icon": "fa fa-hand-o-right",
+      "tocLevel3Icon": "fa fa-hand-o-right"
+    },
     "tbfed-pagefooter": {
       "copyright": "Copyright &copy Ariescat",
       "modify_label": "最后修改时间：",
-      "modify_format": "YYYY-MM-DD HH:mm:ss"
+      "modify_format": "YYYY-MM-DD HH:mm"
     },
-    "page-toc-button": {
-      "maxTocDepth": 2,
-      "minTocSize": 2
+    "hide-element": {
+      "elements": [
+        ".gitbook-link"
+      ]
     }
   }
 }

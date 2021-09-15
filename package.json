@@ -1,11 +1,10 @@
 {
   "homepage": "https://github.com/Ariescat/Metis-Awesome/",
   "scripts": {
-    "install": "npm install && gitbook install",
     "ginstall": "gitbook install",
     "gdev": "gitbook serve",
-    "predeploy": "npm run build",
     "build": "gitbook build . ./_book",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d _book"
   },
   "devDependencies": {
