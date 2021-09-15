@@ -1,10 +1,14 @@
 {
-  "dependencies": {
-    "gitbook": "^2.6.9",
-    "gitbook-cli": "^2.3.2",
-    "graceful-fs": "^4.2.8"
-  },
+  "homepage": "https://github.com/Ariescat/Metis-Awesome/",
   "scripts": {
-    "build": "gitbook build"
+    "install": "npm install && gitbook install",
+    "ginstall": "gitbook install",
+    "predeploy": "npm run build",
+    "build": "gitbook build . ./build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3",
+    "gitbook-cli": "^2.3.2"
   }
 }
