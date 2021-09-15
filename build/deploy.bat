@@ -1,2 +1,0 @@
-npm run deploy
-pause
