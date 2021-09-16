@@ -3,7 +3,9 @@
 
 地址：[介绍 · Awesome (ariescat.top)](https://awesome.ariescat.top/)
 
-目前正在把 blog 里的 Awesome 逐渐迁移过来......
+本项目为 Java 技术体系的探索总结（不断收集整理中...）
+
+不一定全面，只是个人的学习汇总记录
 
 <br>
 
