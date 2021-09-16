@@ -1,3 +1,6 @@
+# 《不归路之Java》
+
+
 > **思想是灵魂，**
 >
 > **实现是形式。**
@@ -446,6 +449,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 #### 线程之间协作
 
+![thread](/img/awesome/thread1.png)
+
 * join
 
   在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待，直到目标线程结束。
@@ -482,7 +487,6 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   [面试 LockSupport.park() 会释放锁资源吗？](http://www.imooc.com/article/294581)
 
-* ![thread](/img/awesome/thread1.png)
 
 
 
