@@ -33,13 +33,13 @@
 
 <br>
 
-感谢 [GitBook 简明教程 ](https://www.mapull.com/gitbook/comscore/)
+感谢：
 
-<br>
-
-要想 MarkDown 中插入复杂表格时，可以先在 word 或 excel 中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
+GitBook：[GitBook 简明教程 ](https://www.mapull.com/gitbook/comscore/)
 
 在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)
+
+表格转HTML：要想 MarkDown 中插入复杂表格时，可以先在 word 或 excel 中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
 
 <br>
 
@@ -55,7 +55,7 @@ Metis 工程是一系列**算法、代码、工具、功能、框架**的用法�
 
 [Metis-DailyRecords](https://github.com/Ariescat/Metis-DailyRecords)：随笔（private，非开放）
 
-[Metis-Leetcode](https://github.com/Ariescat/Metis-Mall) ：leetcode 日常解题
+[Metis-Leetcode](https://github.com/Ariescat/Metis-Leetcode) ：leetcode 日常解题
 
 [Metis-Mall](https://github.com/Ariescat/Metis-Mall) ：分布式电商商城练习
 
