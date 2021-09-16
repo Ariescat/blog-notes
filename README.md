@@ -1,17 +1,9 @@
 # Awesome
 程序员头秃区
 
-该项目还在构建中，目前的Awesome还是写在blog里
+地址：[介绍 · Awesome (ariescat.top)](https://awesome.ariescat.top/)
 
-<br>
-
-感谢 [GitBook 简明教程](https://www.mapull.com/gitbook/comscore/)
-
-<br>
-
-要想MarkDown中插入复杂表格时，可以先在word或excel中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
-
-在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)
+目前正在把 blog 里的 Awesome 逐渐迁移过来......
 
 <br>
 
@@ -27,6 +19,32 @@
 
 
 
+### 后记
+
+搭建过程：
+
+一开始本地搭建 gitbook 环境，build 后手动推送部署；
+
+后来选用 gh-pages 插件进行脚本部署，但还是手动的方式；
+
+最后采用 Github Actions，自动部署，解放双手~~
+
+此外，还采用了 vercel 进行了网站托管。
+
+<br>
+
+感谢 [GitBook 简明教程 ](https://www.mapull.com/gitbook/comscore/)
+
+<br>
+
+要想 MarkDown 中插入复杂表格时，可以先在 word 或 excel 中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
+
+在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)
+
+<br>
+
+
+
 ### Metis 项目列表
 
 Metis 工程是一系列**算法、代码、工具、功能、框架**的用法与使用心得，**Metis** 这个名字取自希腊神话中的智慧女神**墨提斯**。
@@ -37,7 +55,7 @@ Metis 工程是一系列**算法、代码、工具、功能、框架**的用法�
 
 [Metis-DailyRecords](https://github.com/Ariescat/Metis-DailyRecords)：随笔（private，非开放）
 
-[Metis-Leetcode](https://github.com/Ariescat/Metis-Mall) ：leetcode日常解题
+[Metis-Leetcode](https://github.com/Ariescat/Metis-Mall) ：leetcode 日常解题
 
 [Metis-Mall](https://github.com/Ariescat/Metis-Mall) ：分布式电商商城练习
 
