@@ -12,8 +12,6 @@
     "-lunr",
     "-search",
     "search-pro",
-    "-highlight",
-    "prism",
     "github",
     "code",
     "popup",
@@ -43,7 +41,8 @@
     },
     "hide-element": {
       "elements": [
-        ".gitbook-link"
+        ".gitbook-link",
+        ".copyright"
       ]
     }
   }
