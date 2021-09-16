@@ -36,7 +36,7 @@
 
 - char
 
-  JAVA 的 char 内部编码为`UTF-16`，而与`Charset.defaultCharset()`无关
+  JAVA 的 char 内部编码为 `UTF-16` ，而与 `Charset.defaultCharset()` 无关
 
 - String s = new String("a") 到底产生几个对象？
 
@@ -91,21 +91,54 @@
 
 
 
+### 运算符
+
+* 左移 右移
+
+  <table>
+       <tr>
+        <th> 操作符 </th>
+        <th> 描述 </th>
+        <th> 例子 </th>
+     </tr>
+     <tr>
+        <td><< </td>
+        <td>按位左移运算符。左操作数按位左移右操作数指定的位数。</td>
+        <td>A << 2得到240，即 1111 0000</td>
+     </tr>
+     <tr>
+        <td>>> </td>
+        <td>按位右移运算符。左操作数按位右移右操作数指定的位数。</td>
+        <td>A >> 2得到15即 1111</td>
+     </tr>
+     <tr>
+        <td>>>> </td>
+        <td>按位右移补零操作符。左操作数的值按右操作数指定的位数右移，移动得到的空位以零填充。</td>
+        <td>A>>>2得到15即0000 1111</td>
+     </tr>
+  </table>
+
+* 优先级
+
+  运算符优先级，左右优先级
+
+
+
 ### 日期与时间
 
 Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Instant
 
-LocalDate/LocalTime 类：
+* LocalDate/LocalTime 类
 
-Java 8 新增了`LocalDate`和`LocalTime`接口，为什么要搞一套全新的处理日期和时间的 API？因为旧的`java.util.Date`实在是太难用了。
+  Java 8 新增了 `LocalDate` 和 `LocalTime` 接口，为什么要搞一套全新的处理日期和时间的 API？因为旧的 `java.util.Date` 实在是太难用了：
 
-`java.util.Date`月份从`0`开始，一月是`0`，十二月是`11`，变态吧！`java.time.LocalDate`月份和星期都改成了`enum`，就不可能再用错了。
+  `java.util.Date` 月份从`0`开始，一月是 `0`，十二月是 `11`，变态吧！`java.time.LocalDate` 月份和星期都改成了 `enum`，就不可能再用错了。
 
-`java.util.Date`和`SimpleDateFormatter`都不是线程安全的，而`LocalDate`和`LocalTime`和最基本的`String`一样，是不变类型，不但线程安全，而且不能修改。
+  `java.util.Date` 和 `SimpleDateFormatter` 都不是线程安全的，而 `LocalDate` 和 `LocalTime` 和最基本的 `String` 一样，是不变类型，不但线程安全，而且不能修改。
 
-Instant：
+* Instant
 
-`Instant`获取的是**UTC**的时间，而`Date`是根据当前服务器所处的环境的默认时区来获取的当前时间。
+  `Instant` 获取的是 **UTC** 的时间，而 `Date` 是根据当前服务器所处的环境的默认时区来获取的当前时间。
 
 
 
@@ -143,82 +176,200 @@ Instant：
 
 
 
-### Java Util
 
-- BitSet
+
+## Java 高级
+
+
+
+### 数据结构
+
+- 位集合（BitSet）
 
   JDK 中的 BitSet 集合对是**布隆过滤器**中经常使用的数据结构**Bitmap**的相对简单的实现。BitSet 采用了**Bitmap 的算法思想**。
 
-- ServiceLoader
+- 向量（Vector）
 
-  Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
+  线程安全
 
-  该类通过在资源目录 META-INF/services 中放置**提供者配置文件**来标识**服务提供者**。
+- 栈（Stack）
 
-  应用场景：
+- 字典（Dictionary）
 
-    1. JDBC 驱动加载
+- 哈希表（Hashtable）
 
-       `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
-
-       因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
-
-       ```java
-       //a.导入驱动，加载具体的驱动类
-       Class.forName("com.mysql.jdbc.Driver");
-       //b.与数据库建立连接
-       connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-       ```
-
-    2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
-
-       而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
-
-    3. Dubbo 的扩展点加载
-
-       Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
-
-       META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
-
-       ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
-
-- Observable
-
-  操作 Vector 型变量 obs 的四个方法都加有同步关键字，Vector 类型为线程安全的，而上述四个方法为什么还要加同步关键字呢？
-
-- Arrays
-
-    - 几个类：
-
-      TimSort，ComparableTimSort，DualPivotQuicksort
-
-    - 几个方法：
-
-      binarySort 折半插入排序
-
-      mergeSort
+- 属性（Properties）
 
 
 
-### Java lang
+### 集合容器
 
-- Math
+#### HashMap
 
-    1. log
+> Java 集合比如说 HashMap 和 ConcurrentHashMap 我觉得，最好在平时能去耐心读一下源码，搜一搜相关的博客，最好能知道每个参数为什么设置成这么大？有什么好处？为什么？
 
-       在 java 中求 log2N，首先要弄明白一个初中学到的公式`log2N=logeN/loge2`，logeN 代表以 e 为底的 N 的对数，loge2 代表以 e 为底的 2 的对数
+* hash算法
 
-       在 java.lang.math 类中的 log(double a) 代表以 e 为底的 a 的对数，因此 log2N 在 Java 中的表示为`log((double)N)/log((double)2)`
+  [详细梳理 JAVA7 和 JAVA8 HashMap 的 hash 实现 ](https://blog.csdn.net/u013453787/article/details/84702992)
 
-    2. pow
+* 优化
+
+  最近它有两个主要的更新——一个在 Java 7u40 版本中对于空 map 的共享的底层存储，以及在 Java 8 中将底层 hash bucket 链接成为**哈希树**（改进更差情况下的性能）。
+
+  * jdk1.7 中的线程安全问题 
+
+    **resize 死循环：**
+
+    - [ConcurrentModificationException](https://www.2cto.com/kf/201403/286536.html)
+    - [疫苗：JAVA HASHMAP 的死循环 ](https://coolshell.cn/articles/9606.html)
+
+    jdk8 中是如何解决 jdk7 中的 HashMap 死循环的
 
 
 
-### Javax
+##### IdentityHashMap
 
-- Java 注解处理器 (Annotation Processor)
+和 HashMap 最大的不同，就是使用==而不是 equals 比较 key
 
-  javax.annotation.processing.AbstractProcessor 编译时执行
+
+
+##### WeakHashMap
+
+会内存泄漏？
+
+
+
+##### ConcurrentSkipListMap
+
+**跳表** [ConcurrentSkipListMap](https://blog.csdn.net/sunxianghuang/article/details/52221913)
+
+
+
+#### ConcurrentHashMap
+
+- 死循环
+
+  [ConcurrentHashMap BUG 死锁 ](https://blog.csdn.net/zhanglong_4444/article/details/93638844)
+
+- 死锁（该问题由 fly 提出并收录）
+
+  ```java
+  ConcurrentHashMap<Integer, Integer> map = new ConcurrentHashMap<>();
+  map.put(1, 1);
+  map.put(2, 2);
+  Thread t1 = new Thread(() -> {
+      LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(2));
+      map.computeIfAbsent(4, key -> {
+          map.clear();
+          System.out.println("4");
+          return key;
+      });
+  });
+  Thread t2 = new Thread(() -> {
+      LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(2));
+      map.computeIfAbsent(3, key -> {
+          map.clear();
+          System.out.println("3");
+          return key;
+      });
+  });
+  t1.start();
+  t2.start();
+  t1.join();
+  t2.join();
+  System.out.println("finish");
+  ```
+
+  ConcurrentHashMap 1194 行会死锁
+
+  ![deadlock](/img/awesome/map1.png)
+
+
+
+#### TreeMap
+
+TreeSet同理，红黑树实现 
+
+
+
+#### List
+
+* CopyOnWriteArrayList 
+
+  附：Redis 写快照的时候，用到了 Linux 底层的 Copy-On-Write 技术
+
+* 一个著名 BUG
+
+  c.toArray might (incorrectly) not return Object[] (see 6260652) [原文 ](https://blog.csdn.net/qq_33589510/article/details/104767849)
+
+  `java.util.ArrayList` 元素类型为`Object[] elementData`，`toArray()`方法实质返回`Object[]`
+
+  `java.util.Arrays.ArrayList` 元素类型为`E[] a`，`toArray()`方法实质返回`E[]`
+
+  因此，虽然`List`的`toArray`接口表面都返回 Object[]，但他们的实质返回值还是有差的。所以我们不能将其他类型的对象，放进`java.util.Arrays.ArrayList#toArray()`返回的数组中。
+
+  ```java
+  List<String> list = Arrays.asList("abc");
+  // class java.util.Arrays$ArrayList
+  System.out.println(list.getClass());
+  
+  Object[] objArray = list.toArray();
+  // class [Ljava.lang.String;
+  System.out.println(objArray.getClass());
+  
+  // cause ArrayStoreException
+  objArray[0] = new Object();
+  ```
+
+
+
+
+
+#### Queue
+
+* 接口的几个主要方法
+
+  add/offer, remove/poll, element/peek
+
+* DelayQueue
+
+  ScheduledThreadPoolExecutor 其任务队列默认是 DelayedWorkQueue 的变种
+
+
+
+#### Arrays
+
+- 几个类
+
+  TimSort，ComparableTimSort，DualPivotQuicksort
+
+- 几个方法
+
+  binarySort 折半插入排序
+
+  mergeSort
+
+
+
+#### Koloboke
+
+（第三方的集合库）
+
+原始类型集合库**Koloboke**，避免大量的装箱拆箱，Koloboke 的目标是替换标准的 Java 集合和流的 API，提供更高效的实现。
+
+同类型的还有 HPPC，Eclipse Collections 等。
+
+
+
+### Math
+
+* log
+
+  在 Java 中求 log2N，首先要弄明白一个初中学到的公式 `log2N=logeN/loge2` ，logeN 代表以 e 为底的 N 的对数，loge2 代表以 e 为底的 2 的对数
+
+  在 java.lang.math 类中的 log(double a) 代表以 e 为底的 a 的对数，因此 log2N 在 Java 中的表示为 `log((double)N)/log((double)2)`
+
+* pow
 
 
 
@@ -244,160 +395,108 @@ Instant：
 
 
 
-## Java 容器
-
-
-
-> Java 集合比如说 HashMap 和 ConcurrentHashMap 我觉得，最好在平时能去耐心读一下源码，搜一搜相关的博客，最好能知道每个参数为什么设置成这么大？有什么好处？为什么？
-
-- HashMap
-
-    - [详细梳理 JAVA7 和 JAVA8 HashMap 的 hash 实现 ](https://blog.csdn.net/u013453787/article/details/84702992)
-
-  > 最近它有两个主要的更新——一个在 Java 7u40 版本中对于空 map 的共享的底层存储，以及在 Java 8 中将底层 hash bucket 链接成为**哈希树**（改进更差情况下的性能）。
-
-    - jdk1.7 中的线程安全问题 **(resize 死循环)**
-        - [ConcurrentModificationException](https://www.2cto.com/kf/201403/286536.html)
-        - [疫苗：JAVA HASHMAP 的死循环 ](https://coolshell.cn/articles/9606.html)
-    - jdk8 中是如何解决 jdk7 中的 HashMap 死循环的
-    - IdentityHashMap：和 HashMap 最大的不同，就是使用==而不是 equals 比较 key
-
-- jdk8 ConcurrentHashMap
-
-    - 死循环：
-
-      [ConcurrentHashMap BUG 死锁 ](https://blog.csdn.net/zhanglong_4444/article/details/93638844)
-
-    - 死锁（该问题由 fly 提出并收录）：
-
-      ```java
-      ConcurrentHashMap<Integer, Integer> map = new ConcurrentHashMap<>();
-      map.put(1, 1);
-      map.put(2, 2);
-      Thread t1 = new Thread(() -> {
-          LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(2));
-          map.computeIfAbsent(4, key -> {
-              map.clear();
-              System.out.println("4");
-              return key;
-          });
-      });
-      Thread t2 = new Thread(() -> {
-          LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(2));
-          map.computeIfAbsent(3, key -> {
-              map.clear();
-              System.out.println("3");
-              return key;
-          });
-      });
-      t1.start();
-      t2.start();
-      t1.join();
-      t2.join();
-      System.out.println("finish");
-      ```
-
-      ConcurrentHashMap 1194 行会死锁
-
-      ![deadlock](/img/awesome/map1.png)
-
-- **红黑树** TreeMap、TreeSet
-
-- Queue 接口的几个方法
-
-  add/offer, remove/poll, element/peek
-
-- 其他
-
-    - WeakHashMap
-
-    - CopyOnWriteArrayList （附：Redis 写快照的时候，用到了 Linux 底层的 Copy-On-Write 技术）
-
-    - **跳表** [ConcurrentSkipListMap](https://blog.csdn.net/sunxianghuang/article/details/52221913)
-
-    - DelayQueue
-
-      ScheduledThreadPoolExecutor 其任务队列默认是 DelayedWorkQueue 的变种
-
-- 著名 BUG
-
-    - c.toArray might (incorrectly) not return Object[] (see 6260652) [原文 ](https://blog.csdn.net/qq_33589510/article/details/104767849)
-
-      `java.util.ArrayList` 元素类型为`Object[] elementData`，`toArray()`方法实质返回`Object[]`
-
-      `java.util.Arrays.ArrayList` 元素类型为`E[] a`，`toArray()`方法实质返回`E[]`
-
-      因此，虽然`List`的`toArray`接口表面都返回 Object[]，但他们的实质返回值还是有差的。所以我们不能将其他类型的对象，放进`java.util.Arrays.ArrayList#toArray()`返回的数组中。
-
-      ```java
-      List<String> list = Arrays.asList("abc");
-      // class java.util.Arrays$ArrayList
-      System.out.println(list.getClass());
-      
-      Object[] objArray = list.toArray();
-      // class [Ljava.lang.String;
-      System.out.println(objArray.getClass());
-      
-      // cause ArrayStoreException
-      objArray[0] = new Object();
-      ```
-
-
-
-- 第三方原始类型集合库**Koloboke**，避免大量的装箱拆箱，同类型的还有 HPPC，Eclipse Collections 等
-
-  > Koloboke 的目标是替换标准的 Java 集合和流的 API，提供更高效的实现。
-
-
-
-
-
 ## Java 并发
+
+
 
 ### 概述
 
 JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但是得会，至少得知道有这个东西，至少得知道 aba，cas，aqs，unsafe，volatile，sync，常见的各种 lock，死锁，线程池参数和如何合理的去设置，必须明白自旋，阻塞，死锁和它如何去定位，oom 如何定位问题，cpu 过高如何定位等基本的操作。你可以没有生产调试经验，但不代表你可以不会 top，jps，jstack，jmap 这些可能会问的东西。
 
-### 线程创建
+
+
+### 线程
+
+#### 线程创建
+
+有三种使用线程的方法：
+
+- 实现 Runnable 接口；
+- 实现 Callable 接口；
+- 继承 Thread 类。
 
 链接：[Java 并发的四种风味 ](https://blog.csdn.net/yonlist/article/details/84736424)
 
-### 线程状态
 
-- `java.lang.Thread.State`，里面的注释内容讲解得很清楚了
 
-  链接：
+#### 线程状态
 
-    1. [Java 线程的 6 种状态及切换 (透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-    2. [Java 中一个线程只有六个状态。至于阻塞、可运行、挂起状态都是人们为了便于理解，自己加上去的 ](https://www.cnblogs.com/GooPolaris/p/8079490.html)
+`java.lang.Thread.State`，里面的注释内容讲解得很清楚了
 
-### 中断线程
+链接：
 
-？何时抛出 `{@see java.lang.InterruptedException}`
+  1. [Java 线程的 6 种状态及切换 (透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+  2. [Java 中一个线程只有六个状态。至于阻塞、可运行、挂起状态都是人们为了便于理解，自己加上去的 ](https://www.cnblogs.com/GooPolaris/p/8079490.html)
 
-### 守护线程
 
-守护线程是指为其他线程服务的线程。在 JVM 中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。
 
-因此，JVM 退出时，不必关心守护线程是否已结束。
+#### 基础机制
 
-### 线程同步与安全
+* sleep
 
-- 几个问题
+* yield
 
-    - Bounded-Buffer 问题：
+  静态方法 Thread.yield() ，切换给其它线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其它线程可以运行。
 
-      生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。[原文 ](https://www.jianshu.com/p/696c24f3f7b8)
+* 守护线程
 
-    - 并发中的伪共享问题（false sharing）：
+  守护线程是指为其他线程服务的线程。在 JVM 中，所有非守护线程都执行完毕后，无论有没有守护线程，虚拟机都会自动退出。因此，JVM 退出时，不必关心守护线程是否已结束。
 
-      CPU 缓存是以缓存行（cache line）为单位存储的。缓存行通常是 64 字节，并且它有效地引用主内存中的一块地址。并发的修改在一个缓存行中的多个独立变量，看起来是并发执行的，但实际在 CPU 处理的时候，是串行执行的，并发的性能大打折扣。
 
-      Java 中通过填充缓存行，sun.misc.Contended 注解来解决伪共享问题。LMAX Disruptor `Sequence`采用了填充缓存行。
 
-      并不是所有的场景都需要解决伪共享问题，因为 CPU 缓存是有限的，填充会牺牲掉一部分缓存。
+#### 线程之间协作
 
-锁：
+* join
+
+  在线程中调用另一个线程的 join() 方法，会将当前线程挂起，而不是忙等待，直到目标线程结束。
+
+* wait() notify() notifyAll()
+
+  调用 wait() 使得线程等待某个条件满足，线程在等待时会被挂起，当其他线程的运行使得这个条件满足时，其它线程会调用 notify() 或者 notifyAll() 来唤醒挂起的线程。
+
+  它们都属于 Object 的一部分，而不属于 Thread。
+
+  **wait() 和 sleep() 的区别**
+
+  - wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
+
+  - **wait() 会释放锁，sleep() 不会。**
+
+    当使用调用 wait 时，虽然当前的线程还在 schronized 同步块中， 但是也会让出锁，要不然，notify 永远拿不到锁，永远得不到执行。
+
+    同样当使用完 notify 后，是不会立即释放锁的，必须使你当前线程走完 schronized 的代码，也就是说只有当前线程走完 schronized 代码块之后，wait 才会被执行。
+
+* await() signal() signalAll()
+
+  java.util.concurrent 类库中提供了 **Condition 类**来实现线程之间的协调，可以在 Condition 上调用 await() 方法使线程等待，其它线程调用 signal() 或 signalAll() 方法唤醒等待的线程。
+
+  相比于 wait() 这种等待方式，await() 可以指定等待的条件，因此更加灵活。
+
+  `ReentrantLock` 就用了 Condition 类。
+
+  他们释放锁吗？这里其实没这个说法，想想是不是这样~
+
+* LockSupport.park（ReentrantLock）
+
+  [白话讲懂 wait notify 和 park unpark 的使用示例和区别_pengweismile 的专栏-CSDN 博客 ](https://blog.csdn.net/pengweismile/article/details/108836666)
+
+  [面试 LockSupport.park() 会释放锁资源吗？](http://www.imooc.com/article/294581)
+
+* ![thread](/img/awesome/thread1.png)
+
+
+
+#### 中断线程
+
+* InterruptedException
+
+  何时抛出？
+
+* interrupted()
+
+
+
+### 同步互斥
 
 #### synchronized
 
@@ -408,14 +507,6 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
     1. **对象头：Java 对象头一般占有 2 个机器码（在 32 位虚拟机中，1 个机器码等于 4 字节，也就是 32bit，在 64 位虚拟机中，1 个机器码是 8 个字节，也就是 64bit），但是 如果对象是数组类型，则需要 3 个机器码，因为 JVM 虚拟机可以通过 Java 对象的元数据信息确定 Java 对象的大小，但是无法从数组的元数据来确认数组的大小，所以用一块来记录数组长度。**
     2. 实例数据：存放类的属性数据信息，包括父类的属性信息；
     3. 对齐填充：由于虚拟机要求 对象起始地址必须是 8 字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐；
-
-- 锁优化
-
-  偏向锁、轻量级锁、重量级锁
-
-- 其他锁优化
-
-  锁消除、锁粗化
 
 - Monitor 对象
 
@@ -428,92 +519,129 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   “ Java 对象是天生的 Monitor。”
 
-- 总结：
 
-  <table>
-     <tr>
-        <th> 锁 </th>
-        <th> 优点 </th>
-        <th> 缺点 </th>
-        <th> 适用场景 </th>
-     </tr>
-     <tr>
-        <td> 偏向锁 </td>
-        <td> 加锁和解锁不需要额外的消耗，和执行非同步方法比仅存在纳秒级的差距。</td>
-        <td> 如果线程间存在锁竞争，会带来额外的锁撤销的消耗。</td>
-        <td> 适用于只有一个线程访问同步块场景。</td>
-     </tr>
-     <tr>
-        <td> 轻量级锁 </td>
-        <td> 竞争的线程不会阻塞，提高了程序的响应速度。</td>
-        <td> 如果始终得不到锁竞争的线程使用自旋会消耗 CPU。</td>
-        <td> 追求响应时间。同步块执行速度非常快。</td>
-     </tr>
-     <tr>
-        <td> 重量级锁 </td>
-        <td> 线程竞争不使用自旋，不会消耗 CPU。</td>
-        <td> 线程阻塞，响应时间缓慢。</td>
-        <td> 追求吞吐量。同步块执行速度较长。</td>
-     </tr>
-  </table>
 
-- 参考：
+#### 锁优化
+
+这里的锁优化主要是指 JVM 对 synchronized 的优化。
+
+* 自旋锁、锁消除、锁粗化
+
+* 偏向锁、轻量级锁、重量级锁
 
   [彻底搞懂 synchronized(从偏向锁到重量级锁)](https://blog.csdn.net/qq_38462278/article/details/81976428)
 
+<table>
+   <tr>
+      <th> 锁 </th>
+      <th> 优点 </th>
+      <th> 缺点 </th>
+      <th> 适用场景 </th>
+   </tr>
+   <tr>
+      <td> 偏向锁 </td>
+      <td> 加锁和解锁不需要额外的消耗，和执行非同步方法比仅存在纳秒级的差距。</td>
+      <td> 如果线程间存在锁竞争，会带来额外的锁撤销的消耗。</td>
+      <td> 适用于只有一个线程访问同步块场景。</td>
+   </tr>
+   <tr>
+      <td> 轻量级锁 </td>
+      <td> 竞争的线程不会阻塞，提高了程序的响应速度。</td>
+      <td> 如果始终得不到锁竞争的线程使用自旋会消耗 CPU。</td>
+      <td> 追求响应时间。同步块执行速度非常快。</td>
+   </tr>
+   <tr>
+      <td> 重量级锁 </td>
+      <td> 线程竞争不使用自旋，不会消耗 CPU。</td>
+      <td> 线程阻塞，响应时间缓慢。</td>
+      <td> 追求吞吐量。同步块执行速度较长。</td>
+   </tr>
+</table>
+
+
+
 #### volatile
 
-> **Java 内存模型**中：
->
-> 1. `volatile`变量在写操作之后会插入一个 store 屏障，在读操作之前会插入一个 load 屏障。
-> 2. 一个类的`final`字段会在初始化后插入一个 store 屏障，来确保`final`字段在**构造函数初始化完成**并可被使用时可见。
+* 可见性
 
-- 几个概念
+* 重排序（编译器重排，处理器重排），happen-before 原则
 
-    1. 可见性
+  [深入理解 happens-before 规则 ](https://www.jianshu.com/p/9464bf340234)
 
-    2. 重排序（编译器重排，处理器重排），happen-before 原则
 
-       [深入理解 happens-before 规则 ](https://www.jianshu.com/p/9464bf340234)
 
-    3. Java 内存模型定义了 8 种操作来完成主内存和工作内存的变量访问
+#### 内存模型
 
-       lock，unlock，read，load，use，assign，stroe，write
+对volatile的进一步补充，jvm的内存模型。
 
-    4. MESI 协议，Store Buffere（存储缓存），Invalidate Queue（失效队列）
+* 主内存与工作内存
 
-       搜索关键词（CPU 和 volatile ）
+* 内存间交互操作
 
-    5. **内存屏障**是什么？如何工作的？如何实现？在哪个层面上实现？
+  Java 内存模型定义了 8 种操作来完成主内存和工作内存的变量访问：
 
-       x86 架构：
+  lock，unlock，read，load，use，assign，stroe，write
 
-       **Store Barrier**，Store 屏障，是 x86 的"sfence"指令，相当于 StoreStore Barriers，强制所有在 sfence 指令之前的 store 指令，都在该 sfence 指令执行之前被执行，发送缓存失效信号，并把**store buffer**中的数据刷出到 CPU 的 L1 Cache 中；所有在 sfence 指令之后的 store 指令，都在该 sfence 指令执行之后被执行。即，禁止对 sfence 指令前后 store 指令的重排序跨越 sfence 指令，使**所有 Store Barrier 之前发生的内存更新都是可见的**。
+* 三大特性
 
-       **Load Barrier**，Load 屏障，是 x86 上的"ifence"指令，相当于 LoadLoad Barriers，强制所有在 lfence 指令之后的 load 指令，都在该 lfence 指令执行之后被执行，并且一直等到 load buffer 被该 CPU 读完才能执行之后的 load 指令（发现缓存失效后发起的刷入）。即，禁止对 lfence 指令前后 load 指令的重排序跨越 lfence 指令，配合 Store Barrier，使**所有 Store Barrier 之前发生的内存更新，对 Load Barrier 之后的 load 操作都是可见的**。
+  * 原子性
 
-       **Full Barrier**，Full 屏障，是 x86 上的”mfence“指令，相当于 StoreLoad Barriers，强制所有在 mfence 指令之前的 store/load 指令，都在该 mfence 指令执行之前被执行；所有在 mfence 指令之后的 store/load 指令，都在该 mfence 指令执行之后被执行。即，禁止对 mfence 指令前后 store/load 指令的重排序跨越 mfence 指令，使**所有 Full Barrier 之前发生的操作，对所有 Full Barrier 之后的操作都是可见的。**
+  * 可见性
 
-       参考：
+    主要有三种实现可见性的方式：
 
-        1. http://ifeve.com/memory-barriers-or-fences/
-        2. https://www.jianshu.com/p/64240319ed60/ 该博客讲得不错，认真品味每一个字
+    - volatile
+    - synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
+    - final，被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
 
-- 特点：
+  * 有序性
 
-    1. 通过使用**Lock 前缀**的指令禁止**变量在线程工作内存中缓存**来保证 volatile 变量的**内存可见性**
-    2. 通过**插入内存屏障**禁止**会影响变量内存可见性**的**指令重排序**
-    3. 对任意单个 volatile 变量的读/写具有原子性，但类似于 volatile++这种复合操作不具有原子性
+  **Java 内存模型**中：
 
-- 参考文章：
+  1. `volatile` 变量在写操作之后会插入一个 store 屏障，在读操作之前会插入一个 load 屏障。
+  2. 一个类的 `final` 字段会在初始化后插入一个 store 屏障，来确保 `final` 字段在**构造函数初始化完成**并可被使用时可见。
 
-    1. [volatile 关键字的作用、原理 ](https://monkeysayhi.github.io/2016/11/29/volatile 关键字的作用、原理/)
+* volatile
 
-       注意 DCL（Double Check Lock，双重检查锁）和被部分初始化的对象
+  1. 通过使用**Lock 前缀**的指令禁止**变量在线程工作内存中缓存**来保证 volatile 变量的**内存可见性**
+  2. 通过**插入内存屏障**禁止**会影响变量内存可见性**的**指令重排序**
+  3. 对任意单个 volatile 变量的读/写具有原子性，但类似于 volatile++这种复合操作不具有原子性
 
-    2. [既生 synchronized，何生 volatile？！](https://www.hollischuang.com/archives/3928)
+* 底层
 
-       非原子操作！！！
+  * 内存屏障
+
+    **内存屏障**是什么？如何工作的？如何实现？在哪个层面上实现？
+
+    x86 架构：
+
+    **Store Barrier**，Store 屏障，是 x86 的"sfence"指令，相当于 StoreStore Barriers，强制所有在 sfence 指令之前的 store 指令，都在该 sfence 指令执行之前被执行，发送缓存失效信号，并把**store buffer**中的数据刷出到 CPU 的 L1 Cache 中；所有在 sfence 指令之后的 store 指令，都在该 sfence 指令执行之后被执行。即，禁止对 sfence 指令前后 store 指令的重排序跨越 sfence 指令，使**所有 Store Barrier 之前发生的内存更新都是可见的**。
+
+    **Load Barrier**，Load 屏障，是 x86 上的"ifence"指令，相当于 LoadLoad Barriers，强制所有在 lfence 指令之后的 load 指令，都在该 lfence 指令执行之后被执行，并且一直等到 load buffer 被该 CPU 读完才能执行之后的 load 指令（发现缓存失效后发起的刷入）。即，禁止对 lfence 指令前后 load 指令的重排序跨越 lfence 指令，配合 Store Barrier，使**所有 Store Barrier 之前发生的内存更新，对 Load Barrier 之后的 load 操作都是可见的**。
+
+    **Full Barrier**，Full 屏障，是 x86 上的”mfence“指令，相当于 StoreLoad Barriers，强制所有在 mfence 指令之前的 store/load 指令，都在该 mfence 指令执行之前被执行；所有在 mfence 指令之后的 store/load 指令，都在该 mfence 指令执行之后被执行。即，禁止对 mfence 指令前后 store/load 指令的重排序跨越 mfence 指令，使**所有 Full Barrier 之前发生的操作，对所有 Full Barrier 之后的操作都是可见的。**
+
+    参考：
+
+    * http://ifeve.com/memory-barriers-or-fences/
+
+    * https://www.jianshu.com/p/64240319ed60/ 该博客讲得不错，认真品味每一个字
+
+  * MESI 协议，Store Buffere（存储缓存），Invalidate Queue（失效队列）
+
+    搜索关键词（CPU 和 volatile ）
+
+* 参考文章：
+
+  1. [volatile 关键字的作用、原理 ](https://monkeysayhi.github.io/2016/11/29/volatile 关键字的作用、原理/)
+
+     注意 DCL（Double Check Lock，双重检查锁）和被部分初始化的对象
+
+  2. [既生 synchronized，何生 volatile？！](https://www.hollischuang.com/archives/3928)
+
+     非原子操作！！！
+
+
 
 #### 乐观锁
 
@@ -525,11 +653,45 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 - [Java 并发问题--乐观锁与悲观锁以及乐观锁的一种实现方式-CAS](http://www.cnblogs.com/qjjazry/p/6581568.html)
 
-#### ReentrantLock，ReadWriteLock，StampedLock
 
-应用场景的选择
 
-[阿里面试官：说一下公平锁和非公平锁的区别？_敖丙-CSDN 博客 ](https://blog.csdn.net/qq_35190492/article/details/104943579)
+#### ReentrantLock
+
+* 应用场景
+
+  还有ReadWriteLock，StampedLock，应用场景的选择？
+
+* 公平，非公平
+
+  [阿里面试官：说一下公平锁和非公平锁的区别？_敖丙-CSDN 博客 ](https://blog.csdn.net/qq_35190492/article/details/104943579)
+
+* 比较synchronized
+
+  **1. 锁的实现**
+
+  synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
+
+  **2. 性能**
+
+  新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
+
+  **3. 等待可中断**
+
+  当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
+
+  ReentrantLock 可中断，而 synchronized 不行。
+
+  **4. 公平锁**
+
+  公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
+
+  synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+
+  **5. 锁绑定多个条件**
+
+  一个 ReentrantLock 可以同时绑定多个 Condition 对象。
+
+
 
 #### AQS
 
@@ -553,6 +715,8 @@ AbstractQueuedSynchronizer
     - https://blog.51cto.com/14220760/2390586?source=dra
     - https://www.jianshu.com/p/da9d051dcc3d
 
+
+
 #### 并发容器
 
 - LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
@@ -571,13 +735,9 @@ AbstractQueuedSynchronizer
 
   > 和使用哈希算法实现 Map 的另外一个不同之处是：哈希并不会保存元素的顺序，而跳表内所有的元素都是排序的。因此在对跳表进行遍历时，你会得到一个有序的结果。所以，如果你的应用需要有序性，那么跳表就是你不二的选择。
 
-#### 安全点（Safepoint）
 
-#### GC 停顿点
 
-撤销偏向锁（在一个安全点停止拥有锁的线程，具体看流程）
-
-#### 其他
+#### 其他组件
 
 1. ThreadLocal
 
@@ -587,7 +747,7 @@ AbstractQueuedSynchronizer
 
    这里重点看 ReferenceQueue，引用相关请看下面的**对象引用**小节
 
-3. Callable 和**Future**（since1.5）
+3. Callable 和 **Future**（since1.5）
 
    在并发编程中，我们经常用到非阻塞的模型，在之前的多线程的三种实现中，不管是继承 thread 类还是实现 runnable 接口，都无法保证获取到之前的执行结果。通过实现 Callback 接口，并用 Future 可以来接收多线程的执行结果。
 
@@ -599,32 +759,38 @@ AbstractQueuedSynchronizer
 
 5. CompletableFuture
 
-- 弄懂几个方法：
 
-  ![thread](/img/awesome/thread1.png)
 
-    1. synchronized、LockSupport.park（如 ReentrantLock）区别
+#### GC 停顿点
 
-    2. wait 和 notify
+安全点（Safepoint）
 
-       当使用调用 wait 时，虽然当前的线程还在 schronized 同步块中， 但是也会让出锁，要不然，notify 永远拿不到锁，永远得不到执行。
+撤销偏向锁（在一个安全点停止拥有锁的线程，具体看流程）
 
-       同样当使用完 notify 后，是不会立即释放锁的，必须使你当前线程走完 schronized 的代码，也就是说只有当前线程走完 schronized 代码块之后，wait 才会被执行。
 
-    3. Condition
 
-       `ReentrantLock`和`Condition`提供的 await()、signal()、signalAll()
+#### Q&A
 
-    4. Thread.sleep、Object.wait、Condition.await 区别，他们会释放锁吗？
+1. 什么是上下文切换？
+2. 并发与并行的区别？
 
-       [白话讲懂 wait notify 和 park unpark 的使用示例和区别_pengweismile 的专栏-CSDN 博客 ](https://blog.csdn.net/pengweismile/article/details/108836666)
 
-       [面试 LockSupport.park() 会释放锁资源吗？](http://www.imooc.com/article/294581)
 
-- QA？
+#### 几个问题
 
-    1. 什么是上下文切换？
-    2. 并发与并行的区别？
+- Bounded-Buffer 问题：
+
+  生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。[原文 ](https://www.jianshu.com/p/696c24f3f7b8)
+
+- 并发中的伪共享问题（false sharing）：
+
+  CPU 缓存是以缓存行（cache line）为单位存储的。缓存行通常是 64 字节，并且它有效地引用主内存中的一块地址。并发的修改在一个缓存行中的多个独立变量，看起来是并发执行的，但实际在 CPU 处理的时候，是串行执行的，并发的性能大打折扣。
+
+  Java 中通过填充缓存行，sun.misc.Contended 注解来解决伪共享问题。LMAX Disruptor `Sequence`采用了填充缓存行。
+
+  并不是所有的场景都需要解决伪共享问题，因为 CPU 缓存是有限的，填充会牺牲掉一部分缓存。
+
+
 
 ### 线程池
 
@@ -639,59 +805,84 @@ Executors 返回线程池对象的弊端如下：
 1. FixedThreadPool 和 SingleThreadExecutor ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
 2. CachedThreadPool 和 ScheduledThreadPool ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
 
-### 三种队列
 
-| 队列                | 简单解释                                                     |
-| ------------------- | ------------------------------------------------------------ |
-| SynchrousQueue      | 不会保存提交任务，超出直接 corePoolSize 个任务，直接创建新的线程来执行任务，直到 (corePoolSize＋新建线程) > maximumPoolSize。 |
-| LinkedBlockingQueue | 基于链表的先进先出，无界队列。超出直接 corePoolSize 个任务，则加入到该队列中，直到资源耗尽，**所以 maximumPoolSize 不起作用**。 |
-| ArrayBlockingQueue  | 基于数组的先进先出，创建时必须指定大小，超出直接 corePoolSize 个任务，则加入到该队列中，只能加该 queue 设置的大小，其余的任务则创建线程，直到 (corePoolSize＋新建线程) > maximumPoolSize。 |
+
+#### 三种队列
+
+<table>
+   <tr>
+      <th>队列</th>
+      <th>简单解释</th>
+   </tr>
+   <tr>
+      <td>SynchrousQueue</td>
+      <td>不会保存提交任务，超出直接 corePoolSize 个任务，直接创建新的线程来执行任务，直到 (corePoolSize＋新建线程) > maximumPoolSize。</td>
+   </tr>
+   <tr>
+      <td>LinkedBlockingQueue</td>
+      <td>基于链表的先进先出，无界队列。超出直接 corePoolSize 个任务，则加入到该队列中，直到资源耗尽，所以 maximumPoolSize 不起作用。</td>
+   </tr>
+   <tr>
+      <td>ArrayBlockingQueue</td>
+      <td>基于数组的先进先出，创建时必须指定大小，超出直接 corePoolSize 个任务，则加入到该队列中，只能加该 queue 设置的大小，其余的任务则创建线程，直到 (corePoolSize＋新建线程) > maximumPoolSize。</td>
+   </tr>
+</table>
 
 上表收录自：[线程池的三种缓存队列 ](https://blog.csdn.net/nihaomabmt/article/details/81667481)
 
 解释看起来文邹邹的，要不直接上代码：execute：
 
 ```java
-int c = ctl.get();
-        if (workerCountOf(c) < corePoolSize) {
+public void execute(Runnable command) {
+    if (command == null)
+        throw new NullPointerException();
+    int c = ctl.get();
+    if (workerCountOf(c) < corePoolSize) {
         if (addWorker(command, true))
-        return;
+            return;
         c = ctl.get();
-        }
-        if (isRunning(c) && workQueue.offer(command)) {
+    }
+    if (isRunning(c) && workQueue.offer(command)) {
         int recheck = ctl.get();
         if (! isRunning(recheck) && remove(command))
-        reject(command);
+            reject(command);
         else if (workerCountOf(recheck) == 0)
-        addWorker(null, false);
-        }
-        else if (!addWorker(command, false))
+            addWorker(null, false);
+    }
+    else if (!addWorker(command, false))
         reject(command);
+}
 ```
 
-注意几点
+注意：
 
-1. ？`SynchronousQueue`误区：很多人把其认为其没有容量，不存储元素，这是错的。
+？`SynchronousQueue`误区：很多人把其认为其没有容量，不存储元素，这是错的。
 
-   好好了解这个结构，并看看其核心算法`transfer`。后来实在看不懂...，先记住这句话吧：生产者线程对其的插入操作 put 必须等待消费者的移除操作 take，反过来也一样。你不能调用 peek() 方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。
+好好了解这个结构，并看看其核心算法`transfer`。后来实在看不懂...，先记住这句话吧：生产者线程对其的插入操作 put 必须等待消费者的移除操作 take，反过来也一样。你不能调用 peek() 方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。
 
-   链接：
+链接：
 
-    1. https://www.jianshu.com/p/d5e2e3513ba3
-    2. https://www.cnblogs.com/duanxz/p/3252267.html
+ 1. https://www.jianshu.com/p/d5e2e3513ba3
+ 2. https://www.cnblogs.com/duanxz/p/3252267.html
 
-### 四种拒绝策略
+
+
+#### 四种拒绝策略
 
 1. AbortPolicy // 默认，队列满了丢任务抛出异常
 2. DiscardPolicy // 队列满了丢任务不异常
 3. DiscardOldestPolicy // 将最早进入队列的任务删，之后再尝试加入队列
 4. CallerRunsPolicy // 如果添加到线程池失败，那么主线程会自己去执行该任务
 
-### 原理
+
+
+#### 原理
 
 ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 
 - [ScheduledThreadPoolExecutor 原理 ](https://blog.csdn.net/luanmousheng/article/details/77816412)
+
+
 
 #### 线程池运行状态
 
@@ -812,6 +1003,55 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 有认真了解过 Java 的语法糖吗？
 
 - [Java 中的 10 颗语法糖 ](https://www.cnblogs.com/duanxz/p/3916028.html)
+
+
+
+### ServiceLoader
+
+Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
+
+该类通过在资源目录 META-INF/services 中放置**提供者配置文件**来标识**服务提供者**。
+
+应用场景：
+
+  1. JDBC 驱动加载
+
+     `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
+
+     因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
+
+     ```java
+     //a.导入驱动，加载具体的驱动类
+     Class.forName("com.mysql.jdbc.Driver");
+     //b.与数据库建立连接
+     connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+     ```
+
+  2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
+
+     而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
+
+  3. Dubbo 的扩展点加载
+
+     Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
+
+     META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
+
+     ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
+
+### Observable
+
+操作 Vector 型变量 obs 的四个方法都加有同步关键字，Vector 类型为线程安全的，而上述四个方法为什么还要加同步关键字呢？
+
+
+
+### Java 注解处理器 
+
+Annotation Processor
+
+javax.annotation.processing.AbstractProcessor 编译时执行
+
+
 
 ### Class 与反射
 
@@ -1304,6 +1544,8 @@ Classloader 将数据加载到内存中经过的步骤：
   1.由于是本地方法调用，让 JVM 无法优化 (还有 JIT？)
 
   2.反射方法调用还有验证过程和参数问题，参数需要装箱拆箱、需要组装成 Object[] 形式、异常的包装等等问题
+
+
 
 
 
