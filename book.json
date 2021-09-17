@@ -9,18 +9,23 @@
     }
   },
   "plugins": [
+    "theme-comscore",
     "-lunr",
     "-search",
     "search-pro",
+    "insert-logo",
     "github",
     "code",
-    "popup",
+    "lightbox",
     "splitter",
     "anchor-navigation-ex",
     "tbfed-pagefooter",
     "hide-element"
   ],
   "pluginsConfig": {
+    "theme-default": {
+      "showLevel": true
+    },
     "github": {
       "url": "https://github.com/Ariescat/Metis-Awesome/"
     },
@@ -32,6 +37,10 @@
       "tocLevel1Icon": "fa fa-hand-o-right",
       "tocLevel2Icon": "fa fa-hand-o-right",
       "tocLevel3Icon": "fa fa-hand-o-right"
+    },
+    "insert-logo": {
+      "url": "/img/logo.png",
+      "style": "background:none;max-height:129px"
     },
     "tbfed-pagefooter": {
       "copyright": "Copyright &copy Ariescat",

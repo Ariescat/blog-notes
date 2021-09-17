@@ -53,15 +53,15 @@
 
   扩展：
 
-    1. intern 方法
+  1. intern 方法
 
-       - [深入解析 String#intern](https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html)
+    - [深入解析 String#intern](https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html)
 
-         关键点是 jdk7 中常量池不在 Perm 区域了，这块做了调整。常量池中不需要再存储一份对象了，可以直接存储堆中的引用
+      关键点是 jdk7 中常量池不在 Perm 区域了，这块做了调整。常量池中不需要再存储一份对象了，可以直接存储堆中的引用
 
-    2. 此外，Java 中的常量池有**字符串常量池**、**class 常量池**和**运行时常量池**。[原文 ]( http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/ )
+  2. 此外，Java 中的常量池有**字符串常量池**、**class 常量池**和**运行时常量池**。[原文 ]( http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/ )
 
-    3. 常量池会被回收吗？
+  3. 常量池会被回收吗？
 
 
 
@@ -219,7 +219,7 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
   最近它有两个主要的更新——一个在 Java 7u40 版本中对于空 map 的共享的底层存储，以及在 Java 8 中将底层 hash bucket 链接成为**哈希树**（改进更差情况下的性能）。
 
-  * jdk1.7 中的线程安全问题 
+  * jdk1.7 中的线程安全问题
 
     **resize 死循环：**
 
@@ -291,13 +291,13 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
 #### TreeMap
 
-TreeSet 同理，红黑树实现 
+TreeSet 同理，红黑树实现
 
 
 
 #### List
 
-* CopyOnWriteArrayList 
+* CopyOnWriteArrayList
 
   附：Redis 写快照的时候，用到了 Linux 底层的 Copy-On-Write 技术
 
@@ -518,8 +518,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   主要特点：
 
-    - 对象的所有方法都被“互斥”的执行
-    - 通常提供 singal 机制
+  - 对象的所有方法都被“互斥”的执行
+  - 通常提供 singal 机制
 
   “ Java 对象是天生的 Monitor。”
 
@@ -731,7 +731,7 @@ AbstractQueuedSynchronizer
 
   > java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
 
-    - computeIfAbsent
+  - computeIfAbsent
 
 - SkipList（跳表）
 
@@ -757,7 +757,7 @@ AbstractQueuedSynchronizer
 
    Future 表示一个可能还没有完成的异步任务的结果，针对这个结果可以添加 Callback 以便在任务执行成功或失败后作出相应的操作。
 
-    - Guava——AbstractFuture
+  - Guava——AbstractFuture
 
 4. **ForkJoin**
 
@@ -932,8 +932,8 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
    2020 年 3 月 17 日追加：
 
-   1. `FileReader`，可以理解成他把 `FileInputStream` 和 `Decoder` 封装了起来，本质上还是用 FileInputStream 读了一层字节流 byte[] (这里的 read 是一个 `native` 方法)，然后通过 Decoder 把他转成了 char[]。
-   2. `BufferedReader`，他默认开辟了一份 `defaultCharBufferSize = 8192` 长度的 cb[] 数组（缓冲区），读之前会把这个数组`fill()`满，之后都是操作这个数组，操作完了就再次更新数组，提高数据访问的效率。
+  1. `FileReader`，可以理解成他把 `FileInputStream` 和 `Decoder` 封装了起来，本质上还是用 FileInputStream 读了一层字节流 byte[] (这里的 read 是一个 `native` 方法)，然后通过 Decoder 把他转成了 char[]。
+  2. `BufferedReader`，他默认开辟了一份 `defaultCharBufferSize = 8192` 长度的 cb[] 数组（缓冲区），读之前会把这个数组`fill()`满，之后都是操作这个数组，操作完了就再次更新数组，提高数据访问的效率。
 
    测试代码：`study-metis: com.ariescat.metis.base.io.iostream.Test`
 
@@ -1218,45 +1218,43 @@ Classloader 将数据加载到内存中经过的步骤：
 
 4. 一些疑惑 ？
 
-   - 为什么 cglib 为什么生成两个 fastclass，`methodProxy.invokeSuper(“代理对象”, args)` 和 `methodProxy.invoke(“原对象”, args)` 虽然底层分别调用两个不同的 fastclass，但结果是一样的。
+  - 为什么 cglib 为什么生成两个 fastclass，`methodProxy.invokeSuper(“代理对象”, args)` 和 `methodProxy.invoke(“原对象”, args)` 虽然底层分别调用两个不同的 fastclass，但结果是一样的。
 
-     ```java
-     // 自定义 Cglib 代理拦截
-     public class DemoInterceptor implements MethodInterceptor {
-         /**
-          * @param o           cglib 生成的代理对象
-          * @param method      被代理对象方法
-          * @param objects     方法入参
-          * @param methodProxy 代理方法
-          */
-         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-             System.err.println("intercept");
-             // invokeSuper，o 为 cglib 生成的代理对象
-             return methodProxy.invokeSuper(o, objects);
-         }
-     }
-     ```
-     
-     ```java
-     // org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation    
-     private static class CglibMethodInvocation extends ReflectiveMethodInvocation {
-         private final MethodProxy methodProxy;
-         private boolean protectedMethod;
-         public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, Class<?> targetClass, List<Object> interceptorsAndDynamicMethodMatchers, MethodProxy methodProxy) {
-             super(proxy, target, method, arguments, targetClass, interceptorsAndDynamicMethodMatchers);
-             this.methodProxy = methodProxy;
-             this.protectedMethod = Modifier.isProtected(method.getModifiers());
-         }
-         protected Object invokeJoinpoint() throws Throwable {
-             // invoke，target 为原对象
-             return this.protectedMethod ? super.invokeJoinpoint() : this.methodProxy.invoke(this.target, this.arguments);
-         }
-     }
-     ```
-     
-     可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
+    ```java
+    // 自定义 Cglib 代理拦截
+    public class DemoInterceptor implements MethodInterceptor {
+        // @param o           cglib 生成的代理对象
+        // @param method      被代理对象方法
+        // @param objects     方法入参
+        // @param methodProxy 代理方法
+        public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+            System.err.println("intercept");
+            // invokeSuper，o 为 cglib 生成的代理对象
+            return methodProxy.invokeSuper(o, objects);
+        }
+    }
+    ```
 
-     
+    ```java
+    // org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation    
+    private static class CglibMethodInvocation extends ReflectiveMethodInvocation {
+        private final MethodProxy methodProxy;
+        private boolean protectedMethod;
+        public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, Class<?> targetClass, List<Object> interceptorsAndDynamicMethodMatchers, MethodProxy methodProxy) {
+            super(proxy, target, method, arguments, targetClass, interceptorsAndDynamicMethodMatchers);
+            this.methodProxy = methodProxy;
+            this.protectedMethod = Modifier.isProtected(method.getModifiers());
+        }
+        protected Object invokeJoinpoint() throws Throwable {
+            // invoke，target 为原对象
+            return this.protectedMethod ? super.invokeJoinpoint() : this.methodProxy.invoke(this.target, this.arguments);
+        }
+    }
+    ```
+
+    可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
+
+
 
 ### 反射
 
@@ -1324,25 +1322,25 @@ Classloader 将数据加载到内存中经过的步骤：
 
      获取 Method：
 
-      - reflectionData，这个属性主要是 SoftReference 的
-      - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
+    - reflectionData，这个属性主要是 SoftReference 的
+    - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
 
      Method 调用：
 
-      - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
+    - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
 
      MethodAccessor 的实现：
 
-      - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
-      - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
+    - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
+    - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
 
      并发导致垃圾类创建：
 
-      - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
+    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
 
      其他 JVM 相关文章:
 
-      - 该文章最后有其他 JVM 相关文章，感觉是干货
+    - 该文章最后有其他 JVM 相关文章，感觉是干货
 
   2. [反射代理类加载器的潜在内存使用问题 ](https://www.jianshu.com/p/20b7ab284c0a)！！
 
@@ -1433,38 +1431,38 @@ Fu f = new Zi();System.out.println(f.age);
   >
   > 注意：回收的是 WeakReference 引用的对象！若存在 ReferenceQueue 队列，WeakReference 本身会入队，但此时 get()==null
 
-    - [WeakHashMap](https://blog.csdn.net/u012420654/article/details/51793909)
+  - [WeakHashMap](https://blog.csdn.net/u012420654/article/details/51793909)
 
-    - SoftReference 若清楚了上面的原理，[SoftReference](https://www.jianshu.com/p/8c634f10ed1a) 只是**生命周期**变成**内存将要被耗尽的时候**。
+  - SoftReference 若清楚了上面的原理，[SoftReference](https://www.jianshu.com/p/8c634f10ed1a) 只是**生命周期**变成**内存将要被耗尽的时候**。
 
-      > - from [关于 SoftReference 被回收的时机 ](https://blog.csdn.net/S7188290/article/details/86436479)
-      >
-      > 下面，我们来总结一下:
-      > 1.当发生 GC 时，虚拟机可能会回收 SoftReference 对象所指向的软引用，是否被回收取决于该软引用是否是新创建或近期使用过。
-      > 2.在虚拟机抛出 OutOfMemoryError 之前，所有软引用对象都会被回收。
-      > 3.只要一个软引用对象由一个强引用指向，那么即使是 OutOfMemoryError 时，也不会被回收。
-      >
-      > - from [JVM - 优化案例（SoftRefLRUPolicyMSPerMB）](https://blog.csdn.net/qiang_zi_/article/details/100700784)
-      >
-      > 那么 SoftReference 对象到底在 GC 的时候要不要回收是通过什么公式来判断的呢？
-      >
-      > 是如下的一个公式：
-      >
-      > clock - timestamp <= freespace * SoftRefLRUPolicyMSPerMB
-      >
-      > 这个公式的意思就是说，“clock - timestamp”代表了一个软引用对象他有多久没被访问过了，freespace 代表 JVM 中的空闲内存空间，SoftRefLRUPolicyMSPerMB 代表每一 MB 空闲内存空间可以允许 SoftReference 对象存活多久。
+    > - from [关于 SoftReference 被回收的时机 ](https://blog.csdn.net/S7188290/article/details/86436479)
+    >
+    > 下面，我们来总结一下:
+    > 1.当发生 GC 时，虚拟机可能会回收 SoftReference 对象所指向的软引用，是否被回收取决于该软引用是否是新创建或近期使用过。
+    > 2.在虚拟机抛出 OutOfMemoryError 之前，所有软引用对象都会被回收。
+    > 3.只要一个软引用对象由一个强引用指向，那么即使是 OutOfMemoryError 时，也不会被回收。
+    >
+    > - from [JVM - 优化案例（SoftRefLRUPolicyMSPerMB）](https://blog.csdn.net/qiang_zi_/article/details/100700784)
+    >
+    > 那么 SoftReference 对象到底在 GC 的时候要不要回收是通过什么公式来判断的呢？
+    >
+    > 是如下的一个公式：
+    >
+    > clock - timestamp <= freespace * SoftRefLRUPolicyMSPerMB
+    >
+    > 这个公式的意思就是说，“clock - timestamp”代表了一个软引用对象他有多久没被访问过了，freespace 代表 JVM 中的空闲内存空间，SoftRefLRUPolicyMSPerMB 代表每一 MB 空闲内存空间可以允许 SoftReference 对象存活多久。
 
-    - guava cache：
+  - guava cache：
 
-      ```java
-      CacheBuilder.newBuilder().softValues().build()
-      ```
+    ```java
+    CacheBuilder.newBuilder().softValues().build()
+    ```
 
-      当然 softValues() 可以替换成 weakKeys() / weakValues() ...
+    当然 softValues() 可以替换成 weakKeys() / weakValues() ...
 
-      实现原理可具体看 com.google.common.cache.LocalCache.Strength
+    实现原理可具体看 com.google.common.cache.LocalCache.Strength
 
-    - LRU 缓存实现 (Java)
+  - LRU 缓存实现 (Java)
 
 - 原子变量
 
@@ -1492,11 +1490,11 @@ ObjectInputStream、ObjectOutputStream
 
   <table>
      <tr>
-        <th>拷贝方式</th>
-        <th>对象数量: 1</th>
-        <th>对象数量: 1000</th>
-        <th>对象数量: 100000</th>
-        <th>对象数量: 1000000</th>
+        <th> 拷贝方式 </th>
+        <th> 对象数量: 1</th>
+        <th> 对象数量: 1000</th>
+        <th> 对象数量: 100000</th>
+        <th> 对象数量: 1000000</th>
      </tr>
      <tr>
         <td>Hard Code</td>
@@ -1548,11 +1546,11 @@ ObjectInputStream、ObjectOutputStream
 
   类重新定义，这是 Instrumentation 提供的基础功能之一，这个类很早就出了，redefineClasses 这个方法可以更新方法级别的代码，但是不会触发一个类的初始化方法。
 
-    - [游戏服务器之 Java 热更新 ](https://www.cnblogs.com/wgslucky/p/9127681.html)
-    - [动态加载 class 文件 ](https://zheng12tian.iteye.com/blog/1495037)
-    - [JVM 源码分析之 javaagent 原理完全解读 ](https://www.imooc.com/article/42736)
-    - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
-    - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
+  - [游戏服务器之 Java 热更新 ](https://www.cnblogs.com/wgslucky/p/9127681.html)
+  - [动态加载 class 文件 ](https://zheng12tian.iteye.com/blog/1495037)
+  - [JVM 源码分析之 javaagent 原理完全解读 ](https://www.imooc.com/article/42736)
+  - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
+  - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
 
 - 第三方工具
 
@@ -1600,30 +1598,30 @@ Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
 
 应用场景：
 
-  1. JDBC 驱动加载
+1. JDBC 驱动加载
 
-     `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
+   `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
 
-     因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
+   因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
 
-     ```java
-     //a.导入驱动，加载具体的驱动类
-     Class.forName("com.mysql.jdbc.Driver");
-     //b.与数据库建立连接
-     connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-     ```
+   ```java
+   //a.导入驱动，加载具体的驱动类
+   Class.forName("com.mysql.jdbc.Driver");
+   //b.与数据库建立连接
+   connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+   ```
 
-  2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
+2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
 
-     而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
+   而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
 
-  3. Dubbo 的扩展点加载
+3. Dubbo 的扩展点加载
 
-     Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
+   Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
 
-     META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
+   META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
 
-     ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
+   ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
 
 
 
@@ -1633,7 +1631,7 @@ Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
 
 
 
-### Java 注解处理器 
+### Java 注解处理器
 
 Annotation Processor
 
@@ -1733,8 +1731,8 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
     ```java
     List<String> al = Arrays.asList("a", "b", "c", "d");
     al.forEach(AcceptMethod::printValur);
-    //下面的方法和上面等价的Consumer<String> methodParam = AcceptMethod::printValur; 
-    //方法参数al.forEach(x -> methodParam.accept(x));//方法执行 accept
+    //下面的方法和上面等价的 Consumer<String> methodParam = AcceptMethod::printValur; 
+    //方法参数 al.forEach(x -> methodParam.accept(x));//方法执行 accept
     ```
 
 - JVM
