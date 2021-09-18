@@ -38,11 +38,16 @@ jobs:
           npm install
           npm run ginstall
 
-      - name: Run git config
+      - name: Prepare Run module gh-pages to deploy github and coding
+        run: echo `npm run gh-pages-dev -- -V`
+
+      - name: Run deploy-github-gh-pages
         run: |
           git config remote.origin.url 'https://${{secrets.USER_TOKEN}}@github.com/Ariescat/Metis-Awesome.git'
-          git config user.email "1275563227@qq.com"
-          git config user.name "ariescat-awe-deploy"
+          git config user.name 'github-actions-bot'
+          git config user.email '${{secrets.EMAIL}}'
+          npm run deploy
 
-      - name: Run deploy-gh-pages
-        run: npm run deploy
+      - name: Run deploy-coding-master
+        # 用户名密码中一定要转义 @符号 转码后变成了%40
+        run: npm run deploy -- -b master -r '${{secrets.CODING_URL}}' -u 'github-actions-bot <${{secrets.EMAIL}}>' -m 'github-actions-bot Updates'
