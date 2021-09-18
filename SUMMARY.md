@@ -11,7 +11,9 @@
 ## Java
 
 * [Java 基础](Awesome/Java.md#java-基础)
-* [Java 容器](Awesome/Java.md#集合容器)
+* [Java 高级](Awesome/Java.md#java-高级)
+  * [数据结构](Awesome/Java.md#数据结构)
+  * [集合容器](Awesome/Java.md#集合容器)
 * [Java 并发](Awesome/Java.md#java-并发)
   * [线程](Awesome/Java.md#线程)
   * [同步互斥](Awesome/Java.md#同步互斥)
