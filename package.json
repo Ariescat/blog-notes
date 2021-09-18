@@ -5,7 +5,7 @@
     "gdev": "gitbook serve",
     "build": "gitbook build . ./_book",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d _book"
+    "deploy": "master -d _book"
   },
   "devDependencies": {
     "gh-pages": "^3.2.3",
