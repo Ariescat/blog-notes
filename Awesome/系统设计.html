@@ -1004,6 +1004,36 @@
 <ul>
 <li><p><a href="https://blog.csdn.net/linuu/column/info/lovespring" target="_blank">Spring &#x6E90;&#x7801;&#x6D45;&#x6790; </a></p>
 </li>
+<li><p>&#x5FAA;&#x73AF;&#x4F9D;&#x8D56;&#x53CA;&#x4E09;&#x7EA7;&#x7F13;&#x5B58;</p>
+<p><a href="https://blog.csdn.net/u012098021/article/details/107352463/" target="_blank">Spring &#x5FAA;&#x73AF;&#x4F9D;&#x8D56;&#x53CA;&#x4E09;&#x7EA7;&#x7F13;&#x5B58;</a></p>
+<p>&#x5F04;&#x6E05;&#x695A;&#xFF1A;</p>
+<ol>
+<li><p>&#x4E09;&#x7EA7;&#x7F13;&#x5B58;&#x662F;&#x5206;&#x522B;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x5206;&#x522B;&#x662F;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x8D77;&#x4F5C;&#x7528;&#xFF1F;</p>
+</li>
+<li><p>&#x4E3A;&#x4F55;&#x9700;&#x8981;&#x4E09;&#x7EA7;&#x7F13;&#x5B58;&#xFF0C;&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;&#x4E0D;&#x884C;&#x5417;&#xFF1F;</p>
+</li>
+<li><p>Spring &#x5BF9; groovy &#x7684;&#x751F;&#x6210;&#x7684; bean &#x4E3A;&#x4F55;&#x89E3;&#x51B3;&#x4E0D;&#x4E86;&#x5FAA;&#x73AF;&#x4F9D;&#x8D56;&#xFF1F;</p>
+<p>&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x662F;&#xFF1A;</p>
+<ol>
+<li><p>bean &#x751F;&#x6210;&#x7684;&#x65F6;&#x673A;&#x662F; postProcessBeforeInstantiation&#xFF0C;&#x6CA1;&#x6709;&#x8D70;&#x5230; doCreateBean&#xFF0C;&#x800C; addSingletonFactory &#x662F;&#x5728; doCreateBean &#x8C03;&#x7528;&#x7684;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addSingletonFactory</span><span class="hljs-params">(String beanName, ObjectFactory singletonFactory)</span> </span>{
+   Assert.notNull(singletonFactory, <span class="hljs-string">&quot;Singleton factory must not be null&quot;</span>);
+   <span class="hljs-keyword">synchronized</span> (<span class="hljs-keyword">this</span>.singletonObjects) {
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.singletonObjects.containsKey(beanName)) {
+         <span class="hljs-keyword">this</span>.singletonFactories.put(beanName, singletonFactory);
+         <span class="hljs-keyword">this</span>.earlySingletonObjects.remove(beanName);
+         <span class="hljs-keyword">this</span>.registeredSingletons.add(beanName);
+      }
+   }
+}
+</code></pre>
+</li>
+<li><p>bean &#x662F;&#x7531; ScriptFactoryPostProcessor#scriptBeanFactory &#x751F;&#x6210;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A; scriptBeanFactory &#x662F;&#x4E00;&#x4E2A;&#x5168;&#x65B0;&#x7684;&#xFF0C;&#x7136;&#x540E; copyConfigurationFrom &#x4E86;&#x4E00;&#x6B21; parent &#x7684;&#x5C5E;&#x6027;</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
 <li><p>Spring AOP</p>
 <ul>
 <li><p>AOP &#x539F;&#x7406;&#xFF0C;ProxyFactory</p>
@@ -1286,7 +1316,7 @@
 <p>Docker&#x3001;&#x4E2D;&#x53F0;&#x3001;ServiceMesh(&#x670D;&#x52A1;&#x7F51;&#x683C;)</p>
 <p>&#x5927;&#x6570;&#x636E;&#x3001;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x3001;&#x533A;&#x5757;&#x94FE;&#x7B49; </p>
 <footer class="page-footer"><span class="copyright">Copyright &#xA9; Ariescat all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#xFF1A;
-2021-09-22 11:44
+2021-09-24 04:48
 </span></footer></body></html>
                                 
                                 </section>
@@ -1330,7 +1360,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"框架","level":"8.1","depth":1,"next":{"title":"Spring","level":"8.1.1","depth":2,"anchor":"#spring","path":"Awesome/系统设计.md","ref":"Awesome/系统设计.md#spring","articles":[]},"previous":{"title":"groovy","level":"7.2","depth":1,"anchor":"#groovy","path":"Awesome/其他编程语言.md","ref":"Awesome/其他编程语言.md#groovy","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","-lunr","-search","search-pro","insert-logo","github","code","lightbox","splitter","anchor-navigation-ex","tbfed-pagefooter","hide-element"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Ariescat","modify_label":"最后修改时间：","modify_format":"YYYY-MM-DD HH:mm"},"github":{"url":"https://github.com/Ariescat/Metis-Awesome/"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link",".copyright"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"mode":"float","pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"isRewritePageTitle":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","showGoTop":true,"isShowTocTitleIcon":true,"printLog":false,"multipleH1":true,"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false}},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"insert-logo":{"style":"background:none;max-height:129px","url":"/img/logo.png"}},"theme":"default","author":"Ariescat","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Awesome","links":{"sidebar":{"Github":"https://github.com/Ariescat/","开通了个小破站":"https://ariescat.top/"}},"gitbook":"*","description":"记录一些令人头秃的知识"},"file":{"path":"Awesome/系统设计.md","mtime":"2021-09-22T11:44:23.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-09-22T11:45:22.359Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"框架","level":"8.1","depth":1,"next":{"title":"Spring","level":"8.1.1","depth":2,"anchor":"#spring","path":"Awesome/系统设计.md","ref":"Awesome/系统设计.md#spring","articles":[]},"previous":{"title":"groovy","level":"7.2","depth":1,"anchor":"#groovy","path":"Awesome/其他编程语言.md","ref":"Awesome/其他编程语言.md#groovy","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","-lunr","-search","search-pro","insert-logo","github","code","lightbox","splitter","anchor-navigation-ex","tbfed-pagefooter","hide-element"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Ariescat","modify_label":"最后修改时间：","modify_format":"YYYY-MM-DD HH:mm"},"github":{"url":"https://github.com/Ariescat/Metis-Awesome/"},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link",".copyright"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"mode":"float","pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"isRewritePageTitle":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","showGoTop":true,"isShowTocTitleIcon":true,"printLog":false,"multipleH1":true,"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false}},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"insert-logo":{"style":"background:none;max-height:129px","url":"/img/logo.png"}},"theme":"default","author":"Ariescat","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Awesome","links":{"sidebar":{"Github":"https://github.com/Ariescat/","开通了个小破站":"https://ariescat.top/"}},"gitbook":"*","description":"记录一些令人头秃的知识"},"file":{"path":"Awesome/系统设计.md","mtime":"2021-09-24T04:48:36.131Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-09-24T04:49:42.125Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
