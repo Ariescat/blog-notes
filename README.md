@@ -39,7 +39,7 @@
 
 GitBook：[GitBook 简明教程 ](https://www.mapull.com/gitbook/comscore/)
 
-在线排版工具：[Text-Typesetting](https://github.com/CyC2018/Text-Typesetting)
+在线排版工具：[TTS (cyc2018.github.io)](https://cyc2018.github.io/Text-Typesetting/)
 
 表格转HTML：要想 MarkDown 中插入复杂表格时，可以先在 word 或 excel 中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
 
