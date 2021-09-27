@@ -9,7 +9,7 @@
     "gh-pages-dev": "gh-pages"
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3",
-    "gitbook-cli": "^2.3.2"
+    "gh-pages": "3.2.3",
+    "gitbook-cli": "2.3.2"
   }
 }
