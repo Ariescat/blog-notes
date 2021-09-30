@@ -58,7 +58,7 @@
     "gittalk": {
       "clientID": "ac995666edfcde8e6079",
       "clientSecret": "0e981d5d0c91bbb33cf33a356ea4962d137aafdc",
-      "repo": "https://github.com/Ariescat/Metis-Awesome",
+      "repo": "Metis-Awesome",
       "owner": "Ariescat",
       "admin": [
         "Ariescat"
