@@ -63,7 +63,7 @@
       "admin": [
         "Ariescat"
       ],
-      "id": "window.location.pathname"
+      "id": "gittalk-comment"
     }
   }
 }

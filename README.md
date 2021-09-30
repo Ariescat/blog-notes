@@ -18,7 +18,7 @@ Hey，I'm <strong>Ariescat</strong>，一只从事游戏行业的程序猿，现
 
 这是我利用 [GitBook](https://www.gitbook.com/) 搭建的笔记记录，在踏上编程的不归路后，陆陆续续把看到的学到的知识记录于此，以便于温故知新~
 
-我称之为《Coder 头秃区》：📝 [Ariescat‘s Awesome](https://awesome.ariescat.top/)
+我称之为《Coder 头秃区》：📖 [Ariescat‘s Awesome](https://awesome.ariescat.top/)
 
 （我还搭建了个小破站 [Ariescat‘s Blog](https://ariescat.top/)，偶尔想起来的时候也会写写博客的）
 
@@ -34,7 +34,7 @@ Hey，I'm <strong>Ariescat</strong>，一只从事游戏行业的程序猿，现
 
 至于 Coding Pages，那是因为以上平台对墙内的世界并不友好，访问速度让人 jio 急。
 
-（现在境内的线路会自动分发至 Coding Pages，并由 腾讯云的 CDN 加速 🚀🚀）
+（现在境内的线路会自动分发至 Coding Pages，并由 腾讯云的 CDN 加速 🚀🚀 ）
 
 <br>
 
