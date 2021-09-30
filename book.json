@@ -63,7 +63,7 @@
       "admin": [
         "Ariescat"
       ],
-      "distractionFreeMode": false
+      "id": "window.location.pathname"
     }
   }
 }
