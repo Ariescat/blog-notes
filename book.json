@@ -4,8 +4,9 @@
   "description": "记录一些令人头秃的知识",
   "links": {
     "sidebar": {
-      "Github": "https://github.com/Ariescat/",
-      "开通了个小破站": "https://ariescat.top/"
+      "我的 Github": "https://github.com/Ariescat/",
+      "关于 我": "https://ariescat.top/about/",
+      "开通了个 小破站": "https://ariescat.top/"
     }
   },
   "plugins": [
@@ -20,7 +21,8 @@
     "splitter",
     "anchor-navigation-ex",
     "tbfed-pagefooter",
-    "hide-element"
+    "hide-element",
+    "gittalk"
   ],
   "pluginsConfig": {
     "theme-default": {
@@ -52,6 +54,16 @@
         ".gitbook-link",
         ".copyright"
       ]
+    },
+    "gittalk": {
+      "clientID": "ac995666edfcde8e6079",
+      "clientSecret": "0e981d5d0c91bbb33cf33a356ea4962d137aafdc",
+      "repo": "https://github.com/Ariescat/Metis-Awesome",
+      "owner": "Ariescat",
+      "admin": [
+        "Ariescat"
+      ],
+      "distractionFreeMode": false
     }
   }
 }
