@@ -504,14 +504,92 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 #### synchronized
 
-- Java 对象头
+- Java 对象
 
   在 JVM 中**，对象在内存中的布局分为三块区域：对象头、实例数据和对齐填充。**
 
   1. **对象头：Java 对象头一般占有 2 个机器码（在 32 位虚拟机中，1 个机器码等于 4 字节，也就是 32bit，在 64 位虚拟机中，1 个机器码是 8 个字节，也就是 64bit），但是 如果对象是数组类型，则需要 3 个机器码，因为 JVM 虚拟机可以通过 Java 对象的元数据信息确定 Java 对象的大小，但是无法从数组的元数据来确认数组的大小，所以用一块来记录数组长度。**
-  2. 实例数据：存放类的属性数据信息，包括父类的属性信息；
-  3. 对齐填充：由于虚拟机要求 对象起始地址必须是 8 字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐；
+  2. 实例数据：存放类的属性数据信息，包括父类的属性信息。
+  3. 对齐填充：由于虚拟机要求 对象起始地址必须是 8 字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐。
 
+- 对象头
+
+  - Mark Work
+  - 指向类的指针
+  - 数组长度
+
+- Mark Work
+
+  <table>
+     <tr>
+        <td rowspan="2"> 锁状态 </td>
+        <td colspan = "2">25bit</td>
+        <td rowspan="2">4bit</td>
+        <td>1bit</td>
+        <td>2bit</td>
+     </tr>
+     <tr>
+        <td>23bit</td>
+        <td>2bit</td>
+        <td> 是否偏向锁 </td>
+        <td> 锁标志位 </td>
+     </tr>
+     <tr>
+        <td> 无锁 </td>
+        <td colspan = "2"> 对象的 HashCode</td>
+        <td> 分代年龄 </td>
+        <td>0</td>
+        <td>01</td>
+     </tr>
+     <tr>
+        <td> 偏向锁 </td>
+        <td> 线程 ID</td>
+        <td>Epoch</td>
+        <td> 分代年龄 </td>
+        <td>1</td>
+        <td>01</td>
+     </tr>
+     <tr>
+        <td> 轻量级锁 </td>
+        <td colspan = "4"> 指向栈中锁记录的指针 </td>
+        <td>00</td>
+     </tr>
+     <tr>
+        <td> 重量级锁 </td>
+        <td colspan = "4"> 指向重量级锁的指针 </td>
+        <td>10</td>
+     </tr>
+     <tr>
+        <td>GC 标记 </td>
+        <td colspan = "4"> 空 </td>
+        <td>11</td>
+     </tr>
+  </table>
+
+- 原理
+
+  [死磕 Synchronized 底层实现 ](https://mp.weixin.qq.com/s/2ka1cDTRyjsAGk_-ii4ngw)
+
+  * 保证了原子性、可见性、有序性
+
+  * 可重入、不可中断
+  
+  * 同步代码
+  
+    所有的互斥，其实是获取 monitor 的所有权。
+  
+    - 当我们进入一个人方法的时候，执行 **monitorenter**，就会获取当前对象的一个所有权，这个时候 monitor 进入数为 1，当前的这个线程就是这个 monitor 的 owner。
+    - 如果你已经是这个 monitor 的 owner 了，你再次进入，就会把进入数+1.
+    - 同理，当他执行完 **monitorexit**，对应的进入数就-1，直到为 0，才可以被其他线程持有。
+  
+  * 同步方法
+  
+    **ACC_SYNCHRONIZED** 标志位
+  
+    同步方法的时候，一旦执行到这个方法，就会先判断是否有标志位，然后，ACC_SYNCHRONIZED 会去隐式调用刚才的两个指令：monitorenter 和 monitorexit。
+  
+    所以归根究底，还是 monitor 对象的争夺。
+  
 - Monitor 对象
 
   Monitor 其实是一种同步工具，也可以说是一种同步机制，它通常被描述为一个对象。
@@ -522,6 +600,14 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
   - 通常提供 singal 机制
 
   “ Java 对象是天生的 Monitor。”
+  
+- 用户态和内核态的转换
+
+  过程是很复杂的，也涉及很多值的传递；synchronized 在 1.6 之前之所以说重量级，有部分原因在这，大量的系统资源消耗。
+
+- 偏向锁与 hashcode 能共存吗
+
+  [偏向锁与 hashcode 能共存吗？_Saintyyu 的博客-CSDN 博客 ](https://blog.csdn.net/Saintyyu/article/details/108295657)
 
 
 
