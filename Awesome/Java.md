@@ -568,9 +568,9 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * 可见性
 
-* 重排序（编译器重排，处理器重排），happen-before 原则
+* 重排序（编译器重排，处理器重排）
 
-  [深入理解 happens-before 规则 ](https://www.jianshu.com/p/9464bf340234)
+  happen-before 原则：[深入理解 happens-before 规则 ](https://www.jianshu.com/p/9464bf340234)
 
 
 
@@ -578,72 +578,159 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 对 volatile 的进一步补充，jvm 的内存模型。
 
-* 主内存与工作内存
+* 并发三大特性
 
-* 内存间交互操作
+  原子性，可见性，有序性
 
-  Java 内存模型定义了 8 种操作来完成主内存和工作内存的变量访问：
+* 现代计算机内存模型
 
-  lock，unlock，read，load，use，assign，stroe，write
+  处理器与内存的速度矛盾，加入了一层读写速度尽可能接近处理器运算速度的 `高速缓存（Cache）`，但它引入了一个新的问题：`缓存一致性（CacheCoherence）`。
 
-* 三大特性
+  在多处理器系统中，每个处理器都有自己的高速缓存，而它们又共享同一主内存（MainMemory）。
 
-  * 原子性
+  ![java_jmm_1](/img/awesome/java_jmm_1.webp)
 
-  * 可见性
+* JMM
 
-    主要有三种实现可见性的方式：
+  `Java 内存模型 (JavaMemoryModel)` 描述了 Java 程序中各种变量（线程共享变量）的访问规则，以及在 JVM 中将变量，存储到内存和从内存中读取变量这样的底层细节。
 
-    - volatile
-    - synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
-    - final，被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+  **JMM 有以下规定：**
 
-  * 有序性
+  > 所有的共享变量都存储于主内存，这里所说的变量指的是实例变量和类变量，不包含局部变量，因为局部变量是线程私有的，因此不存在竞争问题。
+  >
+  > 每一个线程还存在自己的工作内存，线程的工作内存，保留了被线程使用的变量的工作副本。
+  >
+  > `线程对变量的所有的操作 (读，取) 都必须在工作内存中完成，而不能直接读写主内存中的变量`。
+  >
+  > 不同线程之间也不能直接访问对方工作内存中的变量，线程间变量的值的传递需要通过主内存中转来完成。
 
-  **Java 内存模型**中：
+  ![java_jmm_2](/img/awesome/java_jmm_2.webp)
 
-  1. `volatile` 变量在写操作之后会插入一个 store 屏障，在读操作之前会插入一个 load 屏障。
-  2. 一个类的 `final` 字段会在初始化后插入一个 store 屏障，来确保 `final` 字段在**构造函数初始化完成**并可被使用时可见。
+  **正是因为这样的机制，才导致了可见性问题的存在**
 
-* volatile
+* 主要有三种实现可见性的方式：
 
-  1. 通过使用**Lock 前缀**的指令禁止**变量在线程工作内存中缓存**来保证 volatile 变量的**内存可见性**
-  2. 通过**插入内存屏障**禁止**会影响变量内存可见性**的**指令重排序**
-  3. 对任意单个 volatile 变量的读/写具有原子性，但类似于 volatile++这种复合操作不具有原子性
+  - volatile
 
-* 底层
+    每个线程操作数据的时候会把数据从主内存读取到自己的工作内存，如果他操作了数据并且写会了，他其他已经读取的线程的变量副本就会失效了，需要都数据进行操作又要再次去主内存中读取了。
 
-  * 内存屏障
+    volatile 保证不同线程对共享变量操作的可见性，也就是说一个线程修改了 volatile 修饰的变量，当修改写回主内存时，另外一个线程立即看到最新的值。
+
+  - synchronized
+
+    某一个线程进入 synchronized 代码块前后，线程会获得锁，清空工作内存，从主内存拷贝共享变量最新的值到工作内存成为副本，执行代码，将修改后的副本的值刷新回主内存中，线程释放锁。
+
+  - final
+
+    被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+
+* 缓存一致性协议
+
+  别看加一个 volatile 关键字很简单，但实际上他在背后含辛茹苦默默付出了不少，了解下计算机层面的缓存一致性协议。
+
+  当多个处理器的运算任务都涉及同一块主内存区域时，将可能导致各自的缓存数据不一致，那同步回到主内存时以谁的缓存数据为准呢？
+
+  为了解决一致性的问题，需要各个处理器访问缓存时都遵循一些协议，在读写时要根据协议来进行操作，这类协议有 MSI、`MESI（IllinoisProtocol）`、MOSI、Synapse、Firefly 及 DragonProtocol 等。
+
+  * MESI
+
+    Intel 的 MESI
+
+    嗅探
+
+* 重排序
+
+  为了提高性能，**编译器**和**处理器**常常会对既定的代码执行顺序进行指令重排序。
+
+  ![java_jmm_3](/img/awesome/java_jmm_3.webp)
+
+  一般重排序可以分为如下三种：
+
+  - 编译器优化的重排序。编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序;
+  - 指令级并行的重排序。现代处理器采用了指令级并行技术来将多条指令重叠执行。如果不存在数据依赖性，处理器可以改变语句对应机器指令的执行顺序;
+  - 内存系统的重排序。由于处理器使用缓存和读/写缓冲区，这使得加载和存储操作看上去可能是在乱序执行的。
+
+* as-if-serial
+
+  不管怎么重排序，单线程下的执行结果不能被改变。
+
+  编译器、runtime 和处理器都必须遵守 as-if-serial 语义。
+
+* Volatile 是怎么保证不会被执行重排序?
+
+  **内存屏障**
+
+  为了实现 volatile 的内存语义，JMM 会限制特定类型的编译器和处理器重排序，JMM 会针对编译器制定 volatile 重排序规则表：
+
+  ![java_jmm_4](/img/awesome/java_jmm_4.webp)
+
+  需要注意的是：volatile 写是在前面和后面**分别插入内存屏障**，而 volatile 读操作是在**后面插入两个内存屏障**。
+
+  **写**
+
+  ![java_jmm_5](/img/awesome/java_jmm_5.webp)
+
+  **读**
+
+  ![java_jmm_6](/img/awesome/java_jmm_6.webp)
+
+* happens-before
+
+  上面提过的重排序原则，为了提高处理速度，JVM 会对代码进行编译优化，也就是指令重排序优化，并发编程下指令重排序会带来一些安全隐患：如指令重排序导致的多个线程操作之间的不可见性。
+
+  如果让程序员再去了解这些底层的实现以及具体规则，那么程序员的负担就太重了，严重影响了并发编程的效率。
+
+  从 JDK5 开始，提出了`happens-before`的概念
+
+* 无法保证原子性
+
+  说了这么多，但 Volatile 是没办法保证原子性的，一定要保证原子性，得使用其他方法（比如原子类 AtomicInteger，加锁）。
+
+  常见应用：单例，用双重检查+synchronized+volatile
+
+  可能好奇为啥要双重检查？如果不用 Volatile 会怎么样？
+
+  这个就得了解下创建对象的几个步骤，可能二三步会重排
+
+  - 分配内存空间。
+  - 调用构造器，初始化实例。
+  - 返回地址给引用
+
+* 补充一些
+
+  * 对任意单个 volatile 变量的读/写具有原子性，但类似于 volatile++这种复合操作不具有原子性
+
+  * 内存间交互操作
+
+    Java 内存模型定义了 8 种操作来完成主内存和工作内存的变量访问：
+
+    lock，unlock，read，load，use，assign，stroe，write
+
+  * 一些底层实现
 
     **内存屏障**是什么？如何工作的？如何实现？在哪个层面上实现？
 
-    x86 架构：
-
-    **Store Barrier**，Store 屏障，是 x86 的"sfence"指令，相当于 StoreStore Barriers，强制所有在 sfence 指令之前的 store 指令，都在该 sfence 指令执行之前被执行，发送缓存失效信号，并把**store buffer**中的数据刷出到 CPU 的 L1 Cache 中；所有在 sfence 指令之后的 store 指令，都在该 sfence 指令执行之后被执行。即，禁止对 sfence 指令前后 store 指令的重排序跨越 sfence 指令，使**所有 Store Barrier 之前发生的内存更新都是可见的**。
-
-    **Load Barrier**，Load 屏障，是 x86 上的"ifence"指令，相当于 LoadLoad Barriers，强制所有在 lfence 指令之后的 load 指令，都在该 lfence 指令执行之后被执行，并且一直等到 load buffer 被该 CPU 读完才能执行之后的 load 指令（发现缓存失效后发起的刷入）。即，禁止对 lfence 指令前后 load 指令的重排序跨越 lfence 指令，配合 Store Barrier，使**所有 Store Barrier 之前发生的内存更新，对 Load Barrier 之后的 load 操作都是可见的**。
-
-    **Full Barrier**，Full 屏障，是 x86 上的”mfence“指令，相当于 StoreLoad Barriers，强制所有在 mfence 指令之前的 store/load 指令，都在该 mfence 指令执行之前被执行；所有在 mfence 指令之后的 store/load 指令，都在该 mfence 指令执行之后被执行。即，禁止对 mfence 指令前后 store/load 指令的重排序跨越 mfence 指令，使**所有 Full Barrier 之前发生的操作，对所有 Full Barrier 之后的操作都是可见的。**
-
-    参考：
-
-    * http://ifeve.com/memory-barriers-or-fences/
-
-    * https://www.jianshu.com/p/64240319ed60/ 该博客讲得不错，认真品味每一个字
-
-  * MESI 协议，Store Buffere（存储缓存），Invalidate Queue（失效队列）
+    MESI 协议，Store Buffere（存储缓存），Invalidate Queue（失效队列）
 
     搜索关键词（CPU 和 volatile ）
 
+  * final
+
+    一个类的 `final` 字段会在初始化后插入一个 store 屏障，来确保 `final` 字段在**构造函数初始化完成**并可被使用时可见。
+
 * 参考文章：
 
-  1. [volatile 关键字的作用、原理 ](https://monkeysayhi.github.io/2016/11/29/volatile 关键字的作用、原理/)
+  * [面试官想到，一个 Volatile，敖丙都能吹半小时 ](https://mp.weixin.qq.com/s?__biz=MzAwNDA2OTM1Ng==&mid=2453142004&idx=1&sn=81ccddb6c8b37114c022c4ad50368ecf&scene=21#wechat_redirect)
 
-     注意 DCL（Double Check Lock，双重检查锁）和被部分初始化的对象
+  * [既生 synchronized，何生 volatile？！](https://www.hollischuang.com/archives/3928)
 
-  2. [既生 synchronized，何生 volatile？！](https://www.hollischuang.com/archives/3928)
+    非原子操作！！！
 
-     非原子操作！！！
+  * [一文解决内存屏障 - 简书 (jianshu.com)](https://www.jianshu.com/p/64240319ed60/)
+
+    x86 架构的内存屏障
+
+  * [内存屏障 | 并发编程网 – ifeve.com](http://ifeve.com/memory-barriers-or-fences/)
 
 
 
