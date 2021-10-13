@@ -822,13 +822,18 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 #### 乐观锁
 
-- Atomic
+- Atomic 类
 
-- 了解一下**LongAdder** 与 **Striped64**
+  AtomicStampedReference 它还维护了一个时间戳，解决 ABA 问题
+
+- 了解一下 **LongAdder** 与 **Striped64**
 
   LongAdder 区别于 AtomicLong ，在高并发中有更好的性能体现
 
-- [Java 并发问题--乐观锁与悲观锁以及乐观锁的一种实现方式-CAS](http://www.cnblogs.com/qjjazry/p/6581568.html)
+* 链接
+  * [《吊打面试官》系列-乐观锁、悲观锁](https://mp.weixin.qq.com/s/WtAdXvaRuBZ-SXayIKu1mA)
+  * [妹妹问我：互斥锁、自旋锁、读写锁、悲观锁、乐观锁的应用场景](https://mp.weixin.qq.com/s/6QrQ0TZVqSQq26Rms0_mvA)
+  * [Java 并发问题--乐观锁与悲观锁以及乐观锁的一种实现方式-CAS](http://www.cnblogs.com/qjjazry/p/6581568.html)
 
 
 
