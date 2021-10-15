@@ -47,4 +47,4 @@ jobs:
       - name: Run deploy-coding-master
         # 用户名密码中一定要转义 @符号 转码后变成了%40  See:https://blog.csdn.net/u012447791/article/details/118225605
         # eg. https://username:password@127.0.0.1/res/res.git
-        run: npm run deploy -- -b master -r 'https://${{CODING_USER_PASS}}@e.coding.net/${{CODING_REPO}}' -u 'github-actions-bot <${{secrets.EMAIL}}>' -m 'github-actions-bot Updates'
+        run: npm run deploy -- -b master -r 'https://${{secrets.CODING_USER_PASS}}@e.coding.net/${{secrets.CODING_REPO}}' -u 'github-actions-bot <${{secrets.EMAIL}}>' -m 'github-actions-bot Updates'
