@@ -1088,9 +1088,23 @@ ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 
   源码分析：
 
-  `java.util.concurrent.ThreadPoolExecutor#runWorker`这里会一直调用`task = getTask()`，`getTask`里会调用`workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)`，因此没任务后它也会阻塞`keepAliveTime`时间。
+  `java.util.concurrent.ThreadPoolExecutor#runWorker`这里会一直调用`task = getTask()`，`getTask`里会调用`workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)`或者`workQueue.take()`，因此没任务后它也会阻塞`keepAliveTime`时间 或者 永久阻塞。
 
   分析一下`shutdown()`，它里面调用了`interruptIdleWorkers()`，它会打断上述的`wait keepAliveTime`的状态，抛出中断异常，而`getTask()`会捕获这个异常，从而**打破阻塞状态**。
+
+
+
+#### 线程池异常处理
+
+java.util.concurrent.ThreadPoolExecutor#runWorker
+
+有需要可以重写 afterExecute
+
+但注意 sumbit 这种情况，FutureTask 自己封装处理了异常，不通过 Future 是获取不到的，看看这篇文章：
+
+[记一次线程池引发的故障 排查下来是三歪的锅](https://mp.weixin.qq.com/s/TQGtNpPiTypeKd5kUnfxEw)
+
+这篇文章其实是有点问题的，他最后的 setUncaughtExceptionHandler 是获取不到 sumbit 的异常的，但还是可以通过这篇文章了解下整体的脉络。
 
 
 
