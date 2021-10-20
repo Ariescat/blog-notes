@@ -847,6 +847,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   [阿里面试官：说一下公平锁和非公平锁的区别？_敖丙-CSDN 博客 ](https://blog.csdn.net/qq_35190492/article/details/104943579)
 
+  核心就是 tryAcquire 时，公平锁多了一个 !hasQueuedPredecessors() 判断
+
 * 比较 synchronized
 
   **1. 锁的实现**
@@ -873,6 +875,10 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   一个 ReentrantLock 可以同时绑定多个 Condition 对象。
 
+* 伴生类 Condition
+
+  可以看看上面的[中断线程](#中断线程)，提供了 await() 和 singal() 的功能，可以用于线程间消息通信。
+
 
 
 #### AQS
@@ -882,17 +888,17 @@ AbstractQueuedSynchronizer
 它维护了一个**volatile** int **state**（代表共享资源）和一个 FIFO 线程等待队列（多线程争用资源被阻塞时会进入此队列）。这里 volatile 是核心关键词
 
 - AQS 框架借助于两个类：
-  1. Unsafe（提供 CAS 操作）
+  1. Unsafe（提供 CAS 操作，可以了解一下）
+     * objectFieldOffset
+     * compareAndSwap...
   2. [LockSupport](https://www.jianshu.com/p/e3afe8ab8364)（提供 park/unpark 操作）
+     * AbstractFuture (一旦调用 get 就会阻塞)
 - 与 Object 类的 wait/notify 机制相比，park/unpark 有两个优点：
   1. 以 thread 为操作对象更符合阻塞线程的直观定义
   2. 操作更精准，可以准确地唤醒某一个线程（notify 随机唤醒一个线程，notifyAll 唤醒所有等待的线程），增加了灵活性。
 - 应用：
   1. CountDownLatch、CyclicBarrier 和 Semaphore
-  2. AbstractFuture (一旦调用 get 就会阻塞)
-- JDK Unsafe 类（可以了解一下）
-  - objectFieldOffset
-  - compareAndSwap...
+  2. ReentrantLock 等
 - 参考链接
   - https://blog.51cto.com/14220760/2390586?source=dra
   - https://www.jianshu.com/p/da9d051dcc3d
