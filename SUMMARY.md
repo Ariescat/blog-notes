@@ -204,13 +204,19 @@
   - [框架](/Awesome/其他编程语言.md#框架)
   - [其他](/Awesome/其他编程语言.md#其他)
 
+- [跨平台](/Awesome/其他编程语言.md#跨平台)
+
+  - [Weex](/Awesome/其他编程语言.md#weex)
+
 - [Android](/Awesome/其他编程语言.md#android)
 
 
 
 ## 游戏
 
-- [游戏](Awesome/游戏.md)
+- [Unity3d](/Awesome/游戏.md#unity3d)
+- [游戏技术](/Awesome/游戏.md#游戏技术)
+- [游戏相关](/Awesome/游戏.md#游戏相关)
 
 
 
@@ -219,6 +225,7 @@
 - [Github 干货](/Awesome/必备链接.md#github-干货)
 - [知识体系](/Awesome/必备链接.md#知识体系)
 - [面经汇总](/Awesome/必备链接.md#面经汇总)
+- [博主](/Awesome/必备链接.md#博主)
 - [博文](/Awesome/必备链接.md#博文)
 - [常用社区](/Awesome/必备链接.md#常用社区)
 
