@@ -57,7 +57,7 @@ Hey，I'm <strong>Ariescat</strong>，一只从事游戏行业的程序猿，现
 
 **感谢：**
 
-GitBook：[GitBook 简明教程 ](https://www.mapull.com/gitbook/comscore/)
+GitBook：[GitBook 简明教程](https://www.mapull.com/gitbook/comscore/)
 
 在线排版工具：[TTS (cyc2018.github.io)](https://cyc2018.github.io/Text-Typesetting/)
 
