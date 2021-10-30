@@ -67,16 +67,6 @@ GitBook：[GitBook 简明教程](https://www.mapull.com/gitbook/comscore/)
 
 
 
-### Github 一些不错的项目
-
-**收藏从未停止，学习从未开始**
-
-[CyC2018](https://github.com/CyC2018) / [CS-Notes](https://github.com/CyC2018/CS-Notes)
-
-<br>
-
-
-
 ### Metis 项目列表
 
 Metis 工程是一系列**算法、代码、工具、功能、框架**的用法与使用心得，**Metis** 这个名字取自希腊神话中的智慧女神**墨提斯**。
