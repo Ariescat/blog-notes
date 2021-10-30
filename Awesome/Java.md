@@ -1341,6 +1341,8 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - [GC 性能优化 ](https://blog.csdn.net/renfufei/column/info/14851)
 
+- [假笨说-从一起GC血案谈到反射原理 (qq.com)](https://mp.weixin.qq.com/s/5H6UHcP6kvR2X5hTj_SBjA)
+
 
 
 ### 性能调优工具
@@ -1403,54 +1405,67 @@ Classloader 将数据加载到内存中经过的步骤：
 
 ### 代理
 
-1. 按照代理的创建时期，代理类可以分为两种。
+- 按照代理的创建时期，代理类可以分为两种。
 
-   > 静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class 文件就已经存在了。
-   > 动态代理：在程序运行时，运用反射机制动态创建而成。
+  > 静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class 文件就已经存在了。
+  >
+  > 动态代理：在程序运行时，运用反射机制动态创建而成。
 
-2. Cglib 动态代理
+- 动态代理方案
 
-   > JDK 的动态代理机制只能代理实现了接口的类，而不能实现接口的类就不能实现 JDK 的动态代理，cglib 是针对类来实现代理的，他的原理是对指定的目标类生成一个子类，并覆盖其中方法实现增强，但因为采用的是继承，所以不能对 final 修饰的类进行代理。
+  - jdk 动态代理
 
-3. 代码实现：[Cglib 与 JDK 动态代理 ](https://my.oschina.net/xiaolyuh/blog/3108376)
+  - cglib 动态代理
 
-4. 一些疑惑 ？
+    JDK 的动态代理机制只能代理实现了接口的类，而不能实现接口的类就不能实现 JDK 的动态代理，cglib 是针对类来实现代理的，他的原理是对指定的目标类生成一个子类，并覆盖其中方法实现增强，但因为采用的是继承，所以不能对 final 修饰的类进行代理。
 
-  - 为什么 cglib 为什么生成两个 fastclass，`methodProxy.invokeSuper(“代理对象”, args)` 和 `methodProxy.invoke(“原对象”, args)` 虽然底层分别调用两个不同的 fastclass，但结果是一样的。
+    [Cglib 与 JDK 动态代理 ](https://my.oschina.net/xiaolyuh/blog/3108376)
 
-    ```java
-    // 自定义 Cglib 代理拦截
-    public class DemoInterceptor implements MethodInterceptor {
-        // @param o           cglib 生成的代理对象
-        // @param method      被代理对象方法
-        // @param objects     方法入参
-        // @param methodProxy 代理方法
-        public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-            System.err.println("intercept");
-            // invokeSuper，o 为 cglib 生成的代理对象
-            return methodProxy.invokeSuper(o, objects);
-        }
-    }
-    ```
+  - javassist 动态代理
 
-    ```java
-    // org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation    
-    private static class CglibMethodInvocation extends ReflectiveMethodInvocation {
-        private final MethodProxy methodProxy;
-        private boolean protectedMethod;
-        public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, Class<?> targetClass, List<Object> interceptorsAndDynamicMethodMatchers, MethodProxy methodProxy) {
-            super(proxy, target, method, arguments, targetClass, interceptorsAndDynamicMethodMatchers);
-            this.methodProxy = methodProxy;
-            this.protectedMethod = Modifier.isProtected(method.getModifiers());
-        }
-        protected Object invokeJoinpoint() throws Throwable {
-            // invoke，target 为原对象
-            return this.protectedMethod ? super.invokeJoinpoint() : this.methodProxy.invoke(this.target, this.arguments);
-        }
-    }
-    ```
+  - ASM 字节码
 
-    可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
+  - javassist 字节码
+
+- [深入理解 RPC 之动态代理篇 - 徐靖峰|个人博客 (cnkirito.moe)](https://www.cnkirito.moe/rpc-dynamic-proxy/)
+
+- Q&A
+
+  为什么 cglib 为什么生成两个 fastclass，`methodProxy.invokeSuper(“代理对象”, args)` 和 `methodProxy.invoke(“原对象”, args)` 虽然底层分别调用两个不同的 fastclass，但结果是一样的。
+
+  ```java
+  // 自定义 Cglib 代理拦截
+  public class DemoInterceptor implements MethodInterceptor {
+      // @param o           cglib 生成的代理对象
+      // @param method      被代理对象方法
+      // @param objects     方法入参
+      // @param methodProxy 代理方法
+      public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+          System.err.println("intercept");
+          // invokeSuper，o 为 cglib 生成的代理对象
+          return methodProxy.invokeSuper(o, objects);
+      }
+  }
+  ```
+
+  ```java
+  // org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation    
+  private static class CglibMethodInvocation extends ReflectiveMethodInvocation {
+      private final MethodProxy methodProxy;
+      private boolean protectedMethod;
+      public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, Class<?> targetClass, List<Object> interceptorsAndDynamicMethodMatchers, MethodProxy methodProxy) {
+          super(proxy, target, method, arguments, targetClass, interceptorsAndDynamicMethodMatchers);
+          this.methodProxy = methodProxy;
+          this.protectedMethod = Modifier.isProtected(method.getModifiers());
+      }
+      protected Object invokeJoinpoint() throws Throwable {
+          // invoke，target 为原对象
+          return this.protectedMethod ? super.invokeJoinpoint() : this.methodProxy.invoke(this.target, this.arguments);
+      }
+  }
+  ```
+
+  可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
 
 
 
