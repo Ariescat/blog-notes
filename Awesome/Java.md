@@ -59,7 +59,7 @@
 
       关键点是 jdk7 中常量池不在 Perm 区域了，这块做了调整。常量池中不需要再存储一份对象了，可以直接存储堆中的引用
 
-  2. 此外，Java 中的常量池有**字符串常量池**、**class 常量池**和**运行时常量池**。[原文 ]( http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/ )
+  2. 此外，Java 中的常量池有**字符串常量池**、**class 常量池**和**运行时常量池**。[原文]( http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/)
 
   3. 常量池会被回收吗？
 
@@ -67,7 +67,7 @@
 
 ### 枚举
 
-- [枚举详解之 EnumSet、EnumMap 用法 ](https://www.cnblogs.com/treeshu/p/11013511.html)
+- [枚举详解之 EnumSet、EnumMap 用法](https://www.cnblogs.com/treeshu/p/11013511.html)
 
   `RegularEnumSet`里面有这样一行代码：
 
@@ -90,7 +90,7 @@
   1. CPU 高速缓存
   2. 内存分页调度
 
-  参考：[二维数组按行和按列遍历效率_醒来明月的博客-CSDN 博客_二维数组访问效率 ](https://blog.csdn.net/lbwo001/article/details/78817439?utm_source=blogxgwz0)
+  参考：[二维数组按行和按列遍历效率_醒来明月的博客-CSDN 博客_二维数组访问效率](https://blog.csdn.net/lbwo001/article/details/78817439?utm_source=blogxgwz0)
 
 
 
@@ -213,7 +213,7 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
 * hash 算法
 
-  [详细梳理 JAVA7 和 JAVA8 HashMap 的 hash 实现 ](https://blog.csdn.net/u013453787/article/details/84702992)
+  [详细梳理 JAVA7 和 JAVA8 HashMap 的 hash 实现](https://blog.csdn.net/u013453787/article/details/84702992)
 
 * 优化
 
@@ -224,7 +224,7 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
     **resize 死循环：**
 
     - [ConcurrentModificationException](https://www.2cto.com/kf/201403/286536.html)
-    - [疫苗：JAVA HASHMAP 的死循环 ](https://coolshell.cn/articles/9606.html)
+    - [疫苗：JAVA HASHMAP 的死循环](https://coolshell.cn/articles/9606.html)
 
     jdk8 中是如何解决 jdk7 中的 HashMap 死循环的
 
@@ -252,7 +252,7 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
 - 死循环
 
-  [ConcurrentHashMap BUG 死锁 ](https://blog.csdn.net/zhanglong_4444/article/details/93638844)
+  [ConcurrentHashMap BUG 死锁](https://blog.csdn.net/zhanglong_4444/article/details/93638844)
 
 - 死锁（该问题由 fly 提出并收录）
 
@@ -303,7 +303,7 @@ TreeSet 同理，红黑树实现
 
 * 一个著名 BUG
 
-  c.toArray might (incorrectly) not return Object[] (see 6260652) [原文 ](https://blog.csdn.net/qq_33589510/article/details/104767849)
+  c.toArray might (incorrectly) not return Object[] (see 6260652) [原文](https://blog.csdn.net/qq_33589510/article/details/104767849)
 
   `java.util.ArrayList` 元素类型为`Object[] elementData`，`toArray()`方法实质返回`Object[]`
 
@@ -424,7 +424,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 - 实现 Callable 接口；
 - 继承 Thread 类。
 
-链接：[Java 并发的四种风味 ](https://blog.csdn.net/yonlist/article/details/84736424)
+链接：[Java 并发的四种风味](https://blog.csdn.net/yonlist/article/details/84736424)
 
 
 
@@ -435,7 +435,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 链接：
 
 1. [Java 线程的 6 种状态及切换 (透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-2. [Java 中一个线程只有六个状态。至于阻塞、可运行、挂起状态都是人们为了便于理解，自己加上去的 ](https://www.cnblogs.com/GooPolaris/p/8079490.html)
+2. [Java 中一个线程只有六个状态。至于阻塞、可运行、挂起状态都是人们为了便于理解，自己加上去的](https://www.cnblogs.com/GooPolaris/p/8079490.html)
 
 
 
@@ -489,7 +489,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * LockSupport.park（ReentrantLock）
 
-  [白话讲懂 wait notify 和 park unpark 的使用示例和区别_pengweismile 的专栏-CSDN 博客 ](https://blog.csdn.net/pengweismile/article/details/108836666)
+  [白话讲懂 wait notify 和 park unpark 的使用示例和区别_pengweismile 的专栏-CSDN 博客](https://blog.csdn.net/pengweismile/article/details/108836666)
 
   [面试 LockSupport.park() 会释放锁资源吗？](http://www.imooc.com/article/294581)
 
@@ -574,28 +574,28 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 - 原理
 
-  [死磕 Synchronized 底层实现 ](https://mp.weixin.qq.com/s/2ka1cDTRyjsAGk_-ii4ngw)
+  [死磕 Synchronized 底层实现](https://mp.weixin.qq.com/s/2ka1cDTRyjsAGk_-ii4ngw)
 
   * 保证了原子性、可见性、有序性
 
   * 可重入、不可中断
-  
+
   * 同步代码
-  
+
     所有的互斥，其实是获取 monitor 的所有权。
-  
+
     - 当我们进入一个人方法的时候，执行 **monitorenter**，就会获取当前对象的一个所有权，这个时候 monitor 进入数为 1，当前的这个线程就是这个 monitor 的 owner。
     - 如果你已经是这个 monitor 的 owner 了，你再次进入，就会把进入数+1.
     - 同理，当他执行完 **monitorexit**，对应的进入数就-1，直到为 0，才可以被其他线程持有。
-  
+
   * 同步方法
-  
+
     **ACC_SYNCHRONIZED** 标志位
-  
+
     同步方法的时候，一旦执行到这个方法，就会先判断是否有标志位，然后，ACC_SYNCHRONIZED 会去隐式调用刚才的两个指令：monitorenter 和 monitorexit。
-  
+
     所以归根究底，还是 monitor 对象的争夺。
-  
+
 - Monitor 对象
 
   Monitor 其实是一种同步工具，也可以说是一种同步机制，它通常被描述为一个对象。
@@ -606,16 +606,16 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
   - 通常提供 singal 机制
 
   “ Java 对象是天生的 Monitor。”
-  
+
   [关于Monitor对象在sychronized实现中的应用_super_x_man的博客-CSDN博客_monitor撖寡情](https://blog.csdn.net/super_x_man/article/details/81741073)
-  
+
 - 用户态和内核态的转换
 
   过程是很复杂的，也涉及很多值的传递；synchronized 在 1.6 之前之所以说重量级，有部分原因在这，大量的系统资源消耗。
 
 - 偏向锁与 hashcode 能共存吗
 
-  [偏向锁与 hashcode 能共存吗？_Saintyyu 的博客-CSDN 博客 ](https://blog.csdn.net/Saintyyu/article/details/108295657)
+  [偏向锁与 hashcode 能共存吗？_Saintyyu 的博客-CSDN 博客](https://blog.csdn.net/Saintyyu/article/details/108295657)
 
 
 
@@ -664,7 +664,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * 重排序（编译器重排，处理器重排）
 
-  happen-before 原则：[深入理解 happens-before 规则 ](https://www.jianshu.com/p/9464bf340234)
+  happen-before 原则：[深入理解 happens-before 规则](https://www.jianshu.com/p/9464bf340234)
 
 
 
@@ -814,7 +814,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * 参考文章：
 
-  * [面试官想到，一个 Volatile，敖丙都能吹半小时 ](https://mp.weixin.qq.com/s?__biz=MzAwNDA2OTM1Ng==&mid=2453142004&idx=1&sn=81ccddb6c8b37114c022c4ad50368ecf&scene=21#wechat_redirect)
+  * [面试官想到，一个 Volatile，敖丙都能吹半小时](https://mp.weixin.qq.com/s?__biz=MzAwNDA2OTM1Ng==&mid=2453142004&idx=1&sn=81ccddb6c8b37114c022c4ad50368ecf&scene=21#wechat_redirect)
 
   * [既生 synchronized，何生 volatile？！](https://www.hollischuang.com/archives/3928)
 
@@ -826,7 +826,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   * [内存屏障 | 并发编程网 – ifeve.com](http://ifeve.com/memory-barriers-or-fences/)
 
-  * [全面理解 Java 内存模型 (JMM) 及 volatile 关键字 - CSDN 博客 ](http://blog.csdn.net/javazejian/article/details/72772461)
+  * [全面理解 Java 内存模型 (JMM) 及 volatile 关键字 - CSDN 博客](http://blog.csdn.net/javazejian/article/details/72772461)
 
 
 
@@ -855,7 +855,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * 公平，非公平
 
-  [阿里面试官：说一下公平锁和非公平锁的区别？_敖丙-CSDN 博客 ](https://blog.csdn.net/qq_35190492/article/details/104943579)
+  [阿里面试官：说一下公平锁和非公平锁的区别？_敖丙-CSDN 博客](https://blog.csdn.net/qq_35190492/article/details/104943579)
 
   核心就是 tryAcquire 时，公平锁多了一个 !hasQueuedPredecessors() 判断
 
@@ -978,7 +978,7 @@ AbstractQueuedSynchronizer
 
 - Bounded-Buffer 问题：
 
-  生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。[原文 ](https://www.jianshu.com/p/696c24f3f7b8)
+  生产者消费者问题（Producer-consumer problem），也称有限缓冲问题（Bounded-buffer problem），是一个多线程同步问题的经典案例。[原文](https://www.jianshu.com/p/696c24f3f7b8)
 
 - 并发中的伪共享问题（false sharing）：
 
@@ -1026,7 +1026,7 @@ Executors 返回线程池对象的弊端如下：
    </tr>
 </table>
 
-上表收录自：[线程池的三种缓存队列 ](https://blog.csdn.net/nihaomabmt/article/details/81667481)
+上表收录自：[线程池的三种缓存队列](https://blog.csdn.net/nihaomabmt/article/details/81667481)
 
 解释看起来文邹邹的，要不直接上代码：execute：
 
@@ -1078,7 +1078,7 @@ public void execute(Runnable command) {
 
 ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 
-- [ScheduledThreadPoolExecutor 原理 ](https://blog.csdn.net/luanmousheng/article/details/77816412)
+- [ScheduledThreadPoolExecutor 原理](https://blog.csdn.net/luanmousheng/article/details/77816412)
 
 
 
@@ -1149,7 +1149,7 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
    PipedInputStream 的一个实例要和 PipedOutputStream 的一个实例共同使用，共同完成管道的读取写入操作，主要用于**线程操作**。
 
-   有空看看这里的实现 [简介,源码分析和示例 ](https://www.cnblogs.com/skywang12345/p/io_04.html)
+   有空看看这里的实现 [简介,源码分析和示例](https://www.cnblogs.com/skywang12345/p/io_04.html)
 
    在一个线程里使用 PipedInputStream 和 PipedOutputStream 会造成死锁：这意味着，如果你用同一个线程既读又写（read() 和 write() 方法是阻塞的方法），那么就会造成这个线程的死锁。
 
@@ -1203,14 +1203,14 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 ### Path/Files
 
-- [IO 操作你还在用 File 吗，该拥抱 Path 和 Files 了 ](https://www.sohu.com/a/132459571_654433)
+- [IO 操作你还在用 File 吗，该拥抱 Path 和 Files 了](https://www.sohu.com/a/132459571_654433)
 
 
 
 ### NIO
 
 - Channel，Buffer，Selector
-- [高性能 IO 之 Reactor 模式 ](https://www.cnblogs.com/doit8791/p/7461479.html)
+- [高性能 IO 之 Reactor 模式](https://www.cnblogs.com/doit8791/p/7461479.html)
 
 
 
@@ -1232,7 +1232,7 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 - 堆是线程共享的内存区域？
 
-  不完全正确。因为 HotSpot 中，TLAB 是堆内存的一部分，他在**读取上**确实是**线程共享**的，但是在**内存分配上**，是**线程独享**的。[链接 ](https://mp.weixin.qq.com/s/Jj5Z1DZKpAgrj9wpYUZ_JQ)
+  不完全正确。因为 HotSpot 中，TLAB 是堆内存的一部分，他在**读取上**确实是**线程共享**的，但是在**内存分配上**，是**线程独享**的。[链接](https://mp.weixin.qq.com/s/Jj5Z1DZKpAgrj9wpYUZ_JQ)
 
 
 
@@ -1256,7 +1256,7 @@ Classloader 将数据加载到内存中经过的步骤：
 3. 初始化
    为类中的类中的静态变量赋值（正确的初始值）
 
-参考：[ClassLoader 那事儿 ](https://www.cnblogs.com/nedhome/p/9053132.html)
+参考：[ClassLoader 那事儿](https://www.cnblogs.com/nedhome/p/9053132.html)
 
 问题：
 
@@ -1294,7 +1294,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - 逃逸分析
 
-  - [JVM 优化之逃逸分析与分配消除 ](https://my.oschina.net/u/4215320/blog/3108015)
+  - [JVM 优化之逃逸分析与分配消除](https://my.oschina.net/u/4215320/blog/3108015)
   - [面试问我 Java 逃逸分析，瞬间被秒杀了。。](https://my.oschina.net/javaroad/blog/3062052)
 
 
@@ -1303,7 +1303,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - GC 算法
 
-  [GC 算法 (实现篇) - GC 参考手册 ](https://blog.csdn.net/renfufei/article/details/54885190)
+  [GC 算法 (实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
 
 - 可能导致 FullGC 的原因有以下几种。
 
@@ -1327,7 +1327,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
     看《深入理解 Java 虚拟机》3.7.4 节 垃圾收集器参数总结，这个讲解了 client 和 server 模式下的默认值，以及开启其他收集器的参数
 
-  - [CMS 垃圾回收器详解 ](https://blog.csdn.net/zqz_zqz/article/details/70568819)
+  - [CMS 垃圾回收器详解](https://blog.csdn.net/zqz_zqz/article/details/70568819)
 
     - CMS 之 promotion failed & concurrent mode failure
 
@@ -1335,7 +1335,7 @@ Classloader 将数据加载到内存中经过的步骤：
       >
       > 然后 CMS 的并发周期就会被一次 Full GC 代替，退回到 Serial Old 收集器进行回收，这是一次长 Stop The World
 
-      [关于 CMS 垃圾回收失败是不是进行 FULL GC 问题的记录 ](https://www.jianshu.com/p/843782af87b1)
+      [关于 CMS 垃圾回收失败是不是进行 FULL GC 问题的记录](https://www.jianshu.com/p/843782af87b1)
 
   - CMS 收集器和 G1 收集器 他们的优缺点对比
 
@@ -1347,7 +1347,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
     [Universal JVM GC analyzer - Java Garbage collection log analysis made easy (gceasy.io)](https://gceasy.io/gc-index.jsp)
 
-- [GC 性能优化 ](https://blog.csdn.net/renfufei/column/info/14851)
+- [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
 
 
 
@@ -1360,9 +1360,9 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - VisualVM
 
-  - [使用 VisualVM 进行性能分析及调优 ](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
+  - [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 
-- [Arthas 使用指南 ](https://segmentfault.com/a/1190000014618329?utm_source=tag-newest)  
+- [Arthas 使用指南](https://segmentfault.com/a/1190000014618329?utm_source=tag-newest)  
   Arthas 是基于 Greys 进行二次开发的全新在线诊断工具
 
 
@@ -1406,7 +1406,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 有认真了解过 Java 的语法糖吗？
 
-- [Java 中的 10 颗语法糖 ](https://www.cnblogs.com/duanxz/p/3916028.html)
+- [Java 中的 10 颗语法糖](https://www.cnblogs.com/duanxz/p/3916028.html)
 
 
 
@@ -1426,7 +1426,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
     JDK 的动态代理机制只能代理实现了接口的类，而不能实现接口的类就不能实现 JDK 的动态代理，cglib 是针对类来实现代理的，他的原理是对指定的目标类生成一个子类，并覆盖其中方法实现增强，但因为采用的是继承，所以不能对 final 修饰的类进行代理。
 
-    [Cglib 与 JDK 动态代理 ](https://my.oschina.net/xiaolyuh/blog/3108376)
+    [Cglib 与 JDK 动态代理](https://my.oschina.net/xiaolyuh/blog/3108376)
 
   - javassist 动态代理
 
@@ -1562,10 +1562,10 @@ Classloader 将数据加载到内存中经过的步骤：
 
     - 该文章最后有其他 JVM 相关文章，感觉是干货
 
-- [反射代理类加载器的潜在内存使用问题 ](https://www.jianshu.com/p/20b7ab284c0a)！！
+- [反射代理类加载器的潜在内存使用问题](https://www.jianshu.com/p/20b7ab284c0a)！！
 
-   大量的类加载器 `sun/reflect/DelegatingClassLoader`，用来加载 `sun/reflect/GeneratedMethodAccessor` 类，可能导致潜在的占用大量本机内存空间问题，应用服务器进程占用的内存会显著增大。
-   
+  大量的类加载器 `sun/reflect/DelegatingClassLoader`，用来加载 `sun/reflect/GeneratedMethodAccessor` 类，可能导致潜在的占用大量本机内存空间问题，应用服务器进程占用的内存会显著增大。
+
 - 其他链接
 
   [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
@@ -1610,8 +1610,8 @@ public final class MySingleton implements Serializable {
 
 参考：
 
-- [Java 类的实例化顺序 ](https://www.cnblogs.com/yanghe123/p/10936025.html)
-- [java 类实例化顺序+经典的面试题 ](https://blog.csdn.net/qq_36382679/article/details/105811529)
+- [Java 类的实例化顺序](https://www.cnblogs.com/yanghe123/p/10936025.html)
+- [java 类实例化顺序+经典的面试题](https://blog.csdn.net/qq_36382679/article/details/105811529)
 
 测试：com.ariescat.metis.base.jdk.TestSameField
 
@@ -1639,9 +1639,9 @@ Fu f = new Zi();System.out.println(f.age);
 
 参考：
 
-- [java 中父类与子类有相同属性调谁？取决于左边 ](https://blog.csdn.net/qq_40093255/article/details/108400976)
+- [java 中父类与子类有相同属性调谁？取决于左边](https://blog.csdn.net/qq_40093255/article/details/108400976)
 
-- [父类和子类同时存在相同属性 BeanUtils 的 copyProperties 复制 ](https://blog.csdn.net/u012786993/article/details/82923064/)
+- [父类和子类同时存在相同属性 BeanUtils 的 copyProperties 复制](https://blog.csdn.net/u012786993/article/details/82923064/)
 
 
 
@@ -1659,7 +1659,7 @@ Fu f = new Zi();System.out.println(f.age);
 
   - SoftReference 若清楚了上面的原理，[SoftReference](https://www.jianshu.com/p/8c634f10ed1a) 只是**生命周期**变成**内存将要被耗尽的时候**。
 
-    > - from [关于 SoftReference 被回收的时机 ](https://blog.csdn.net/S7188290/article/details/86436479)
+    > - from [关于 SoftReference 被回收的时机](https://blog.csdn.net/S7188290/article/details/86436479)
     >
     > 下面，我们来总结一下:
     > 1.当发生 GC 时，虚拟机可能会回收 SoftReference 对象所指向的软引用，是否被回收取决于该软引用是否是新创建或近期使用过。
@@ -1710,7 +1710,7 @@ ObjectInputStream、ObjectOutputStream
 
 ### 对象拷贝
 
-- [BeanUtils 对象属性 copy 的性能对比以及源码分析 ](https://www.cnblogs.com/kancy/p/12089126.html)
+- [BeanUtils 对象属性 copy 的性能对比以及源码分析](https://www.cnblogs.com/kancy/p/12089126.html)
 
   <table>
      <tr>
@@ -1763,22 +1763,22 @@ ObjectInputStream、ObjectOutputStream
 
 - 自定义类加载器
 
-  - [探秘 Java 热部署 ](https://www.jianshu.com/p/731bc8293365)
-  - [CSDN·自定义 classloader 实现 JAVA 热替换 ](https://blog.csdn.net/puhaiyang/article/details/78165465)
+  - [探秘 Java 热部署](https://www.jianshu.com/p/731bc8293365)
+  - [CSDN·自定义 classloader 实现 JAVA 热替换](https://blog.csdn.net/puhaiyang/article/details/78165465)
 
 - java.lang.instrument
 
   类重新定义，这是 Instrumentation 提供的基础功能之一，这个类很早就出了，redefineClasses 这个方法可以更新方法级别的代码，但是不会触发一个类的初始化方法。
 
-  - [游戏服务器之 Java 热更新 ](https://www.cnblogs.com/wgslucky/p/9127681.html)
-  - [动态加载 class 文件 ](https://zheng12tian.iteye.com/blog/1495037)
-  - [JVM 源码分析之 javaagent 原理完全解读 ](https://www.imooc.com/article/42736)
+  - [游戏服务器之 Java 热更新](https://www.cnblogs.com/wgslucky/p/9127681.html)
+  - [动态加载 class 文件](https://zheng12tian.iteye.com/blog/1495037)
+  - [JVM 源码分析之 javaagent 原理完全解读](https://www.imooc.com/article/42736)
   - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
   - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
 
 - 第三方工具
 
-  - [**Arthas**的使用 ](https://www.cnblogs.com/orange911/p/10583245.html)
+  - [**Arthas**的使用](https://www.cnblogs.com/orange911/p/10583245.html)
   - [Github · **HotswapAgent**](https://github.com/HotswapProjects/HotswapAgent)
 
 - 脚本语言
@@ -1806,7 +1806,7 @@ ObjectInputStream、ObjectOutputStream
 
 链接：
 
-- [Java System#exit 无法退出程序的问题探索 ](https://blog.csdn.net/qq271859852/article/details/106596524)
+- [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
 
 - [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
 
@@ -1887,19 +1887,19 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
   2. Unicode
 
-     目前Unicode字符分为17组编排，0x0000至0x10FFFF,每组称为平面（Plane）,每个面拥有65536个码位，共1114112个。
+     目前 Unicode 字符分为 17 组编排，0x0000 至 0x10FFFF,每组称为平面（Plane）,每个面拥有 65536 个码位，共 1114112 个。
 
 - 字符编码
 
-  UTF-32、UTF-16和 UTF-8 是 Unicode 标准的编码字符集的字符编码方案
+  UTF-32、UTF-16 和 UTF-8 是 Unicode 标准的编码字符集的字符编码方案
 
   - 附：
 
-    1. Java的`char`内部编码为`UTF-16`，而与`Charset.defaultCharset()`无关。
+    1. Java 的`char`内部编码为`UTF-16`，而与`Charset.defaultCharset()`无关。
 
-       看 [Unicode 编码理解](https://blog.csdn.net/wdeng2011/article/details/80155795) 可知`UTF-16`编码完全可以满足Unicode 的17组编排（平面），因为有平面0的0xD800-0xDFFF代理区。
+       看 [Unicode 编码理解](https://blog.csdn.net/wdeng2011/article/details/80155795) 可知`UTF-16`编码完全可以满足 Unicode 的 17 组编排（平面），因为有平面 0 的 0xD800-0xDFFF 代理区。
 
-       [关于java中char占几个字节，汉字占几个字节](https://www.cnblogs.com/nevermorewang/p/7808092.html)，这里指出Java中的`char`是占用两个字节，只不过有些字符需要两个char来表示，同时这篇博客也给了一个官方Oracle链接里面明确的说明了*值在16位范围之外且在0x10000到0x10FFFF范围内的字符称为补充字符，并定义为**一对char值***。
+       [关于 java 中 char 占几个字节，汉字占几个字节](https://www.cnblogs.com/nevermorewang/p/7808092.html)，这里指出 Java 中的`char`是占用两个字节，只不过有些字符需要两个 char 来表示，同时这篇博客也给了一个官方 Oracle 链接里面明确的说明了*值在 16 位范围之外且在 0x10000 到 0x10FFFF 范围内的字符称为补充字符，并定义为**一对 char 值***。
 
        测试代码：
 
@@ -1931,9 +1931,9 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
        }
        ```
 
-    2. [UniCode编码表](https://www.cnblogs.com/csguo/p/7401874.html)
+    2. [UniCode 编码表](https://www.cnblogs.com/csguo/p/7401874.html)
 
-    3. [汉字unicode编码范围](https://blog.csdn.net/gywtzh0889/article/details/71083459/)
+    3. [汉字 unicode 编码范围](https://blog.csdn.net/gywtzh0889/article/details/71083459/)
 
   - 参考博客：
 
@@ -1943,36 +1943,36 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
        该文有简单有效的解释了：
 
-       在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。
-       用记事本编辑的时候，从文件读取的UTF-8字符被转换为Unicode字符到内存里，编辑完成后，保存的时候再把Unicode转换为UTF-8保存到文件：
+       在计算机内存中，统一使用 Unicode 编码，当需要保存到硬盘或者需要传输的时候，就转换为 UTF-8 编码。
+       用记事本编辑的时候，从文件读取的 UTF-8 字符被转换为 Unicode 字符到内存里，编辑完成后，保存的时候再把 Unicode 转换为 UTF-8 保存到文件：
 
-       ![字符编码·图1](/img/awesome/Unicode1.png)
+       ![字符编码·图 1](/img/awesome/Unicode1.png)
 
-       浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器：
+       浏览网页的时候，服务器会把动态生成的 Unicode 内容转换为 UTF-8 再传输到浏览器：
 
-       ![字符编码·图2](/img/awesome/Unicode2.png)
+       ![字符编码·图 2](/img/awesome/Unicode2.png)
 
-       所以你看到很多网页的源码上会有类似`<meta charset="UTF-8" />`的信息，表示该网页正是用的UTF-8编码。
+       所以你看到很多网页的源码上会有类似`<meta charset="UTF-8" />`的信息，表示该网页正是用的 UTF-8 编码。
 
-- Base64编码：
+- Base64 编码：
 
-  Base64编码本质上是一种将二进制数据转成文本数据的方案。对于非二进制数据，是先将其转换成二进制形式，然后每连续6比特（2的6次方=64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。
+  Base64 编码本质上是一种将二进制数据转成文本数据的方案。对于非二进制数据，是先将其转换成二进制形式，然后每连续 6 比特（2 的 6 次方=64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。
 
-- 常见问题处理之Emoji
+- 常见问题处理之 Emoji
 
-  所谓Emoji就是一种在Unicode位于\u1F601–\u1F64F区段的字符。这个显然超过了目前常用的UTF-8字符集的编码范围\u0000–\uFFFF。Emoji表情随着IOS的普及和微信的支持越来越常见。
+  所谓 Emoji 就是一种在 Unicode 位于\u1F601–\u1F64F 区段的字符。这个显然超过了目前常用的 UTF-8 字符集的编码范围\u0000–\uFFFF。Emoji 表情随着 IOS 的普及和微信的支持越来越常见。
 
-  ![字符编码·图3](https://img-blog.csdnimg.cn/20181119221259676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3podXNvbmd6aXll,size_16,color_FFFFFF,t_70)
+  ![字符编码·图 3](https://img-blog.csdnimg.cn/20181119221259676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3podXNvbmd6aXll,size_16,color_FFFFFF,t_70)
 
-  那么Emoji字符表情会对我们平时的开发运维带来什么影响呢？最常见的问题就在于将他存入MySQL数据库的时候。一般来说MySQL数据库的默认字符集都会配置成UTF-8，mysql支持的 utf8 编码最大字符长度为 **3 字节**，而utf8mb4在5.5以后才被支持，也很少会有DBA主动将系统默认字符集改成utf8mb4。那么问题就来了，当我们把一个需要4字节UTF-8编码才能表示的字符存入数据库的时候就会报错：ERROR 1366: Incorrect string value: '\xF0\x9D\x8C\x86' for column 。 如果认真阅读了上面的解释，那么这个报错也就不难看懂了。我们试图将一串Bytes插入到一列中，而这串Bytes的第一个字节是\xF0意味着这是一个四字节的UTF-8编码。但是当MySQL表和列字符集配置为UTF-8的时候是无法存储这样的字符的，所以报了错。
+  那么 Emoji 字符表情会对我们平时的开发运维带来什么影响呢？最常见的问题就在于将他存入 MySQL 数据库的时候。一般来说 MySQL 数据库的默认字符集都会配置成 UTF-8，mysql 支持的 utf8 编码最大字符长度为 **3 字节**，而 utf8mb4 在 5.5 以后才被支持，也很少会有 DBA 主动将系统默认字符集改成 utf8mb4。那么问题就来了，当我们把一个需要 4 字节 UTF-8 编码才能表示的字符存入数据库的时候就会报错：ERROR 1366: Incorrect string value: '\xF0\x9D\x8C\x86' for column 。 如果认真阅读了上面的解释，那么这个报错也就不难看懂了。我们试图将一串 Bytes 插入到一列中，而这串 Bytes 的第一个字节是\xF0 意味着这是一个四字节的 UTF-8 编码。但是当 MySQL 表和列字符集配置为 UTF-8 的时候是无法存储这样的字符的，所以报了错。
 
-  那么遇到这种情况我们如何解决呢？有两种方式：升级MySQL到5.6或更高版本，并且将表字符集切换至utf8mb4。第二种方法就是在把内容存入到数据库之前做一次过滤，将Emoji字符替换成一段特殊的文字编码，然后再存入数据库中。之后从数据库获取或者前端展示时再将这段特殊文字编码转换成Emoji显示。第二种方法我们假设用-*-1F601-*-来替代4字节的Emoji，那么具体实现python代码可以参见[Stackoverflow上的回答](http://stackoverflow.com/questions/3220031/how-to-filter-or-replace-unicode-characters-that-would-take-more-than-3-bytes)
+  那么遇到这种情况我们如何解决呢？有两种方式：升级 MySQL 到 5.6 或更高版本，并且将表字符集切换至 utf8mb4。第二种方法就是在把内容存入到数据库之前做一次过滤，将 Emoji 字符替换成一段特殊的文字编码，然后再存入数据库中。之后从数据库获取或者前端展示时再将这段特殊文字编码转换成 Emoji 显示。第二种方法我们假设用-*-1F601-*-来替代 4 字节的 Emoji，那么具体实现 python 代码可以参见[Stackoverflow 上的回答](http://stackoverflow.com/questions/3220031/how-to-filter-or-replace-unicode-characters-that-would-take-more-than-3-bytes)
 
 - 补码
 
   补码(为什么按位取反再加一)：告诉你一个其实很简单的问题 [原文](https://blog.csdn.net/wenxinwukui234/article/details/42119265)
 
-  其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于0才对**
+  其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于 0 才对**
 
 
 
@@ -1984,7 +1984,7 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
 ### Java 7
 
-- [JDK7 动态方法调用 ](https://blog.csdn.net/xtayfjpk/article/details/42043977)
+- [JDK7 动态方法调用](https://blog.csdn.net/xtayfjpk/article/details/42043977)
 
   - java.lang.invoke 包
 
@@ -2019,7 +2019,7 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
 - 函数式编程
 
-  - [Java 函数优雅之道 ](https://blog.csdn.net/yunqiinsight/article/details/99826098)
+  - [Java 函数优雅之道](https://blog.csdn.net/yunqiinsight/article/details/99826098)
 
   - Optional 类
 
@@ -2045,7 +2045,7 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
     3. Java 中的 lambda 每次执行都会创建一个新对象吗？
 
-       测试代码：`study-metis: com.ariescat.metis.base.jdk8.lambda.LambdaTest2`，[参考链接 ](https://cloud.tencent.com/developer/article/1572212)
+       测试代码：`study-metis: com.ariescat.metis.base.jdk8.lambda.LambdaTest2`，[参考链接](https://cloud.tencent.com/developer/article/1572212)
 
   - **::（双冒号）的实现原理**
 
