@@ -93,61 +93,6 @@
 
 
 
-## 网络
-
-- [计算机网络](/Awesome/网络.md#计算机网络)
-
-- [网络安全](/Awesome/网络.md#网络安全)
-
-- [Socket](/Awesome/网络.md#socket)
-
-  - [同步阻塞概念](/Awesome/网络.md#同步阻塞概念)
-  - [I/O 模型](/Awesome/网络.md#io-模型)
-  - [Reactor 模式](/Awesome/网络.md#reactor-模式)
-
-- [零拷贝](/Awesome/网络.md#零拷贝)
-
-
-
-## 操作系统
-
-- [操作系统](/Awesome/操作系统.md)
-
-
-
-## 数据库
-
-- [MySQL](/Awesome/数据库.md#mysql)
-
-  - [数据类型](/Awesome/数据库.md#数据类型)
-  - [SQL 语句](/Awesome/数据库.md#sql-语句)
-  - [锁](/Awesome/数据库.md#锁)
-  - [事务](/Awesome/数据库.md#事务)
-  - [索引](/Awesome/数据库.md#索引)
-  - [存储引擎](/Awesome/数据库.md#存储引擎)
-  - [日志](/Awesome/数据库.md#日志)
-  - [备份与恢复](/Awesome/数据库.md#备份与恢复)
-  - [高级](/Awesome/数据库.md#高级)
-  - [分布式](/Awesome/数据库.md#分布式)
-
-- [Redis](/Awesome/数据库.md#redis)
-
-- [Orther](/Awesome/数据库.md#orther)
-
-  - [Memcache](/Awesome/数据库.md#memcache)
-  - [MongoDB](/Awesome/数据库.md#mongodb)
-  - [Elasticsearch](/Awesome/数据库.md#elasticsearch)
-
-
-
-## 其他编程语言
-
-- [C/C++](/Awesome/其他编程语言.md#cc)
-- [动态语言与动态类型语言](/Awesome/其他编程语言.md#动态语言与动态类型语言)
-- [Groovy](/Awesome/其他编程语言.md#groovy)
-
-
-
 ## 系统设计
 
 - [框架](/Awesome/系统设计.md#框架)
@@ -189,9 +134,99 @@
 
 
 
+## 数据库
+
+- [MySQL](/Awesome/数据库.md#mysql)
+
+  - [数据类型](/Awesome/数据库.md#数据类型)
+  - [SQL 语句](/Awesome/数据库.md#sql-语句)
+  - [锁](/Awesome/数据库.md#锁)
+  - [事务](/Awesome/数据库.md#事务)
+  - [索引](/Awesome/数据库.md#索引)
+  - [存储引擎](/Awesome/数据库.md#存储引擎)
+  - [日志](/Awesome/数据库.md#日志)
+  - [备份与恢复](/Awesome/数据库.md#备份与恢复)
+  - [高级](/Awesome/数据库.md#高级)
+  - [分布式](/Awesome/数据库.md#分布式)
+
+- [Redis](/Awesome/数据库.md#redis)
+
+- [Orther](/Awesome/数据库.md#orther)
+
+  - [Memcache](/Awesome/数据库.md#memcache)
+  - [MongoDB](/Awesome/数据库.md#mongodb)
+  - [Elasticsearch](/Awesome/数据库.md#elasticsearch)
+
+
+
+## 网络
+
+- [计算机网络](/Awesome/网络.md#计算机网络)
+
+- [网络安全](/Awesome/网络.md#网络安全)
+
+- [Socket](/Awesome/网络.md#socket)
+
+  - [同步阻塞概念](/Awesome/网络.md#同步阻塞概念)
+  - [I/O 模型](/Awesome/网络.md#io-模型)
+  - [Reactor 模式](/Awesome/网络.md#reactor-模式)
+
+- [零拷贝](/Awesome/网络.md#零拷贝)
+
+
+
+## 操作系统
+
+- [操作系统](/Awesome/操作系统.md#操作系统)
+
+  - [进程管理](/Awesome/操作系统.md#进程管理)
+  - [内存管理](/Awesome/操作系统.md#内存管理)
+  - [磁盘](/Awesome/操作系统.md#磁盘)
+  - [Orther](/Awesome/操作系统.md#orther)
+
+- [Linux 常用服务搭建](/Awesome/操作系统.md#linux-常用服务搭建)
+
+- [必备软件](/Awesome/操作系统.md#必备软件)
+
+
+
+## 其他编程语言
+
+- [动态语言与动态类型语言](/Awesome/其他编程语言.md#动态语言与动态类型语言)
+
+- [C/C++](/Awesome/其他编程语言.md#cc)
+
+- [Groovy](/Awesome/其他编程语言.md#groovy)
+
+- [前端](/Awesome/其他编程语言.md#前端)
+
+  - [基础](/Awesome/其他编程语言.md#基础)
+  - [框架](/Awesome/其他编程语言.md#框架)
+  - [其他](/Awesome/其他编程语言.md#其他)
+
+- [Android](/Awesome/其他编程语言.md#android)
+
+
+
+## 游戏
+
+- [游戏](Awesome/游戏.md)
+
+
+
 ## 必备链接
 
-- [必备链接](Awesome/必备链接.md)
+- [Github 干货](/Awesome/必备链接.md#github-干货)
+- [知识体系](/Awesome/必备链接.md#知识体系)
+- [面经汇总](/Awesome/必备链接.md#面经汇总)
+- [博文](/Awesome/必备链接.md#博文)
+- [常用社区](/Awesome/必备链接.md#常用社区)
+
+
+
+## 书籍
+
+- [技术书籍](/Awesome/书籍.md#技术书籍)
 
 
 
