@@ -192,9 +192,9 @@
 
 ## 其他编程语言
 
-- [动态语言与动态类型语言](/Awesome/其他编程语言.md#动态语言与动态类型语言)
-
 - [C/C++](/Awesome/其他编程语言.md#cc)
+
+- [动态语言与动态类型语言](/Awesome/其他编程语言.md#动态语言与动态类型语言)
 
 - [Groovy](/Awesome/其他编程语言.md#groovy)
 
@@ -214,9 +214,7 @@
 
 ## 游戏
 
-- [Unity3d](/Awesome/游戏.md#unity3d)
-- [游戏技术](/Awesome/游戏.md#游戏技术)
-- [游戏相关](/Awesome/游戏.md#游戏相关)
+- [游戏开发](/Awesome/游戏.md)
 
 
 
