@@ -1545,20 +1545,20 @@ Classloader 将数据加载到内存中经过的步骤：
     - reflectionData，这个属性主要是 SoftReference 的
     - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
 
-     **Method 调用：**
+  **Method 调用：**
 
     - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
 
-     **MethodAccessor 的实现：**
+  **MethodAccessor 的实现：**
 
     - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
     - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
 
-     **并发导致垃圾类创建：**
+  **并发导致垃圾类创建：**
 
     - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
 
-     **其他 JVM 相关文章:**
+  **其他 JVM 相关文章:**
 
     - 该文章最后有其他 JVM 相关文章，感觉是干货
 
