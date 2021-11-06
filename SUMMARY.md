@@ -151,11 +151,21 @@
 
 - [Redis](/Awesome/数据库.md#redis)
 
+  - [概述](/Awesome/数据库.md#概述)
+  - [数据类型](/Awesome/数据库.md#数据类型_1)
+  - [数据结构](/Awesome/数据库.md#数据结构)
+  - [过期](/Awesome/数据库.md#过期)
+  - [淘汰](/Awesome/数据库.md#淘汰)
+  - [高可用](/Awesome/数据库.md#高可用)
+  - [应用场景](/Awesome/数据库.md#应用场景)
+  - [持久化](/Awesome/数据库.md#持久化)
+  - [额外的知识点](/Awesome/数据库.md#额外的知识点)
+  - [书籍](/Awesome/数据库.md#书籍)
+
 - [Orther](/Awesome/数据库.md#orther)
 
   - [Memcache](/Awesome/数据库.md#memcache)
   - [MongoDB](/Awesome/数据库.md#mongodb)
-  - [Elasticsearch](/Awesome/数据库.md#elasticsearch)
 
 
 
@@ -226,7 +236,7 @@
 - [博主](/Awesome/必备链接.md#博主)
 - [博文](/Awesome/必备链接.md#博文)
 - [常用社区](/Awesome/必备链接.md#常用社区)
-
+- [简历](/Awesome/必备链接.md#简历)
 
 
 ## 书籍
@@ -237,6 +247,6 @@
 
 ## 阅读
 
+- [公众号](Reading/公众号.md)
 - [Effective Java](Reading/Effective Java.md)
-- [码农翻身](Reading/码农翻身.md)
 - [设计模式之美](Reading/设计模式之美.md)
