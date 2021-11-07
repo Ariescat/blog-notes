@@ -4,9 +4,8 @@
   "description": "记录一些令人头秃的知识",
   "links": {
     "sidebar": {
+      "关于 我": "https://ariescat.top/about/",
       "我的 Github": "https://github.com/Ariescat/",
-      "开通了个 小破站": "https://ariescat.top/",
-      "关于 我": "https://ariescat.top/about/"
     }
   },
   "plugins": [
