@@ -232,14 +232,15 @@
 - [简历](/Awesome/必备链接.md#简历)
 
 
-## 书籍
 
-- [技术书籍](/Awesome/书籍.md#技术书籍)
+## 书单
+
+- [技术书籍](/Reading/书单.md#技术书籍)
 
 
 
 ## 阅读
 
-- [公众号](Reading/公众号.md)
-- [Effective Java](Reading/Effective Java.md)
-- [设计模式之美](Reading/设计模式之美.md)
+- [公众号](/Reading/公众号.md)
+- [Effective Java](/Reading/Effective Java.md)
+- [设计模式之美](/Reading/设计模式之美.md)
