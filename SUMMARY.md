@@ -102,35 +102,38 @@
   - [ASM 神器](/Awesome/系统设计.md#asm-神器)
   - [JAX-RS](/Awesome/系统设计.md#jax-rs)
   - [缓存](/Awesome/系统设计.md#缓存)
-  - [时间库](/Awesome/系统设计.md#时间库)
   - [日志](/Awesome/系统设计.md#日志)
   - [ORM 库](/Awesome/系统设计.md#orm-库)
   - [Netty](/Awesome/系统设计.md#netty)
-  - [逆向工程](/Awesome/系统设计.md#逆向工程)
   - [Disruptor](/Awesome/系统设计.md#disruptor)
   - [原子类型集合库](/Awesome/系统设计.md#原子类型集合库)
+  - [时间库](/Awesome/系统设计.md#时间库)
   - [RxJava](/Awesome/系统设计.md#rxjava)
 
 - [工具](/Awesome/系统设计.md#工具)
 
 - [中间件](/Awesome/系统设计.md#中间件)
 
+  - [Kafka](/Awesome/系统设计.md#kafka)
   - [RabbitMQ](/Awesome/系统设计.md#rabbitmq)
-  - [Elasticsearch](/Awesome/系统设计.md#elasticsearch)
-  - [Akka](/Awesome/系统设计.md#akka)
   - [Zookeeper](/Awesome/系统设计.md#zookeeper)
-
-- [编程思想](/Awesome/系统设计.md#编程思想)
-
-  - [Reative（响应式）编程](/Awesome/系统设计.md#reative（响应式）编程)
-  - [领域驱动设计](/Awesome/系统设计.md#领域驱动设计)
+  - [Elasticsearch](/Awesome/系统设计.md#elasticsearch)
 
 - [分布式](/Awesome/系统设计.md#分布式)
 
-  - [分布式 session 一致性](/Awesome/系统设计.md#分布式-session-一致性)
-  - [高可用技术](/Awesome/系统设计.md#高可用技术)
+  - [理论基石](/Awesome/系统设计.md#理论基石)
+  - [主要算法](/Awesome/系统设计.md#主要算法)
+  - [网络通信](/Awesome/系统设计.md#网络通信)
+  - [一致性](/Awesome/系统设计.md#一致性)
+  - [高可用](/Awesome/系统设计.md#高可用)
 
 - [前沿技术](/Awesome/系统设计.md#前沿技术)
+
+  - [技术](/Awesome/系统设计.md#技术)
+  - [中间件](/Awesome/系统设计.md#中间件_1)
+  - [思想](/Awesome/系统设计.md#思想)
+
+- [源码学习](/Awesome/系统设计.md#源码学习)
 
 
 
@@ -148,24 +151,20 @@
   - [备份与恢复](/Awesome/数据库.md#备份与恢复)
   - [高级](/Awesome/数据库.md#高级)
   - [分布式](/Awesome/数据库.md#分布式)
-
 - [Redis](/Awesome/数据库.md#redis)
-
   - [概述](/Awesome/数据库.md#概述)
   - [数据类型](/Awesome/数据库.md#数据类型_1)
   - [数据结构](/Awesome/数据库.md#数据结构)
   - [过期](/Awesome/数据库.md#过期)
   - [淘汰](/Awesome/数据库.md#淘汰)
   - [高可用](/Awesome/数据库.md#高可用)
+  - [数据一致性](/Awesome/数据库.md#数据一致性)
   - [应用场景](/Awesome/数据库.md#应用场景)
   - [持久化](/Awesome/数据库.md#持久化)
   - [额外的知识点](/Awesome/数据库.md#额外的知识点)
   - [书籍](/Awesome/数据库.md#书籍)
-
-- [Orther](/Awesome/数据库.md#orther)
-
-  - [Memcache](/Awesome/数据库.md#memcache)
-  - [MongoDB](/Awesome/数据库.md#mongodb)
+- [Memcache](/Awesome/数据库.md#memcache)
+- [MongoDB](/Awesome/数据库.md#mongodb)
 
 
 
@@ -239,14 +238,15 @@
 - [简历](/Awesome/必备链接.md#简历)
 
 
-## 书籍
 
-- [技术书籍](/Awesome/书籍.md#技术书籍)
+## 书单
+
+- [技术书籍](/Reading/书单.md#技术书籍)
 
 
 
 ## 阅读
 
-- [公众号](Reading/公众号.md)
-- [Effective Java](Reading/Effective Java.md)
-- [设计模式之美](Reading/设计模式之美.md)
+- [公众号](/Reading/公众号.md)
+- [Effective Java](/Reading/Effective Java.md)
+- [设计模式之美](/Reading/设计模式之美.md)
