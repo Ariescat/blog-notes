@@ -114,10 +114,10 @@
 
 - [中间件](/Awesome/系统设计.md#中间件)
 
-  - [Kafka](/Awesome/系统设计.md#kafka)
-  - [RabbitMQ](/Awesome/系统设计.md#rabbitmq)
+  - [消息队列](/Awesome/系统设计.md#消息队列)
   - [Zookeeper](/Awesome/系统设计.md#zookeeper)
-  - [Elasticsearch](/Awesome/系统设计.md#elasticsearch)
+  - [搜索引擎](/Awesome/系统设计.md#搜索引擎)
+  - [SOFAStack](/Awesome/系统设计.md#sofastack)
 
 - [分布式](/Awesome/系统设计.md#分布式)
 
@@ -126,11 +126,14 @@
   - [网络通信](/Awesome/系统设计.md#网络通信)
   - [一致性](/Awesome/系统设计.md#一致性)
   - [高可用](/Awesome/系统设计.md#高可用)
+  - [架构演进](/Awesome/系统设计.md#架构演进)
 
 - [前沿技术](/Awesome/系统设计.md#前沿技术)
 
-  - [技术](/Awesome/系统设计.md#技术)
-  - [中间件](/Awesome/系统设计.md#中间件_1)
+  - [概述](/Awesome/系统设计.md#概述)
+  - [容器化](/Awesome/系统设计.md#容器化)
+  - [大数据](/Awesome/系统设计.md#大数据)
+  - [人工智能](/Awesome/系统设计.md#人工智能)
   - [思想](/Awesome/系统设计.md#思想)
 
 - [源码学习](/Awesome/系统设计.md#源码学习)
