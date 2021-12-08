@@ -1230,19 +1230,23 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 ### 内存管理
 
+- 内存划分
+
 - 堆是线程共享的内存区域？
 
   不完全正确。因为 HotSpot 中，TLAB 是堆内存的一部分，他在**读取上**确实是**线程共享**的，但是在**内存分配上**，是**线程独享**的。[链接](https://mp.weixin.qq.com/s/Jj5Z1DZKpAgrj9wpYUZ_JQ)
 
 
 
-#### 内存模型
+### 内存模型
 
 这个关系到线程，线程安全，具体看 Java并发-同步互斥-内存模型
 
+（不要和内存管理的内存划分搞混）
 
 
-#### 类加载 ClassLoader
+
+### 类加载 ClassLoader
 
 Bootstrap ClassLoader、 Extention ClassLoader、AppClassLoader
 
@@ -1266,7 +1270,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 
 
-#### 字节码
+### 字节码
 
 - 局部变量表中的 Slot
 
@@ -1280,7 +1284,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 
 
-#### 编译与优化
+### 编译与优化
 
 - HotSpot 虚拟机 JIT
 
