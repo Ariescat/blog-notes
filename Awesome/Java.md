@@ -157,6 +157,12 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
 
 
+### 异常
+
+- Error 和 Exception 的区别
+
+
+
 ### 位运算
 
 - `^`“异或运算”的特殊作用：
@@ -173,9 +179,15 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
 
 
-### 异常
+### Math
 
-- Error 和 Exception 的区别
+* log
+
+  在 Java 中求 log2N，首先要弄明白一个初中学到的公式 `log2N=logeN/loge2` ，logeN 代表以 e 为底的 N 的对数，loge2 代表以 e 为底的 2 的对数
+
+  在 java.lang.math 类中的 log(double a) 代表以 e 为底的 a 的对数，因此 log2N 在 Java 中的表示为 `log((double)N)/log((double)2)`
+
+* pow
 
 
 
@@ -370,15 +382,579 @@ TreeSet 同理，红黑树实现
 
 
 
-### Math
 
-* log
 
-  在 Java 中求 log2N，首先要弄明白一个初中学到的公式 `log2N=logeN/loge2` ，logeN 代表以 e 为底的 N 的对数，loge2 代表以 e 为底的 2 的对数
+### 代理
 
-  在 java.lang.math 类中的 log(double a) 代表以 e 为底的 a 的对数，因此 log2N 在 Java 中的表示为 `log((double)N)/log((double)2)`
+- 按照代理的创建时期，代理类可以分为两种。
 
-* pow
+  > 静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class 文件就已经存在了。
+  >
+  > 动态代理：在程序运行时，运用反射机制动态创建而成。
+
+- 动态代理方案
+
+  - jdk 动态代理
+
+  - cglib 动态代理
+
+    JDK 的动态代理机制只能代理实现了接口的类，而不能实现接口的类就不能实现 JDK 的动态代理，cglib 是针对类来实现代理的，他的原理是对指定的目标类生成一个子类，并覆盖其中方法实现增强，但因为采用的是继承，所以不能对 final 修饰的类进行代理。
+
+    [Cglib 与 JDK 动态代理](https://my.oschina.net/xiaolyuh/blog/3108376)
+
+  - javassist 动态代理
+
+  - ASM 字节码
+
+  - javassist 字节码
+
+- [深入理解 RPC 之动态代理篇 - 徐靖峰|个人博客 (cnkirito.moe)](https://www.cnkirito.moe/rpc-dynamic-proxy/)
+
+- Q&A
+
+  为什么 cglib 为什么生成两个 fastclass，`methodProxy.invokeSuper(“代理对象”, args)` 和 `methodProxy.invoke(“原对象”, args)` 虽然底层分别调用两个不同的 fastclass，但结果是一样的。
+
+  ```java
+  // 自定义 Cglib 代理拦截
+  public class DemoInterceptor implements MethodInterceptor {
+      // @param o           cglib 生成的代理对象
+      // @param method      被代理对象方法
+      // @param objects     方法入参
+      // @param methodProxy 代理方法
+      public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+          System.err.println("intercept");
+          // invokeSuper，o 为 cglib 生成的代理对象
+          return methodProxy.invokeSuper(o, objects);
+      }
+  }
+  ```
+
+  ```java
+  // org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation    
+  private static class CglibMethodInvocation extends ReflectiveMethodInvocation {
+      private final MethodProxy methodProxy;
+      private boolean protectedMethod;
+      public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, Class<?> targetClass, List<Object> interceptorsAndDynamicMethodMatchers, MethodProxy methodProxy) {
+          super(proxy, target, method, arguments, targetClass, interceptorsAndDynamicMethodMatchers);
+          this.methodProxy = methodProxy;
+          this.protectedMethod = Modifier.isProtected(method.getModifiers());
+      }
+      protected Object invokeJoinpoint() throws Throwable {
+          // invoke，target 为原对象
+          return this.protectedMethod ? super.invokeJoinpoint() : this.methodProxy.invoke(this.target, this.arguments);
+      }
+  }
+  ```
+
+  可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
+
+
+
+### 反射
+
+#### Class
+
+- 关键字 instanceof **VS** Class.isInstance（参数）
+
+  ```java
+  System.err.println(son instanceof Parent);
+  System.err.println(Parent.class.isInstance(son));
+  ```
+
+- Class 的 getSuperclass 与 getGenericSuperclass
+
+  **getGenericSuperclass 会包含该超类的泛型。**
+
+- 判断当前类是什么类
+
+  ```java
+  boolean isLocalClass(); //判断是不是局部类，也就是方法里面的类，其实现：isLocalOrAnonymousClass() && !isAnonymousClass();
+  boolean isLocalOrAnonymousClass();
+  boolean isMemberClass(); //判断是不是成员内部类，也就是一个类里面定义的类
+  boolean isAnonymousClass(); //判断当前类是不是匿名类，一般为实例化的接口或实例化的抽象类
+  boolean isAnnotation();// 判断 Class 对象是否是注解类型
+  boolean isPrimitive(); // 判断 Class 是否为原始类型（int，double 等）
+  boolean isSynthetic(); // 判断是否由 Java 编译器生成（除了像默认构造函数这一类的）的方法或者类，Method 也有这个方法
+  ```
+
+  参考：
+
+  [Java 中冷门的 synthetic 关键字原理解读 - 老白讲互联网 - 博客园 (cnblogs.com)](https://www.cnblogs.com/bethunebtj/p/7761596.html)
+
+- 返回字符串 (String) 的方法
+
+  ```java
+  String getCanonicalName(); //返回 Java Language Specification 中所定义的底层类的规范化名称
+  String getName(); //以 String 的形式返回此 Class 对象所表示的实体（类、接口、数组类、基本类型或 void）名称（全限定名：包名.类名）。
+  String getSimpleName(); //返回源代码中给出的底层类的简称。
+  String toString(); //将对象转换为字符串。
+  ```
+
+- Class.forName 和 ClassLoader 的区别
+
+  都可用来对类进行加载。
+
+  不同：
+
+  1）Class.forName() 除了将类的.class 文件加载到 jvm 中之外，**还会对类进行解释，执行类中的 static 块，还会执行给静态变量赋值的静态方法**
+
+  2）classLoader 只干一件事情，就是将.class 文件加载到 jvm 中，不会执行 static 中的内容,只有在 newInstance 才会去执行 static 块。
+
+* 使用 Class.getResource 和 ClassLoader.getResource 方法获取文件路径
+
+  对于**class.getResource(path)**方法，其中的参数 path 有两种形式，一种是以“/”开头的，另一种是不以"/"开头
+
+  **Class.getClassLoader().getResource(String path)**，该方法中的参数 path 不能以“/“开头，path 表示的是从 classpath 下获取资源的
+
+
+
+#### Method
+
+- **Method**.invoke() 的实现原理
+
+  [假笨说-从一起 GC 血案谈到反射原理](https://mp.weixin.qq.com/s/5H6UHcP6kvR2X5hTj_SBjA)
+
+  **获取 Method：**
+
+    - reflectionData，这个属性主要是 SoftReference 的
+    - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
+
+  **Method 调用：**
+
+    - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
+
+  **MethodAccessor 的实现：**
+
+    - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
+    - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
+
+  **并发导致垃圾类创建：**
+
+    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
+
+  **其他 JVM 相关文章:**
+
+    - 该文章最后有其他 JVM 相关文章，感觉是干货
+
+- [反射代理类加载器的潜在内存使用问题](https://www.jianshu.com/p/20b7ab284c0a)！！
+
+  大量的类加载器 `sun/reflect/DelegatingClassLoader`，用来加载 `sun/reflect/GeneratedMethodAccessor` 类，可能导致潜在的占用大量本机内存空间问题，应用服务器进程占用的内存会显著增大。
+
+- 其他链接
+
+  [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
+
+
+
+### 创建和销毁对象
+
+#### 单例 与 序列化
+
+一般来说，一个类实现了 Serializable 接口，我们就可以把它往内存地写再从内存里读出而"组装"成一个跟原来一模一样的对象。不过当序列化遇到单例时，这里边就有了个问题：从内存读出而组装的对象破坏了单例的规则。单例是要求一个 JVM 中只有一个类对象的，而现在通过反序列化，一个新的对象克隆了出来。
+
+解决方案：加上 readResolve() 方法
+
+```java
+public final class MySingleton implements Serializable {
+    private MySingleton() {
+    }
+    private static final MySingleton INSTANCE = new MySingleton();
+    public static MySingleton getInstance() {
+        return INSTANCE;
+    }
+
+    private Object readResolve() throws ObjectStreamException {
+        // instead of the object we're on,
+        // return the class variable INSTANCE
+        return INSTANCE;
+    }
+}
+```
+
+
+
+#### 对象实例化顺序
+
+1. 父类的静态成员变量和静态代码块加载
+2. 子类的静态成员变量和静态代码块加载
+3. 父类成员变量和方法块加载
+4. 父类的构造函数加载
+5. 子类成员变量和方法块加载
+6. 子类的构造函数加载
+
+参考：
+
+- [Java 类的实例化顺序](https://www.cnblogs.com/yanghe123/p/10936025.html)
+- [java 类实例化顺序+经典的面试题](https://blog.csdn.net/qq_36382679/article/details/105811529)
+
+测试：com.ariescat.metis.base.jdk.TestSameField
+
+
+
+#### java 中父类与子类有相同属性调谁？
+
+**继承中：**
+
+属性：不可被重写，只会被隐藏
+
+方法：会被重写，不会隐藏
+
+**多态中，**
+
+成员变量无论编译和运行，都参考左边 (**引用型变量所属的类**)。
+
+也就是说
+
+```java
+Fu f = new Zi();System.out.println(f.age);
+```
+
+打印的还是父类的值。
+
+参考：
+
+- [java 中父类与子类有相同属性调谁？取决于左边](https://blog.csdn.net/qq_40093255/article/details/108400976)
+
+- [父类和子类同时存在相同属性 BeanUtils 的 copyProperties 复制](https://blog.csdn.net/u012786993/article/details/82923064/)
+
+
+
+### 对象引用
+
+- [WeakReference](https://www.jianshu.com/p/964fbc30151a)
+
+  看 ThreadLocal 源码的时候，其中嵌套类 ThreadLocalMap 中的 Entry 继承了 WeakReference，为了能搞清楚 ThreadLocal，只能先了解下了 WeakReference：
+
+  > WeakReference 如字面意思，弱引用， 当**一个对象**仅仅被 WeakReference（弱引用）指向, 而没有任何其他 strong reference（强引用）指向的时候, 如果这时 GC 运行, 那么**这个对象**就会被回收，不论当前的内存空间是否足够，这个对象都会被回收。
+  >
+  > 注意：回收的是 WeakReference 引用的对象！若存在 ReferenceQueue 队列，WeakReference 本身会入队，但此时 get()==null
+
+  - [WeakHashMap](https://blog.csdn.net/u012420654/article/details/51793909)
+
+  - SoftReference 若清楚了上面的原理，[SoftReference](https://www.jianshu.com/p/8c634f10ed1a) 只是**生命周期**变成**内存将要被耗尽的时候**。
+
+    > - from [关于 SoftReference 被回收的时机](https://blog.csdn.net/S7188290/article/details/86436479)
+    >
+    > 下面，我们来总结一下:
+    > 1.当发生 GC 时，虚拟机可能会回收 SoftReference 对象所指向的软引用，是否被回收取决于该软引用是否是新创建或近期使用过。
+    > 2.在虚拟机抛出 OutOfMemoryError 之前，所有软引用对象都会被回收。
+    > 3.只要一个软引用对象由一个强引用指向，那么即使是 OutOfMemoryError 时，也不会被回收。
+    >
+    > - from [JVM - 优化案例（SoftRefLRUPolicyMSPerMB）](https://blog.csdn.net/qiang_zi_/article/details/100700784)
+    >
+    > 那么 SoftReference 对象到底在 GC 的时候要不要回收是通过什么公式来判断的呢？
+    >
+    > 是如下的一个公式：
+    >
+    > clock - timestamp <= freespace * SoftRefLRUPolicyMSPerMB
+    >
+    > 这个公式的意思就是说，“clock - timestamp”代表了一个软引用对象他有多久没被访问过了，freespace 代表 JVM 中的空闲内存空间，SoftRefLRUPolicyMSPerMB 代表每一 MB 空闲内存空间可以允许 SoftReference 对象存活多久。
+
+  - guava cache：
+
+    ```java
+    CacheBuilder.newBuilder().softValues().build()
+    ```
+
+    当然 softValues() 可以替换成 weakKeys() / weakValues() ...
+
+    实现原理可具体看 com.google.common.cache.LocalCache.Strength
+
+  - LRU 缓存实现 (Java)
+
+- 原子变量
+
+  - XXXAtomic 原子类
+
+  - AtomicXXXFieldUpdater 原子更新器
+
+    在 Java5 中，JDK 就开始提供原子类了，当然也包括原子的更新器——即后缀为 FieldUpdater 的类
+
+    已经有了原子类，为啥还额外提供一套原子更新器呢？
+
+    > 简单的说有两个原因，以 int 变量为例，基于 AtomicIntegerFieldUpdater 实现的原子计数器，比单纯的直接用 AtomicInteger 包装 int 变量的花销要小，因为前者只需要一个全局的静态变量 AtomicIntegerFieldUpdater 即可包装 volatile 修饰的非静态共享变量，然后配合 CAS 就能实现原子更新，而这样做，使得后续同一个类的每个对象中只需要共享这个静态的原子更新器即可为对象计数器实现原子更新，而**原子类**是为同一个类的**每个对象**中都创建了一个**计数器** + **AtomicInteger 对象**，这种开销显然就比较大了。
+
+
+
+### 对象序列化
+
+ObjectInputStream、ObjectOutputStream
+
+
+
+### 对象拷贝
+
+- [BeanUtils 对象属性 copy 的性能对比以及源码分析](https://www.cnblogs.com/kancy/p/12089126.html)
+
+  <table>
+     <tr>
+        <th> 拷贝方式 </th>
+        <th> 对象数量: 1</th>
+        <th> 对象数量: 1000</th>
+        <th> 对象数量: 100000</th>
+        <th> 对象数量: 1000000</th>
+     </tr>
+     <tr>
+        <td>Hard Code</td>
+        <td>0 ms</td>
+        <td>1 ms</td>
+        <td>18 ms</td>
+        <td>43 ms</td>
+     </tr>
+     <tr>
+        <td>cglib.BeanCopier</td>
+        <td>111 ms</td>
+        <td>117 ms</td>
+        <td>107 ms</td>
+        <td>110 ms</td>
+     </tr>
+     <tr>
+        <td>spring.BeanUtils</td>
+        <td>116 ms</td>
+        <td>137 ms</td>
+        <td>246 ms</td>
+        <td>895 ms</td>
+     </tr>
+     <tr>
+        <td>apache.PropertyUtils</td>
+        <td>167 ms</td>
+        <td>212 ms</td>
+        <td>601 ms</td>
+        <td>7869 ms</td>
+     </tr>
+     <tr>
+        <td>apache.BeanUtils</td>
+        <td>167 ms</td>
+        <td>275 ms</td>
+        <td>1732 ms</td>
+        <td>12380 ms</td>
+     </tr>
+  </table>
+
+
+
+### 热更新
+
+- 自定义类加载器
+
+  - [探秘 Java 热部署](https://www.jianshu.com/p/731bc8293365)
+  - [CSDN·自定义 classloader 实现 JAVA 热替换](https://blog.csdn.net/puhaiyang/article/details/78165465)
+
+- java.lang.instrument
+
+  类重新定义，这是 Instrumentation 提供的基础功能之一，这个类很早就出了，redefineClasses 这个方法可以更新方法级别的代码，但是不会触发一个类的初始化方法。
+
+  - [游戏服务器之 Java 热更新](https://www.cnblogs.com/wgslucky/p/9127681.html)
+  - [动态加载 class 文件](https://zheng12tian.iteye.com/blog/1495037)
+  - [JVM 源码分析之 javaagent 原理完全解读](https://www.imooc.com/article/42736)
+  - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
+  - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
+
+- 第三方工具
+
+  - [**Arthas**的使用](https://www.cnblogs.com/orange911/p/10583245.html)
+  - [Github · **HotswapAgent**](https://github.com/HotswapProjects/HotswapAgent)
+
+- 脚本语言
+
+  - groovy
+
+    使用 groovy 类加载器重载 java 代码 重载的 java 文件可以直接使用源文件，无需编译为 class
+
+
+
+### System#exit
+
+1. 注册的关闭勾子会在以下几种时机被调用到
+
+- 程序正常退出
+  - 最后一个非守护线程执行完毕退出时
+  - System.exit 方法被调用时
+- 程序响应外部事件
+  - 程序响应用户输入事件，例如在控制台按 ctrl+c(^+c)
+  - 程序响应系统事件，如用户注销、系统关机等
+
+2. 这种方法永远不会正常返回。
+
+   意味着该方法不会返回；一旦一个线程进入那里，就不会再回来了。
+
+链接：
+
+- [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
+
+- [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
+
+  最后一楼说了：将 A 线程变为 while(true) 一直执行，就会发现 A 线程也会中止。两个线程各自执行，之前都循环十次，A 线程可能在 B 线程调用 System.exit(0) 之前就执行完了
+
+
+
+### ServiceLoader
+
+Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
+
+该类通过在资源目录 META-INF/services 中放置**提供者配置文件**来标识**服务提供者**。
+
+应用场景：
+
+1. JDBC 驱动加载
+
+   `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
+
+   因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
+
+   ```java
+   //a.导入驱动，加载具体的驱动类
+   Class.forName("com.mysql.jdbc.Driver");
+   //b.与数据库建立连接
+   connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+   ```
+
+2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
+
+   而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
+
+3. Dubbo 的扩展点加载
+
+   Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
+
+   META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
+
+   ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
+
+
+
+### Observable
+
+操作 Vector 型变量 obs 的四个方法都加有同步关键字，Vector 类型为线程安全的，而上述四个方法为什么还要加同步关键字呢？
+
+
+
+### Java 注解处理器
+
+Annotation Processor
+
+javax.annotation.processing.AbstractProcessor 编译时执行
+
+
+
+### JMX
+
+JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控接口。
+
+了解不深==
+
+
+
+### 启动
+
+- jsvc
+
+  > 在 linux 上以服务的方式启动 java 程序，需要提前安装 jsvc。linux 是利用 daemon(jsvc) 构建 java 守护进程。
+
+
+
+### 语法糖
+
+有认真了解过 Java 的语法糖吗？
+
+- [Java 中的 10 颗语法糖](https://www.cnblogs.com/duanxz/p/3916028.html)
+
+
+
+### 字符编解码
+
+- 字符集
+
+  1. ASCII
+
+  2. Unicode
+
+     目前 Unicode 字符分为 17 组编排，0x0000 至 0x10FFFF,每组称为平面（Plane）,每个面拥有 65536 个码位，共 1114112 个。
+
+- 字符编码
+
+  UTF-32、UTF-16 和 UTF-8 是 Unicode 标准的编码字符集的字符编码方案
+
+  - 附：
+
+    1. Java 的`char`内部编码为`UTF-16`，而与`Charset.defaultCharset()`无关。
+
+       看 [Unicode 编码理解](https://blog.csdn.net/wdeng2011/article/details/80155795) 可知`UTF-16`编码完全可以满足 Unicode 的 17 组编排（平面），因为有平面 0 的 0xD800-0xDFFF 代理区。
+
+       [关于 java 中 char 占几个字节，汉字占几个字节](https://www.cnblogs.com/nevermorewang/p/7808092.html)，这里指出 Java 中的`char`是占用两个字节，只不过有些字符需要两个 char 来表示，同时这篇博客也给了一个官方 Oracle 链接里面明确的说明了*值在 16 位范围之外且在 0x10000 到 0x10FFFF 范围内的字符称为补充字符，并定义为**一对 char 值***。
+
+       测试代码：
+
+       ```java
+       public static void main(String[] args) {
+       
+           char[] c = new char[]{'一'};
+           System.err.println(Integer.toHexString(c[0]));
+           String s = new String(c);
+           // String#length事实上调用了char[].length
+           System.err.println(s + " " + s.length());
+       
+           String str = "一";
+           System.err.println(str + " " + str.length());
+       
+           // Unicode编码 汉字扩展B '𠀀' 字
+           c = new char[]{'\uD840', '\uDC00'};
+           s = new String(c);
+           System.err.println(s + " " + s.length());
+       
+           str = "\uD840\uDC00";
+           System.err.println(str + " " + str.length());
+       
+           // 输出：由输出可见这个字用了两个char来存
+           // 一 1
+           // 一 1
+           // 𠀀 2
+           // 𠀀 2
+       }
+       ```
+
+    2. [UniCode 编码表](https://www.cnblogs.com/csguo/p/7401874.html)
+
+    3. [汉字 unicode 编码范围](https://blog.csdn.net/gywtzh0889/article/details/71083459/)
+
+  - 参考博客：
+
+    1. 吴秦（Tyler）[字符集和字符编码（Charset & Encoding）](https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html)
+
+    2. 廖雪峰 [字符串和编码](https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896)
+
+       该文有简单有效的解释了：
+
+       在计算机内存中，统一使用 Unicode 编码，当需要保存到硬盘或者需要传输的时候，就转换为 UTF-8 编码。
+       用记事本编辑的时候，从文件读取的 UTF-8 字符被转换为 Unicode 字符到内存里，编辑完成后，保存的时候再把 Unicode 转换为 UTF-8 保存到文件：
+
+       ![字符编码·图 1](/img/awesome/Unicode1.png)
+
+       浏览网页的时候，服务器会把动态生成的 Unicode 内容转换为 UTF-8 再传输到浏览器：
+
+       ![字符编码·图 2](/img/awesome/Unicode2.png)
+
+       所以你看到很多网页的源码上会有类似`<meta charset="UTF-8" />`的信息，表示该网页正是用的 UTF-8 编码。
+
+- Base64 编码：
+
+  Base64 编码本质上是一种将二进制数据转成文本数据的方案。对于非二进制数据，是先将其转换成二进制形式，然后每连续 6 比特（2 的 6 次方=64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。
+
+- 常见问题处理之 Emoji
+
+  所谓 Emoji 就是一种在 Unicode 位于\u1F601–\u1F64F 区段的字符。这个显然超过了目前常用的 UTF-8 字符集的编码范围\u0000–\uFFFF。Emoji 表情随着 IOS 的普及和微信的支持越来越常见。
+
+  ![字符编码·图 3](https://img-blog.csdnimg.cn/20181119221259676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3podXNvbmd6aXll,size_16,color_FFFFFF,t_70)
+
+  那么 Emoji 字符表情会对我们平时的开发运维带来什么影响呢？最常见的问题就在于将他存入 MySQL 数据库的时候。一般来说 MySQL 数据库的默认字符集都会配置成 UTF-8，mysql 支持的 utf8 编码最大字符长度为 **3 字节**，而 utf8mb4 在 5.5 以后才被支持，也很少会有 DBA 主动将系统默认字符集改成 utf8mb4。那么问题就来了，当我们把一个需要 4 字节 UTF-8 编码才能表示的字符存入数据库的时候就会报错：ERROR 1366: Incorrect string value: '\xF0\x9D\x8C\x86' for column 。 如果认真阅读了上面的解释，那么这个报错也就不难看懂了。我们试图将一串 Bytes 插入到一列中，而这串 Bytes 的第一个字节是\xF0 意味着这是一个四字节的 UTF-8 编码。但是当 MySQL 表和列字符集配置为 UTF-8 的时候是无法存储这样的字符的，所以报了错。
+
+  那么遇到这种情况我们如何解决呢？有两种方式：升级 MySQL 到 5.6 或更高版本，并且将表字符集切换至 utf8mb4。第二种方法就是在把内容存入到数据库之前做一次过滤，将 Emoji 字符替换成一段特殊的文字编码，然后再存入数据库中。之后从数据库获取或者前端展示时再将这段特殊文字编码转换成 Emoji 显示。第二种方法我们假设用-*-1F601-*-来替代 4 字节的 Emoji，那么具体实现 python 代码可以参见[Stackoverflow 上的回答](http://stackoverflow.com/questions/3220031/how-to-filter-or-replace-unicode-characters-that-would-take-more-than-3-bytes)
+
+- 补码
+
+  补码(为什么按位取反再加一)：告诉你一个其实很简单的问题 [原文](https://blog.csdn.net/wenxinwukui234/article/details/42119265)
+
+  其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于 0 才对**
 
 
 
@@ -399,6 +975,91 @@ TreeSet 同理，红黑树实现
   如`java.awt.Component#dispatchEventImpl`里会触发各种监听
 
 - [Polygon](https://segmentfault.com/a/1190000007736473)，区域超区校验
+
+
+
+
+
+## Java IO
+
+### IO 流
+
+1. 对文件进行操作：FileInputStream（字节输入流），FileOutputStream（字节输出流），FileReader（字符输入流），FileWriter（字符输出流）
+
+   2020 年 3 月 17 日追加：
+
+  2. `FileReader`，可以理解成他把 `FileInputStream` 和 `Decoder` 封装了起来，本质上还是用 FileInputStream 读了一层字节流 byte[] (这里的 read 是一个 `native` 方法)，然后通过 Decoder 把他转成了 char[]。
+
+  3. `BufferedReader`，他默认开辟了一份 `defaultCharBufferSize = 8192` 长度的 cb[] 数组（缓冲区），读之前会把这个数组`fill()`满，之后都是操作这个数组，操作完了就再次更新数组，提高数据访问的效率。
+
+   测试代码：`study-metis: com.ariescat.metis.base.io.iostream.Test`
+
+2. 对管道进行操作：PipedInputStream（字节输入流），PipedOutStream（字节输出流），PipedReader（字符输入流），PipedWriter（字符输出流）
+
+   PipedInputStream 的一个实例要和 PipedOutputStream 的一个实例共同使用，共同完成管道的读取写入操作，主要用于**线程操作**。
+
+   有空看看这里的实现 [简介,源码分析和示例](https://www.cnblogs.com/skywang12345/p/io_04.html)
+
+   在一个线程里使用 PipedInputStream 和 PipedOutputStream 会造成死锁：这意味着，如果你用同一个线程既读又写（read() 和 write() 方法是阻塞的方法），那么就会造成这个线程的死锁。
+
+3. 字节/字符数组：ByteArrayInputStream，ByteArrayOutputStream，CharArrayReader，CharArrayWriter
+
+   在内存中开辟了一个字节或字符数组。
+
+4. Buffered 缓冲流：BufferedInputStream，BufferedOutputStream，BufferedReader，BufferedWriter
+
+   带缓冲区的处理流，缓冲区的作用的主要目的是：避免每次和硬盘打交道，提高数据访问的效率。
+
+5. 转化流：
+
+   InputStreamReader：在读入数据的时候将字节转换成字符。
+
+   OutputStreamWriter：在写出数据的时候将字符转换成字节。
+
+6. 数据流：DataInputStream，DataOutputStream
+
+   因为平时若是我们输出一个 8 个字节的 long 类型或 4 个字节的 float 类型，那怎么办呢？可以一个字节一个字节输出，也可以把转换成字符串输出，但是这样转换费时间，若是直接输出该多好啊，因此这个数据流就解决了我们输出数据类型的困难。数据流可以直接输出 float 类型或 long 类型，提高了数据读写的效率。
+
+7. 打印流：printStream，printWriter
+
+   一般是打印到控制台，可以进行控制打印的地方和格式，其中的  print 方法不会抛出异常，可以通过 checkError 方法来查看异常。
+
+8. 对象流：ObjectInputStream，ObjectOutputStream
+
+   把封装的对象直接输出，而不是一个个在转换成字符串再输出。
+
+9. `RandomAccessFile` 随机访问文件
+
+   java.io 包中是一个特殊的类, 既可以读文件，也可以写文件。
+
+   **有空也要看看这里的实现**，log4j2 的 Appender 里就有这个：`RandomAccessFileAppender`、`RollingRandomAccessFileAppender`
+
+   RandomAccessFile 的绝大多数功能，但不是全部，已经被 JDK 1.4 的 nio 的内存映射文件**(memory-mapped files)**给取代了，你该考虑一下是不是用"内存映射文件"来代替 RandomAccessFile 了。
+
+10. ZipInputStream、ZipOutputStream
+
+    读取 zip 文档 getNextEntry、putNextEntry 得到或创建 ZipEntry 对象。
+
+
+
+### close()
+
+为什么要用 `close()` 关掉流？
+
+有些资源 `GC` 回收不掉？
+
+
+
+### Path/Files
+
+- [IO 操作你还在用 File 吗，该拥抱 Path 和 Files 了](https://www.sohu.com/a/132459571_654433)
+
+
+
+### NIO
+
+- Channel，Buffer，Selector
+- [高性能 IO 之 Reactor 模式](https://www.cnblogs.com/doit8791/p/7461479.html)
 
 
 
@@ -1132,88 +1793,6 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 
 
-## Java IO
-
-### IO 流
-
-1. 对文件进行操作：FileInputStream（字节输入流），FileOutputStream（字节输出流），FileReader（字符输入流），FileWriter（字符输出流）
-
-   2020 年 3 月 17 日追加：
-
-  1. `FileReader`，可以理解成他把 `FileInputStream` 和 `Decoder` 封装了起来，本质上还是用 FileInputStream 读了一层字节流 byte[] (这里的 read 是一个 `native` 方法)，然后通过 Decoder 把他转成了 char[]。
-  2. `BufferedReader`，他默认开辟了一份 `defaultCharBufferSize = 8192` 长度的 cb[] 数组（缓冲区），读之前会把这个数组`fill()`满，之后都是操作这个数组，操作完了就再次更新数组，提高数据访问的效率。
-
-   测试代码：`study-metis: com.ariescat.metis.base.io.iostream.Test`
-
-2. 对管道进行操作：PipedInputStream（字节输入流），PipedOutStream（字节输出流），PipedReader（字符输入流），PipedWriter（字符输出流）
-
-   PipedInputStream 的一个实例要和 PipedOutputStream 的一个实例共同使用，共同完成管道的读取写入操作，主要用于**线程操作**。
-
-   有空看看这里的实现 [简介,源码分析和示例](https://www.cnblogs.com/skywang12345/p/io_04.html)
-
-   在一个线程里使用 PipedInputStream 和 PipedOutputStream 会造成死锁：这意味着，如果你用同一个线程既读又写（read() 和 write() 方法是阻塞的方法），那么就会造成这个线程的死锁。
-
-3. 字节/字符数组：ByteArrayInputStream，ByteArrayOutputStream，CharArrayReader，CharArrayWriter
-
-   在内存中开辟了一个字节或字符数组。
-
-4. Buffered 缓冲流：BufferedInputStream，BufferedOutputStream，BufferedReader，BufferedWriter
-
-   带缓冲区的处理流，缓冲区的作用的主要目的是：避免每次和硬盘打交道，提高数据访问的效率。
-
-5. 转化流：
-
-   InputStreamReader：在读入数据的时候将字节转换成字符。
-
-   OutputStreamWriter：在写出数据的时候将字符转换成字节。
-
-6. 数据流：DataInputStream，DataOutputStream
-
-   因为平时若是我们输出一个 8 个字节的 long 类型或 4 个字节的 float 类型，那怎么办呢？可以一个字节一个字节输出，也可以把转换成字符串输出，但是这样转换费时间，若是直接输出该多好啊，因此这个数据流就解决了我们输出数据类型的困难。数据流可以直接输出 float 类型或 long 类型，提高了数据读写的效率。
-
-7. 打印流：printStream，printWriter
-
-   一般是打印到控制台，可以进行控制打印的地方和格式，其中的  print 方法不会抛出异常，可以通过 checkError 方法来查看异常。
-
-8. 对象流：ObjectInputStream，ObjectOutputStream
-
-   把封装的对象直接输出，而不是一个个在转换成字符串再输出。
-
-9. `RandomAccessFile` 随机访问文件
-
-   java.io 包中是一个特殊的类, 既可以读文件，也可以写文件。
-
-   **有空也要看看这里的实现**，log4j2 的 Appender 里就有这个：`RandomAccessFileAppender`、`RollingRandomAccessFileAppender`
-
-   RandomAccessFile 的绝大多数功能，但不是全部，已经被 JDK 1.4 的 nio 的内存映射文件**(memory-mapped files)**给取代了，你该考虑一下是不是用"内存映射文件"来代替 RandomAccessFile 了。
-
-10. ZipInputStream、ZipOutputStream
-
-    读取 zip 文档 getNextEntry、putNextEntry 得到或创建 ZipEntry 对象。
-
-
-
-### close()
-
-为什么要用 `close()` 关掉流？
-
-有些资源 `GC` 回收不掉？
-
-
-
-### Path/Files
-
-- [IO 操作你还在用 File 吗，该拥抱 Path 和 Files 了](https://www.sohu.com/a/132459571_654433)
-
-
-
-### NIO
-
-- Channel，Buffer，Selector
-- [高性能 IO 之 Reactor 模式](https://www.cnblogs.com/doit8791/p/7461479.html)
-
-
-
 
 
 ## Java 虚拟机
@@ -1397,586 +1976,6 @@ Classloader 将数据加载到内存中经过的步骤：
   1.由于是本地方法调用，让 JVM 无法优化 (还有 JIT？)
 
   2.反射方法调用还有验证过程和参数问题，参数需要装箱拆箱、需要组装成 Object[] 形式、异常的包装等等问题
-
-
-
-
-
-## Java 其他
-
-
-
-### 语法糖
-
-有认真了解过 Java 的语法糖吗？
-
-- [Java 中的 10 颗语法糖](https://www.cnblogs.com/duanxz/p/3916028.html)
-
-
-
-### 代理
-
-- 按照代理的创建时期，代理类可以分为两种。
-
-  > 静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class 文件就已经存在了。
-  >
-  > 动态代理：在程序运行时，运用反射机制动态创建而成。
-
-- 动态代理方案
-
-  - jdk 动态代理
-
-  - cglib 动态代理
-
-    JDK 的动态代理机制只能代理实现了接口的类，而不能实现接口的类就不能实现 JDK 的动态代理，cglib 是针对类来实现代理的，他的原理是对指定的目标类生成一个子类，并覆盖其中方法实现增强，但因为采用的是继承，所以不能对 final 修饰的类进行代理。
-
-    [Cglib 与 JDK 动态代理](https://my.oschina.net/xiaolyuh/blog/3108376)
-
-  - javassist 动态代理
-
-  - ASM 字节码
-
-  - javassist 字节码
-
-- [深入理解 RPC 之动态代理篇 - 徐靖峰|个人博客 (cnkirito.moe)](https://www.cnkirito.moe/rpc-dynamic-proxy/)
-
-- Q&A
-
-  为什么 cglib 为什么生成两个 fastclass，`methodProxy.invokeSuper(“代理对象”, args)` 和 `methodProxy.invoke(“原对象”, args)` 虽然底层分别调用两个不同的 fastclass，但结果是一样的。
-
-  ```java
-  // 自定义 Cglib 代理拦截
-  public class DemoInterceptor implements MethodInterceptor {
-      // @param o           cglib 生成的代理对象
-      // @param method      被代理对象方法
-      // @param objects     方法入参
-      // @param methodProxy 代理方法
-      public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-          System.err.println("intercept");
-          // invokeSuper，o 为 cglib 生成的代理对象
-          return methodProxy.invokeSuper(o, objects);
-      }
-  }
-  ```
-
-  ```java
-  // org.springframework.aop.framework.CglibAopProxy.CglibMethodInvocation    
-  private static class CglibMethodInvocation extends ReflectiveMethodInvocation {
-      private final MethodProxy methodProxy;
-      private boolean protectedMethod;
-      public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, Class<?> targetClass, List<Object> interceptorsAndDynamicMethodMatchers, MethodProxy methodProxy) {
-          super(proxy, target, method, arguments, targetClass, interceptorsAndDynamicMethodMatchers);
-          this.methodProxy = methodProxy;
-          this.protectedMethod = Modifier.isProtected(method.getModifiers());
-      }
-      protected Object invokeJoinpoint() throws Throwable {
-          // invoke，target 为原对象
-          return this.protectedMethod ? super.invokeJoinpoint() : this.methodProxy.invoke(this.target, this.arguments);
-      }
-  }
-  ```
-
-  可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
-
-
-
-### 反射
-
-#### Class
-
-- 关键字 instanceof **VS** Class.isInstance（参数）
-
-  ```java
-  System.err.println(son instanceof Parent);
-  System.err.println(Parent.class.isInstance(son));
-  ```
-
-- Class 的 getSuperclass 与 getGenericSuperclass
-
-  **getGenericSuperclass 会包含该超类的泛型。**
-
-- 判断当前类是什么类
-
-  ```java
-  boolean isLocalClass(); //判断是不是局部类，也就是方法里面的类，其实现：isLocalOrAnonymousClass() && !isAnonymousClass();
-  boolean isLocalOrAnonymousClass();
-  boolean isMemberClass(); //判断是不是成员内部类，也就是一个类里面定义的类
-  boolean isAnonymousClass(); //判断当前类是不是匿名类，一般为实例化的接口或实例化的抽象类
-  boolean isAnnotation();// 判断 Class 对象是否是注解类型
-  boolean isPrimitive(); // 判断 Class 是否为原始类型（int，double 等）
-  boolean isSynthetic(); // 判断是否由 Java 编译器生成（除了像默认构造函数这一类的）的方法或者类，Method 也有这个方法
-  ```
-
-  参考：
-
-  [Java 中冷门的 synthetic 关键字原理解读 - 老白讲互联网 - 博客园 (cnblogs.com)](https://www.cnblogs.com/bethunebtj/p/7761596.html)
-
-- 返回字符串 (String) 的方法
-
-  ```java
-  String getCanonicalName(); //返回 Java Language Specification 中所定义的底层类的规范化名称
-  String getName(); //以 String 的形式返回此 Class 对象所表示的实体（类、接口、数组类、基本类型或 void）名称（全限定名：包名.类名）。
-  String getSimpleName(); //返回源代码中给出的底层类的简称。
-  String toString(); //将对象转换为字符串。
-  ```
-
-- Class.forName 和 ClassLoader 的区别
-
-  都可用来对类进行加载。
-
-  不同：
-
-  1）Class.forName() 除了将类的.class 文件加载到 jvm 中之外，**还会对类进行解释，执行类中的 static 块，还会执行给静态变量赋值的静态方法**
-
-  2）classLoader 只干一件事情，就是将.class 文件加载到 jvm 中，不会执行 static 中的内容,只有在 newInstance 才会去执行 static 块。
-
-* 使用 Class.getResource 和 ClassLoader.getResource 方法获取文件路径
-
-  对于**class.getResource(path)**方法，其中的参数 path 有两种形式，一种是以“/”开头的，另一种是不以"/"开头
-
-  **Class.getClassLoader().getResource(String path)**，该方法中的参数 path 不能以“/“开头，path 表示的是从 classpath 下获取资源的
-
-
-
-#### Method
-
-- **Method**.invoke() 的实现原理
-
-  [假笨说-从一起 GC 血案谈到反射原理](https://mp.weixin.qq.com/s/5H6UHcP6kvR2X5hTj_SBjA)
-
-  **获取 Method：**
-
-    - reflectionData，这个属性主要是 SoftReference 的
-    - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
-
-  **Method 调用：**
-
-    - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
-
-  **MethodAccessor 的实现：**
-
-    - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
-    - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
-
-  **并发导致垃圾类创建：**
-
-    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
-
-  **其他 JVM 相关文章:**
-
-    - 该文章最后有其他 JVM 相关文章，感觉是干货
-
-- [反射代理类加载器的潜在内存使用问题](https://www.jianshu.com/p/20b7ab284c0a)！！
-
-  大量的类加载器 `sun/reflect/DelegatingClassLoader`，用来加载 `sun/reflect/GeneratedMethodAccessor` 类，可能导致潜在的占用大量本机内存空间问题，应用服务器进程占用的内存会显著增大。
-
-- 其他链接
-
-  [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
-
-
-
-### 创建和销毁对象
-
-#### 单例 与 序列化
-
-一般来说，一个类实现了 Serializable 接口，我们就可以把它往内存地写再从内存里读出而"组装"成一个跟原来一模一样的对象。不过当序列化遇到单例时，这里边就有了个问题：从内存读出而组装的对象破坏了单例的规则。单例是要求一个 JVM 中只有一个类对象的，而现在通过反序列化，一个新的对象克隆了出来。
-
-解决方案：加上 readResolve() 方法
-
-```java
-public final class MySingleton implements Serializable {
-    private MySingleton() {
-    }
-    private static final MySingleton INSTANCE = new MySingleton();
-    public static MySingleton getInstance() {
-        return INSTANCE;
-    }
-
-    private Object readResolve() throws ObjectStreamException {
-        // instead of the object we're on,
-        // return the class variable INSTANCE
-        return INSTANCE;
-    }
-}
-```
-
-
-
-#### 对象实例化顺序
-
-1. 父类的静态成员变量和静态代码块加载
-2. 子类的静态成员变量和静态代码块加载
-3. 父类成员变量和方法块加载
-4. 父类的构造函数加载
-5. 子类成员变量和方法块加载
-6. 子类的构造函数加载
-
-参考：
-
-- [Java 类的实例化顺序](https://www.cnblogs.com/yanghe123/p/10936025.html)
-- [java 类实例化顺序+经典的面试题](https://blog.csdn.net/qq_36382679/article/details/105811529)
-
-测试：com.ariescat.metis.base.jdk.TestSameField
-
-
-
-#### java 中父类与子类有相同属性调谁？
-
-**继承中：**
-
-属性：不可被重写，只会被隐藏
-
-方法：会被重写，不会隐藏
-
-**多态中，**
-
-成员变量无论编译和运行，都参考左边 (**引用型变量所属的类**)。
-
-也就是说
-
-```java
-Fu f = new Zi();System.out.println(f.age);
-```
-
-打印的还是父类的值。
-
-参考：
-
-- [java 中父类与子类有相同属性调谁？取决于左边](https://blog.csdn.net/qq_40093255/article/details/108400976)
-
-- [父类和子类同时存在相同属性 BeanUtils 的 copyProperties 复制](https://blog.csdn.net/u012786993/article/details/82923064/)
-
-
-
-### 对象引用
-
-- [WeakReference](https://www.jianshu.com/p/964fbc30151a)
-
-  看 ThreadLocal 源码的时候，其中嵌套类 ThreadLocalMap 中的 Entry 继承了 WeakReference，为了能搞清楚 ThreadLocal，只能先了解下了 WeakReference：
-
-  > WeakReference 如字面意思，弱引用， 当**一个对象**仅仅被 WeakReference（弱引用）指向, 而没有任何其他 strong reference（强引用）指向的时候, 如果这时 GC 运行, 那么**这个对象**就会被回收，不论当前的内存空间是否足够，这个对象都会被回收。
-  >
-  > 注意：回收的是 WeakReference 引用的对象！若存在 ReferenceQueue 队列，WeakReference 本身会入队，但此时 get()==null
-
-  - [WeakHashMap](https://blog.csdn.net/u012420654/article/details/51793909)
-
-  - SoftReference 若清楚了上面的原理，[SoftReference](https://www.jianshu.com/p/8c634f10ed1a) 只是**生命周期**变成**内存将要被耗尽的时候**。
-
-    > - from [关于 SoftReference 被回收的时机](https://blog.csdn.net/S7188290/article/details/86436479)
-    >
-    > 下面，我们来总结一下:
-    > 1.当发生 GC 时，虚拟机可能会回收 SoftReference 对象所指向的软引用，是否被回收取决于该软引用是否是新创建或近期使用过。
-    > 2.在虚拟机抛出 OutOfMemoryError 之前，所有软引用对象都会被回收。
-    > 3.只要一个软引用对象由一个强引用指向，那么即使是 OutOfMemoryError 时，也不会被回收。
-    >
-    > - from [JVM - 优化案例（SoftRefLRUPolicyMSPerMB）](https://blog.csdn.net/qiang_zi_/article/details/100700784)
-    >
-    > 那么 SoftReference 对象到底在 GC 的时候要不要回收是通过什么公式来判断的呢？
-    >
-    > 是如下的一个公式：
-    >
-    > clock - timestamp <= freespace * SoftRefLRUPolicyMSPerMB
-    >
-    > 这个公式的意思就是说，“clock - timestamp”代表了一个软引用对象他有多久没被访问过了，freespace 代表 JVM 中的空闲内存空间，SoftRefLRUPolicyMSPerMB 代表每一 MB 空闲内存空间可以允许 SoftReference 对象存活多久。
-
-  - guava cache：
-
-    ```java
-    CacheBuilder.newBuilder().softValues().build()
-    ```
-
-    当然 softValues() 可以替换成 weakKeys() / weakValues() ...
-
-    实现原理可具体看 com.google.common.cache.LocalCache.Strength
-
-  - LRU 缓存实现 (Java)
-
-- 原子变量
-
-  - XXXAtomic 原子类
-
-  - AtomicXXXFieldUpdater 原子更新器
-
-    在 Java5 中，JDK 就开始提供原子类了，当然也包括原子的更新器——即后缀为 FieldUpdater 的类
-
-    已经有了原子类，为啥还额外提供一套原子更新器呢？
-
-    > 简单的说有两个原因，以 int 变量为例，基于 AtomicIntegerFieldUpdater 实现的原子计数器，比单纯的直接用 AtomicInteger 包装 int 变量的花销要小，因为前者只需要一个全局的静态变量 AtomicIntegerFieldUpdater 即可包装 volatile 修饰的非静态共享变量，然后配合 CAS 就能实现原子更新，而这样做，使得后续同一个类的每个对象中只需要共享这个静态的原子更新器即可为对象计数器实现原子更新，而**原子类**是为同一个类的**每个对象**中都创建了一个**计数器** + **AtomicInteger 对象**，这种开销显然就比较大了。
-
-
-
-### 对象序列化
-
-ObjectInputStream、ObjectOutputStream
-
-
-
-### 对象拷贝
-
-- [BeanUtils 对象属性 copy 的性能对比以及源码分析](https://www.cnblogs.com/kancy/p/12089126.html)
-
-  <table>
-     <tr>
-        <th> 拷贝方式 </th>
-        <th> 对象数量: 1</th>
-        <th> 对象数量: 1000</th>
-        <th> 对象数量: 100000</th>
-        <th> 对象数量: 1000000</th>
-     </tr>
-     <tr>
-        <td>Hard Code</td>
-        <td>0 ms</td>
-        <td>1 ms</td>
-        <td>18 ms</td>
-        <td>43 ms</td>
-     </tr>
-     <tr>
-        <td>cglib.BeanCopier</td>
-        <td>111 ms</td>
-        <td>117 ms</td>
-        <td>107 ms</td>
-        <td>110 ms</td>
-     </tr>
-     <tr>
-        <td>spring.BeanUtils</td>
-        <td>116 ms</td>
-        <td>137 ms</td>
-        <td>246 ms</td>
-        <td>895 ms</td>
-     </tr>
-     <tr>
-        <td>apache.PropertyUtils</td>
-        <td>167 ms</td>
-        <td>212 ms</td>
-        <td>601 ms</td>
-        <td>7869 ms</td>
-     </tr>
-     <tr>
-        <td>apache.BeanUtils</td>
-        <td>167 ms</td>
-        <td>275 ms</td>
-        <td>1732 ms</td>
-        <td>12380 ms</td>
-     </tr>
-  </table>
-
-
-
-### 热更新
-
-- 自定义类加载器
-
-  - [探秘 Java 热部署](https://www.jianshu.com/p/731bc8293365)
-  - [CSDN·自定义 classloader 实现 JAVA 热替换](https://blog.csdn.net/puhaiyang/article/details/78165465)
-
-- java.lang.instrument
-
-  类重新定义，这是 Instrumentation 提供的基础功能之一，这个类很早就出了，redefineClasses 这个方法可以更新方法级别的代码，但是不会触发一个类的初始化方法。
-
-  - [游戏服务器之 Java 热更新](https://www.cnblogs.com/wgslucky/p/9127681.html)
-  - [动态加载 class 文件](https://zheng12tian.iteye.com/blog/1495037)
-  - [JVM 源码分析之 javaagent 原理完全解读](https://www.imooc.com/article/42736)
-  - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
-  - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
-
-- 第三方工具
-
-  - [**Arthas**的使用](https://www.cnblogs.com/orange911/p/10583245.html)
-  - [Github · **HotswapAgent**](https://github.com/HotswapProjects/HotswapAgent)
-
-- 脚本语言
-
-  - groovy
-
-    使用 groovy 类加载器重载 java 代码 重载的 java 文件可以直接使用源文件，无需编译为 class
-
-
-
-### System#exit
-
-1. 注册的关闭勾子会在以下几种时机被调用到
-
-- 程序正常退出
-  - 最后一个非守护线程执行完毕退出时
-  - System.exit 方法被调用时
-- 程序响应外部事件
-  - 程序响应用户输入事件，例如在控制台按 ctrl+c(^+c)
-  - 程序响应系统事件，如用户注销、系统关机等
-
-2. 这种方法永远不会正常返回。
-
-   意味着该方法不会返回；一旦一个线程进入那里，就不会再回来了。
-
-链接：
-
-- [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
-
-- [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
-
-  最后一楼说了：将 A 线程变为 while(true) 一直执行，就会发现 A 线程也会中止。两个线程各自执行，之前都循环十次，A 线程可能在 B 线程调用 System.exit(0) 之前就执行完了
-
-
-
-### ServiceLoader
-
-Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
-
-该类通过在资源目录 META-INF/services 中放置**提供者配置文件**来标识**服务提供者**。
-
-应用场景：
-
-1. JDBC 驱动加载
-
-   `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
-
-   因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
-
-   ```java
-   //a.导入驱动，加载具体的驱动类
-   Class.forName("com.mysql.jdbc.Driver");
-   //b.与数据库建立连接
-   connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-   ```
-
-2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
-
-   而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
-
-3. Dubbo 的扩展点加载
-
-   Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
-
-   META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
-
-   ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
-
-
-
-### Observable
-
-操作 Vector 型变量 obs 的四个方法都加有同步关键字，Vector 类型为线程安全的，而上述四个方法为什么还要加同步关键字呢？
-
-
-
-### Java 注解处理器
-
-Annotation Processor
-
-javax.annotation.processing.AbstractProcessor 编译时执行
-
-
-
-### JMX
-
-JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控接口。
-
-了解不深==
-
-
-
-### 启动
-
-- jsvc
-
-  > 在 linux 上以服务的方式启动 java 程序，需要提前安装 jsvc。linux 是利用 daemon(jsvc) 构建 java 守护进程。
-
-
-
-### 字符编解码
-
-- 字符集
-
-  1. ASCII
-
-  2. Unicode
-
-     目前 Unicode 字符分为 17 组编排，0x0000 至 0x10FFFF,每组称为平面（Plane）,每个面拥有 65536 个码位，共 1114112 个。
-
-- 字符编码
-
-  UTF-32、UTF-16 和 UTF-8 是 Unicode 标准的编码字符集的字符编码方案
-
-  - 附：
-
-    1. Java 的`char`内部编码为`UTF-16`，而与`Charset.defaultCharset()`无关。
-
-       看 [Unicode 编码理解](https://blog.csdn.net/wdeng2011/article/details/80155795) 可知`UTF-16`编码完全可以满足 Unicode 的 17 组编排（平面），因为有平面 0 的 0xD800-0xDFFF 代理区。
-
-       [关于 java 中 char 占几个字节，汉字占几个字节](https://www.cnblogs.com/nevermorewang/p/7808092.html)，这里指出 Java 中的`char`是占用两个字节，只不过有些字符需要两个 char 来表示，同时这篇博客也给了一个官方 Oracle 链接里面明确的说明了*值在 16 位范围之外且在 0x10000 到 0x10FFFF 范围内的字符称为补充字符，并定义为**一对 char 值***。
-
-       测试代码：
-
-       ```java
-       public static void main(String[] args) {
-       
-           char[] c = new char[]{'一'};
-           System.err.println(Integer.toHexString(c[0]));
-           String s = new String(c);
-           // String#length事实上调用了char[].length
-           System.err.println(s + " " + s.length());
-       
-           String str = "一";
-           System.err.println(str + " " + str.length());
-       
-           // Unicode编码 汉字扩展B '𠀀' 字
-           c = new char[]{'\uD840', '\uDC00'};
-           s = new String(c);
-           System.err.println(s + " " + s.length());
-       
-           str = "\uD840\uDC00";
-           System.err.println(str + " " + str.length());
-       
-           // 输出：由输出可见这个字用了两个char来存
-           // 一 1
-           // 一 1
-           // 𠀀 2
-           // 𠀀 2
-       }
-       ```
-
-    2. [UniCode 编码表](https://www.cnblogs.com/csguo/p/7401874.html)
-
-    3. [汉字 unicode 编码范围](https://blog.csdn.net/gywtzh0889/article/details/71083459/)
-
-  - 参考博客：
-
-    1. 吴秦（Tyler）[字符集和字符编码（Charset & Encoding）](https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html)
-
-    2. 廖雪峰 [字符串和编码](https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896)
-
-       该文有简单有效的解释了：
-
-       在计算机内存中，统一使用 Unicode 编码，当需要保存到硬盘或者需要传输的时候，就转换为 UTF-8 编码。
-       用记事本编辑的时候，从文件读取的 UTF-8 字符被转换为 Unicode 字符到内存里，编辑完成后，保存的时候再把 Unicode 转换为 UTF-8 保存到文件：
-
-       ![字符编码·图 1](/img/awesome/Unicode1.png)
-
-       浏览网页的时候，服务器会把动态生成的 Unicode 内容转换为 UTF-8 再传输到浏览器：
-
-       ![字符编码·图 2](/img/awesome/Unicode2.png)
-
-       所以你看到很多网页的源码上会有类似`<meta charset="UTF-8" />`的信息，表示该网页正是用的 UTF-8 编码。
-
-- Base64 编码：
-
-  Base64 编码本质上是一种将二进制数据转成文本数据的方案。对于非二进制数据，是先将其转换成二进制形式，然后每连续 6 比特（2 的 6 次方=64）计算其十进制值，根据该值在上面的索引表中找到对应的字符，最终得到一个文本字符串。
-
-- 常见问题处理之 Emoji
-
-  所谓 Emoji 就是一种在 Unicode 位于\u1F601–\u1F64F 区段的字符。这个显然超过了目前常用的 UTF-8 字符集的编码范围\u0000–\uFFFF。Emoji 表情随着 IOS 的普及和微信的支持越来越常见。
-
-  ![字符编码·图 3](https://img-blog.csdnimg.cn/20181119221259676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3podXNvbmd6aXll,size_16,color_FFFFFF,t_70)
-
-  那么 Emoji 字符表情会对我们平时的开发运维带来什么影响呢？最常见的问题就在于将他存入 MySQL 数据库的时候。一般来说 MySQL 数据库的默认字符集都会配置成 UTF-8，mysql 支持的 utf8 编码最大字符长度为 **3 字节**，而 utf8mb4 在 5.5 以后才被支持，也很少会有 DBA 主动将系统默认字符集改成 utf8mb4。那么问题就来了，当我们把一个需要 4 字节 UTF-8 编码才能表示的字符存入数据库的时候就会报错：ERROR 1366: Incorrect string value: '\xF0\x9D\x8C\x86' for column 。 如果认真阅读了上面的解释，那么这个报错也就不难看懂了。我们试图将一串 Bytes 插入到一列中，而这串 Bytes 的第一个字节是\xF0 意味着这是一个四字节的 UTF-8 编码。但是当 MySQL 表和列字符集配置为 UTF-8 的时候是无法存储这样的字符的，所以报了错。
-
-  那么遇到这种情况我们如何解决呢？有两种方式：升级 MySQL 到 5.6 或更高版本，并且将表字符集切换至 utf8mb4。第二种方法就是在把内容存入到数据库之前做一次过滤，将 Emoji 字符替换成一段特殊的文字编码，然后再存入数据库中。之后从数据库获取或者前端展示时再将这段特殊文字编码转换成 Emoji 显示。第二种方法我们假设用-*-1F601-*-来替代 4 字节的 Emoji，那么具体实现 python 代码可以参见[Stackoverflow 上的回答](http://stackoverflow.com/questions/3220031/how-to-filter-or-replace-unicode-characters-that-would-take-more-than-3-bytes)
-
-- 补码
-
-  补码(为什么按位取反再加一)：告诉你一个其实很简单的问题 [原文](https://blog.csdn.net/wenxinwukui234/article/details/42119265)
-
-  其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于 0 才对**
 
 
 

@@ -19,42 +19,14 @@
   - [运算符](/Awesome/Java.md#运算符)
   - [日期与时间](/Awesome/Java.md#日期与时间)
   - [泛型](/Awesome/Java.md#泛型)
-  - [位运算](/Awesome/Java.md#位运算)
   - [异常](/Awesome/Java.md#异常)
+  - [位运算](/Awesome/Java.md#位运算)
+  - [Math](/Awesome/Java.md#math)
 
 - [Java 高级](/Awesome/Java.md#java-高级)
 
   - [数据结构](/Awesome/Java.md#数据结构)
   - [集合容器](/Awesome/Java.md#集合容器)
-  - [Math](/Awesome/Java.md#math)
-  - [Swing/Awt](/Awesome/Java.md#swingawt)
-
-- [Java 并发](/Awesome/Java.md#java-并发)
-
-  - [概述](/Awesome/Java.md#概述)
-  - [线程](/Awesome/Java.md#线程)
-  - [同步互斥](/Awesome/Java.md#同步互斥)
-  - [线程池](/Awesome/Java.md#线程池)
-  - [协程](/Awesome/Java.md#协程)
-
-- [Java IO](/Awesome/Java.md#java-io)
-
-  - [IO 流](/Awesome/Java.md#io-流)
-  - [close()](/Awesome/Java.md#close)
-  - [Path/Files](/Awesome/Java.md#pathfiles)
-  - [NIO](/Awesome/Java.md#nio)
-
-- [Java 虚拟机](/Awesome/Java.md#java-虚拟机)
-
-  - [前言](/Awesome/Java.md#前言)
-  - [内存管理](/Awesome/Java.md#内存管理)
-  - [GC](/Awesome/Java.md#gc)
-  - [性能调优工具](/Awesome/Java.md#性能调优工具)
-  - [Q&A](/Awesome/Java.md#qa_1)
-
-- [Java 其他](/Awesome/Java.md#java-其他)
-
-  - [语法糖](/Awesome/Java.md#语法糖)
   - [代理](/Awesome/Java.md#代理)
   - [反射](/Awesome/Java.md#反射)
   - [创建和销毁对象](/Awesome/Java.md#创建和销毁对象)
@@ -68,7 +40,36 @@
   - [Java 注解处理器](/Awesome/Java.md#java-注解处理器)
   - [JMX](/Awesome/Java.md#jmx)
   - [启动](/Awesome/Java.md#启动)
+  - [语法糖](/Awesome/Java.md#语法糖)
   - [字符编解码](/Awesome/Java.md#字符编解码)
+  - [Swing/Awt](/Awesome/Java.md#swingawt)
+
+- [Java IO](/Awesome/Java.md#java-io)
+
+  - [IO 流](/Awesome/Java.md#io-流)
+  - [close()](/Awesome/Java.md#close)
+  - [Path/Files](/Awesome/Java.md#pathfiles)
+  - [NIO](/Awesome/Java.md#nio)
+
+- [Java 并发](/Awesome/Java.md#java-并发)
+
+  - [概述](/Awesome/Java.md#概述)
+  - [线程](/Awesome/Java.md#线程)
+  - [同步互斥](/Awesome/Java.md#同步互斥)
+  - [线程池](/Awesome/Java.md#线程池)
+  - [协程](/Awesome/Java.md#协程)
+
+- [Java 虚拟机](/Awesome/Java.md#java-虚拟机)
+
+  - [前言](/Awesome/Java.md#前言)
+  - [内存管理](/Awesome/Java.md#内存管理)
+  - [内存模型](/Awesome/Java.md#内存模型_1)
+  - [类加载 ClassLoader](/Awesome/Java.md#类加载-classloader)
+  - [字节码](/Awesome/Java.md#字节码)
+  - [编译与优化](/Awesome/Java.md#编译与优化)
+  - [GC](/Awesome/Java.md#gc)
+  - [性能调优工具](/Awesome/Java.md#性能调优工具)
+  - [Q&A](/Awesome/Java.md#qa_1)
 
 - [Java 新特性](/Awesome/Java.md#java-新特性)
 
@@ -114,8 +115,9 @@
 
 - [中间件](/Awesome/系统设计.md#中间件)
 
-  - [消息队列](/Awesome/系统设计.md#消息队列)
   - [Zookeeper](/Awesome/系统设计.md#zookeeper)
+  - [消息队列](/Awesome/系统设计.md#消息队列)
+  - [MySQL](/Awesome/系统设计.md#mysql)
   - [搜索引擎](/Awesome/系统设计.md#搜索引擎)
   - [SOFAStack](/Awesome/系统设计.md#sofastack)
 
