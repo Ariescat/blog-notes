@@ -1884,23 +1884,30 @@ Classloader 将数据加载到内存中经过的步骤：
 
 ### GC
 
-- GC 算法
+- 垃圾收集器
 
-  [GC 算法 (实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
+  - Serial、Serial Old
 
-- 可能导致 FullGC 的原因有以下几种。
+  - ParNew
 
-  > 1. 老年代空间不足。
-  > 2. 永生代或者元数据空间不足。
-  > 3. 程序执行了 System.gc() //建议 jvm 执行 fullgc，并不一定会执行。
-  > 4. CMS GC 时出现 promotion failed 和 concurrent mode failure
-  > 5. YoungGC 时晋升老年代的内存平均值大于老年代剩余空间（执行 minor gc 的时候进行的一系列检查）
-  > 6. 有连续的大对象需要分配
-  > 7. 执行了 jmap -histo:live pid 命令 //这个会立即触发 fullgc
+  - Parallel Scavenge、Parallel Old
 
-  出现 Full GC 一般是不正常
+  - **CMS**
 
-- 垃圾回收器有哪些？
+    - [CMS 垃圾回收器详解](https://blog.csdn.net/zqz_zqz/article/details/70568819)
+
+    - CMS 之 promotion failed & concurrent mode failure
+
+      然后 CMS 的并发周期就会被一次 Full GC 代替，退回到 Serial Old 收集器进行回收，这是一次长 Stop The World
+
+      [关于 CMS 垃圾回收失败是不是进行 FULL GC 问题的记录](https://www.jianshu.com/p/843782af87b1)
+
+  - **G1**
+
+    - CMS 收集器和 G1 收集器 他们的优缺点对比
+    - 不要设置年轻代的大小，通过`-Xmn`显式设置年轻代的大小，会干扰G1收集器的默认行为
+  
+  - **ZGC**
 
   - 他们什么阶段会**stop the world**？
 
@@ -1910,17 +1917,25 @@ Classloader 将数据加载到内存中经过的步骤：
 
     看《深入理解 Java 虚拟机》3.7.4 节 垃圾收集器参数总结，这个讲解了 client 和 server 模式下的默认值，以及开启其他收集器的参数
 
-  - [CMS 垃圾回收器详解](https://blog.csdn.net/zqz_zqz/article/details/70568819)
+  - 参考：
 
-    - CMS 之 promotion failed & concurrent mode failure
+    - [Java虚拟机垃圾回收——7种垃圾收集器](https://blog.csdn.net/li_c_yang/article/details/116158374)
+    - [可能是最全面的 Java G1学习笔记](https://blog.csdn.net/xiaoye319/article/details/85252195)
+    - [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
+      - [4. GC 算法(实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
+      - [7. GC 调优(实战篇) - GC参考手册](https://blog.csdn.net/renfufei/article/details/61924893)
+  
+- 可能导致 FullGC 的原因有以下几种。
 
-      > 疑问?
-      >
-      > 然后 CMS 的并发周期就会被一次 Full GC 代替，退回到 Serial Old 收集器进行回收，这是一次长 Stop The World
+  1. 老年代空间不足。
+  2. 永生代或者元数据空间不足。
+  3. 程序执行了 System.gc() //建议 jvm 执行 fullgc，并不一定会执行。
+  4. CMS GC 时出现 promotion failed 和 concurrent mode failure
+  5. YoungGC 时晋升老年代的内存平均值大于老年代剩余空间（执行 minor gc 的时候进行的一系列检查）
+  6. 有连续的大对象需要分配
+  7. 执行了 jmap -histo:live pid 命令 //这个会立即触发 fullgc
 
-      [关于 CMS 垃圾回收失败是不是进行 FULL GC 问题的记录](https://www.jianshu.com/p/843782af87b1)
-
-  - CMS 收集器和 G1 收集器 他们的优缺点对比
+  **出现 Full GC 一般是不正常**
 
 - GC 日志
 
@@ -1930,7 +1945,6 @@ Classloader 将数据加载到内存中经过的步骤：
 
     [Universal JVM GC analyzer - Java Garbage collection log analysis made easy (gceasy.io)](https://gceasy.io/gc-index.jsp)
 
-- [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
 
 
 
