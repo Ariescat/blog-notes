@@ -25,6 +25,9 @@
   - Java8 包装类 新增 无符号运算方法
   - byte 转换 int 时与 0xff 进行与运算的原因
 
+- 浮点数怎么存储
+  - [计算机与数学 —— 雷神之锤3源码中的快速逆平方根算法](https://blog.csdn.net/noahzuo/article/details/51555161)
+
 
 
 ### String
@@ -1909,6 +1912,8 @@ Classloader 将数据加载到内存中经过的步骤：
   
   - **ZGC**
 
+  - Shenandoah
+
   - 他们什么阶段会**stop the world**？
 
     看《深入理解 Java 虚拟机》3.5 节 经典垃圾收集器，这里每种收集器的执行图讲解了哪个阶段会 STW
@@ -1918,8 +1923,9 @@ Classloader 将数据加载到内存中经过的步骤：
     看《深入理解 Java 虚拟机》3.7.4 节 垃圾收集器参数总结，这个讲解了 client 和 server 模式下的默认值，以及开启其他收集器的参数
 
   - 参考：
-
+  
     - [Java虚拟机垃圾回收——7种垃圾收集器](https://blog.csdn.net/li_c_yang/article/details/116158374)
+    - [垃圾收集器_晏霖/胖虎的博客](https://blog.csdn.net/weixin_38003389/article/details/109760194)
     - [可能是最全面的 Java G1学习笔记](https://blog.csdn.net/xiaoye319/article/details/85252195)
     - [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
       - [4. GC 算法(实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
@@ -2092,12 +2098,14 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - Reactive Streams
 - Flow API
+- HTTP / 2 Client
 
 
 
 ### Java 11
 
 - 直接运行源代码
+- ZGC垃圾收集器
 
 
 
