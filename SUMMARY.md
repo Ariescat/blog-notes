@@ -202,6 +202,8 @@
   - [磁盘](/Awesome/操作系统.md#磁盘)
   - [Orther](/Awesome/操作系统.md#orther)
 
+- [Windows](/Awesome/操作系统.md#windows)
+
 - [Linux 常用服务搭建](/Awesome/操作系统.md#linux-常用服务搭建)
 
 - [必备软件](/Awesome/操作系统.md#必备软件)
