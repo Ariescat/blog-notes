@@ -1945,10 +1945,20 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - GC 日志
 
-  - Full GC 日志解读
+  - 日志解读
 
+    Full GC时的日志
+
+    [18 GC 日志解读与分析（实例分析上篇）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/18 GC 日志解读与分析（实例分析上篇）.md)
+  
+  - Java9 后的日志格式变化
+  
+    使用：-XX:+PrintCommandLineFlags -Xlog:gc*=debug:./gc.log:level,time,tags
+  
+    [Disruptive Changes to GC Logging in Java 9 - DZone Java](https://dzone.com/articles/disruptive-changes-to-gc-logging-in-java-9)
+  
   - 分析工具
-
+  
     [Universal JVM GC analyzer - Java Garbage collection log analysis made easy (gceasy.io)](https://gceasy.io/gc-index.jsp)
 
 
@@ -2099,6 +2109,7 @@ Classloader 将数据加载到内存中经过的步骤：
 - Reactive Streams
 - Flow API
 - HTTP / 2 Client
+- 统一的JVM日志系统
 
 
 
