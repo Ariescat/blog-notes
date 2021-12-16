@@ -1814,6 +1814,10 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 - 内存划分
 
+  [JVM中的五大内存区域划分详解及快速扫盲](https://segmentfault.com/a/1190000022080301)
+
+  ![](https://image-static.segmentfault.com/234/102/2341028142-93fdd749b30a7515_fix732)
+
 - 堆是线程共享的内存区域？
 
   不完全正确。因为 HotSpot 中，TLAB 是堆内存的一部分，他在**读取上**确实是**线程共享**的，但是在**内存分配上**，是**线程独享**的。[链接](https://mp.weixin.qq.com/s/Jj5Z1DZKpAgrj9wpYUZ_JQ)
@@ -1908,41 +1912,41 @@ Classloader 将数据加载到内存中经过的步骤：
   - **G1**
 
     - CMS 收集器和 G1 收集器 他们的优缺点对比
+  
     - 不要设置年轻代的大小，通过`-Xmn`显式设置年轻代的大小，会干扰G1收集器的默认行为
   
+      开发人员仅仅需要声明以下参数即可：
+  
+      `-XX:+UseG1GC -Xmx32g -XX:MaxGCPauseMillis=200`
+  
+      其中`-XX:+UseG1GC`为开启G1垃圾收集器，`-Xmx32g`设计堆内存的最大内存为32G，`-XX:MaxGCPauseMillis=200`设置GC的最大暂停时间为200ms。如果我们需要调优，在内存大小一定的情况下，我们只需要修改最大暂停时间即可。
+  
+    - 参考：
+  
+      [可能是最全面的 Java G1学习笔记](https://blog.csdn.net/xiaoye319/article/details/85252195)
+  
+      [【JVM】7、深入理解Java G1垃圾收集器](https://www.cnblogs.com/wangzhongqiu/p/10250868.html)
+  
   - **ZGC**
-
+  
   - Shenandoah
-
+  
   - 他们什么阶段会**stop the world**？
-
+  
     看《深入理解 Java 虚拟机》3.5 节 经典垃圾收集器，这里每种收集器的执行图讲解了哪个阶段会 STW
-
+  
   - JVM 默认启用的收集器是哪些？
-
+  
     看《深入理解 Java 虚拟机》3.7.4 节 垃圾收集器参数总结，这个讲解了 client 和 server 模式下的默认值，以及开启其他收集器的参数
-
+  
   - 参考：
   
     - [Java虚拟机垃圾回收——7种垃圾收集器](https://blog.csdn.net/li_c_yang/article/details/116158374)
     - [垃圾收集器_晏霖/胖虎的博客](https://blog.csdn.net/weixin_38003389/article/details/109760194)
-    - [可能是最全面的 Java G1学习笔记](https://blog.csdn.net/xiaoye319/article/details/85252195)
     - [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
       - [4. GC 算法(实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
       - [7. GC 调优(实战篇) - GC参考手册](https://blog.csdn.net/renfufei/article/details/61924893)
   
-- 可能导致 FullGC 的原因有以下几种。
-
-  1. 老年代空间不足。
-  2. 永生代或者元数据空间不足。
-  3. 程序执行了 System.gc() //建议 jvm 执行 fullgc，并不一定会执行。
-  4. CMS GC 时出现 promotion failed 和 concurrent mode failure
-  5. YoungGC 时晋升老年代的内存平均值大于老年代剩余空间（执行 minor gc 的时候进行的一系列检查）
-  6. 有连续的大对象需要分配
-  7. 执行了 jmap -histo:live pid 命令 //这个会立即触发 fullgc
-
-  **出现 Full GC 一般是不正常**
-
 - GC 日志
 
   - 日志解读
@@ -1961,11 +1965,105 @@ Classloader 将数据加载到内存中经过的步骤：
   
     [Universal JVM GC analyzer - Java Garbage collection log analysis made easy (gceasy.io)](https://gceasy.io/gc-index.jsp)
 
+- 调优
 
+  - GC日志中real时间比user+sys时间长该如何处理？
+
+  - 可能导致 FullGC 的原因有以下几种。
+
+    1. 老年代空间不足。
+    2. 永生代或者元数据空间不足。
+    3. 程序执行了 System.gc() //建议 jvm 执行 fullgc，并不一定会执行。
+    4. CMS GC 时出现 promotion failed 和 concurrent mode failure
+    5. YoungGC 时晋升老年代的内存平均值大于老年代剩余空间（执行 minor gc 的时候进行的一系列检查）
+    6. 有连续的大对象需要分配
+    7. 执行了 jmap -histo:live pid 命令 //这个会立即触发 fullgc
+
+    **出现 Full GC 一般是不正常**
+
+- 参数
+
+  - Jdk9+
+
+    `-XX:+PrintCommandLineFlags -Xlog:gc*=debug:./running_data/gc.log:level,time,tags`
+
+  - Jdk8
+
+    <table>
+        <thead>
+            <tr>
+                <th><b>Young</b></th>
+                <th><b>Tenured</b></th>
+                <th><b>JVM options</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Incremental(增量GC)</td>
+                <td>Incremental</td>
+                <td>-Xincgc</td>
+            </tr>
+            <tr>
+                <td><b>Serial</b></td>
+                <td><b>Serial</b></td>
+                <td><b>-XX:+UseSerialGC</b></td>
+            </tr>
+            <tr>
+                <td>Parallel Scavenge</td>
+                <td>Serial</td>
+                <td>-XX:+UseParallelGC -XX:-UseParallelOldGC</td>
+            </tr>
+            <tr>
+                <td>Parallel New</td>
+                <td>Serial</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>Serial</td>
+                <td>Parallel Old</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td><b>Parallel Scavenge</b></td>
+                <td><b>Parallel Old</b></td>
+                <td><b>-XX:+UseParallelGC -XX:+UseParallelOldGC</b></td>
+            </tr>
+            <tr>
+                <td>Parallel New</td>
+                <td>Parallel Old</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>Serial</td>
+                <td>CMS</td>
+                <td>-XX:-UseParNewGC -XX:+UseConcMarkSweepGC</td>
+            </tr>
+            <tr>
+                <td>Parallel Scavenge</td>
+                <td>CMS</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td><b>Parallel New</b></td>
+                <td><b>CMS</b></td>
+                <td><b>-XX:+UseParNewGC -XX:+UseConcMarkSweepGC</b></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="middle"><b>G1</b></td>
+                <td><b>-XX:+UseG1GC</b></td>
+            </tr>
+        </tbody>
+    </table>
+
+    主要使用的是上表中黑体字表示的这四种组合。其余的要么是被废弃(deprecated)，要么是不支持或者是不太适用于生产环境。
 
 
 
 ### 性能调优工具
+
+- 参数
+
+  [JVM调优总结 -Xms -Xmx -Xmn -Xss - 李克华 - 博客园](https://www.cnblogs.com/likehua/p/3369823.html)
 
 - jps、jstat、jinfo、jstack、jmap、jhat
 
