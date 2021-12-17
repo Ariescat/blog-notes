@@ -77,6 +77,7 @@
   - [Java 8](/Awesome/Java.md#java-8)
   - [Java 9](/Awesome/Java.md#java-9)
   - [Java 11](/Awesome/Java.md#java-11)
+  - [Java 12](/Awesome/Java.md#java-12)
   - [Q&A](/Awesome/Java.md#qa_2)
 
 
@@ -171,6 +172,7 @@
   - [应用场景](/Awesome/数据库.md#应用场景)
   - [持久化](/Awesome/数据库.md#持久化)
   - [额外的知识点](/Awesome/数据库.md#额外的知识点)
+  - [Redis模块](/Awesome/数据库.md#redis模块)
   - [书籍](/Awesome/数据库.md#书籍)
 - [Memcache](/Awesome/数据库.md#memcache)
 - [MongoDB](/Awesome/数据库.md#mongodb)

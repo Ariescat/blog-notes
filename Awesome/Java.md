@@ -1891,6 +1891,33 @@ Classloader 将数据加载到内存中经过的步骤：
 
 ### GC
 
+- 垃圾收集事件
+
+  - Minor GC（小型 GC）
+
+    简单定义：Minor GC 清理的是年轻代，又或者说 Minor GC 就是“年轻代 GC”（Young GC，简称 YGC）。
+
+    关于 Minor GC 事件，我们需要了解一些相关的内容：
+
+    1. 当 JVM 无法为新对象分配内存空间时就会触发 Minor GC（ 一般就是 Eden 区用满了）。如果对象的分配速率很快，那么 Minor GC 的次数也就会很多，频率也就会很快。
+    2. Minor GC 事件不处理老年代，所以会把所有从老年代指向年轻代的引用都当做 GC Root。从年轻代指向老年代的引用则在标记阶段被忽略。
+    3. 与我们一般的认知相反，Minor GC 每次都会引起 STW 停顿（stop-the-world），挂起所有的应用线程。对大部分应用程序来说，Minor GC 的暂停时间可以忽略不计，因为 Eden 区里面的对象大部分都是垃圾，也不怎么复制到存活区/老年代。但如果不符合这种情况，那么很多新创建的对象就不能被 GC 清理，Minor GC 的停顿时间就会增大，就会产生比较明显的 GC 性能影响。
+
+  - Major GC vs. Full GC
+
+    值得一提的是，这几个术语都没有正式的定义--无论是在 JVM 规范中还是在 GC 论文中。
+
+    我们知道，除了 Minor GC 外，另外两种 GC 事件则是：
+
+    - Major GC（大型 GC）：清理老年代空间（Old Space）的 GC 事件。
+    - Full GC（完全 GC）：清理整个堆内存空间的 GC 事件，包括年轻代空间和老年代空间。
+
+    其实 Major GC 和 Full GC 有时候并不能很好地区分。更复杂的情况是，很多 Major GC 是由 Minor GC 触发的，所以很多情况下这两者是不可分离的。
+
+    另外，像 G1 这种垃圾收集算法，是每次找一小部分区域来进行清理，这部分区域中可能有一部分是年轻代，另一部分区域属于老年代。
+
+    所以我们不要太纠结具体是叫 Major GC 呢还是叫 Full GC，它们一般都会造成单次较长时间的 STW 暂停。所以我们需要关注的是：某次 GC 事件，是暂停了所有线程、进而对系统造成了性能影响呢，还是与其他业务线程并发执行、暂停时间几乎可以忽略不计。
+
 - 垃圾收集器
 
   - Serial、Serial Old
@@ -1912,57 +1939,59 @@ Classloader 将数据加载到内存中经过的步骤：
   - **G1**
 
     - CMS 收集器和 G1 收集器 他们的优缺点对比
-  
+
     - 不要设置年轻代的大小，通过`-Xmn`显式设置年轻代的大小，会干扰G1收集器的默认行为
-  
+
       开发人员仅仅需要声明以下参数即可：
-  
+
       `-XX:+UseG1GC -Xmx32g -XX:MaxGCPauseMillis=200`
-  
+
       其中`-XX:+UseG1GC`为开启G1垃圾收集器，`-Xmx32g`设计堆内存的最大内存为32G，`-XX:MaxGCPauseMillis=200`设置GC的最大暂停时间为200ms。如果我们需要调优，在内存大小一定的情况下，我们只需要修改最大暂停时间即可。
-  
+
     - 参考：
-  
+
       [可能是最全面的 Java G1学习笔记](https://blog.csdn.net/xiaoye319/article/details/85252195)
-  
+
       [【JVM】7、深入理解Java G1垃圾收集器](https://www.cnblogs.com/wangzhongqiu/p/10250868.html)
-  
+
   - **ZGC**
-  
+
   - Shenandoah
-  
+
   - 他们什么阶段会**stop the world**？
-  
+
     看《深入理解 Java 虚拟机》3.5 节 经典垃圾收集器，这里每种收集器的执行图讲解了哪个阶段会 STW
-  
+
   - JVM 默认启用的收集器是哪些？
-  
+
     看《深入理解 Java 虚拟机》3.7.4 节 垃圾收集器参数总结，这个讲解了 client 和 server 模式下的默认值，以及开启其他收集器的参数
-  
+
   - 参考：
-  
+
     - [Java虚拟机垃圾回收——7种垃圾收集器](https://blog.csdn.net/li_c_yang/article/details/116158374)
     - [垃圾收集器_晏霖/胖虎的博客](https://blog.csdn.net/weixin_38003389/article/details/109760194)
     - [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
       - [4. GC 算法(实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
       - [7. GC 调优(实战篇) - GC参考手册](https://blog.csdn.net/renfufei/article/details/61924893)
-  
+
 - GC 日志
 
   - 日志解读
 
-    Full GC时的日志
+    注意 Minor GC 和 Full GC 时的日志
+
+    [17 GC 日志解读与分析（基础配置）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/17 GC 日志解读与分析（基础配置）.md)
 
     [18 GC 日志解读与分析（实例分析上篇）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/18 GC 日志解读与分析（实例分析上篇）.md)
-  
+
   - Java9 后的日志格式变化
-  
+
     使用：-XX:+PrintCommandLineFlags -Xlog:gc*=debug:./gc.log:level,time,tags
-  
+
     [Disruptive Changes to GC Logging in Java 9 - DZone Java](https://dzone.com/articles/disruptive-changes-to-gc-logging-in-java-9)
-  
+
   - 分析工具
-  
+
     [Universal JVM GC analyzer - Java Garbage collection log analysis made easy (gceasy.io)](https://gceasy.io/gc-index.jsp)
 
 - 调优
@@ -2056,14 +2085,30 @@ Classloader 将数据加载到内存中经过的步骤：
     </table>
 
     主要使用的是上表中黑体字表示的这四种组合。其余的要么是被废弃(deprecated)，要么是不支持或者是不太适用于生产环境。
-
+    
 
 
 ### 性能调优工具
 
 - 参数
 
-  [JVM调优总结 -Xms -Xmx -Xmn -Xss - 李克华 - 博客园](https://www.cnblogs.com/likehua/p/3369823.html)
+  注意 JDK 版本，不一定都通用
+
+  **堆区：**
+
+  - -Xms and -Xmx (or: -XX:InitialHeapSize and -XX:MaxHeapSize，实际上是两者的缩写)
+  - -Xmn（or: -XX:NewSize and -XX:MaxnewSize，-Xmn 是对两者的同时配置，JDK4生效）
+  - -Xss，设置每个线程的堆栈大小，JDK5.0以后每个线程堆栈大小为1M
+  - -XX:NewRatio  -XX:SurvivorRatio
+  - -XX:MetaspaceSize  -XX:MaxMetaspaceSize，JDK8后替换永久代
+  - -XX:+UseCompressedOops  -XX:+UseCompressedClassPointers，目的是为了在 64bit 机器上使用 32bit 的原始对象指针
+
+  **非堆区：**
+
+  - -XX:PermSize
+  - -XX:MaxPermSize
+
+  [JVM调优总结 -Xms -Xmx -Xmn -Xss](https://www.cnblogs.com/likehua/p/3369823.html)
 
 - jps、jstat、jinfo、jstack、jmap、jhat
 
@@ -2076,13 +2121,13 @@ Classloader 将数据加载到内存中经过的步骤：
   [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 
 - MAT
-  
+
   Eclipse Memory Analyzer
-  
+
 - Atthas
-  
+
   Arthas 是基于 Greys 进行二次开发的全新在线诊断工具
-  
+
   [Arthas 使用指南](https://segmentfault.com/a/1190000014618329?utm_source=tag-newest)
 
 
@@ -2214,7 +2259,13 @@ Classloader 将数据加载到内存中经过的步骤：
 ### Java 11
 
 - 直接运行源代码
-- ZGC垃圾收集器
+- ZGC 垃圾收集器
+
+
+
+### Java 12
+
+- Shenandoah 垃圾收集器
 
 
 
