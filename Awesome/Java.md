@@ -25,7 +25,12 @@
   - Java8 包装类 新增 无符号运算方法
   - byte 转换 int 时与 0xff 进行与运算的原因
 
+- Integer
+  
+  [Java Integer(-128~127)值的==和equals比较产生的思考 - CSniper - 博客园 (cnblogs.com)](https://www.cnblogs.com/csniper/p/5882760.html)
+  
 - 浮点数怎么存储
+  
   - [计算机与数学 —— 雷神之锤3源码中的快速逆平方根算法](https://blog.csdn.net/noahzuo/article/details/51555161)
 
 
@@ -163,6 +168,12 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 ### 异常
 
 - Error 和 Exception 的区别
+
+- finally语句到底是在return之前还是之后执行？
+  1. 不管有木有出现异常，finally块中代码都会执行；
+  2. 当try和catch中有return时，finally仍然会执行；
+  3. finally是在return语句执行之后，返回之前执行的（此时并没有返回运算后的值，而是先把要返回的值保存起来，不管finally中的代码怎么样，返回的值都不会改变，仍然是之前保存的值），所以函数返回值是在finally执行前就已经确定了；
+  4. finally中如果包含return，那么程序将在这里返回，而不是try或catch中的return返回，返回值就不是try或catch中保存的返回值了。
 
 
 
@@ -457,6 +468,22 @@ TreeSet 同理，红黑树实现
 
 #### Class
 
+- Class类 与 Class 对象
+
+  Class 没有公共构造方法。Class 对象是在加载类时由 Java 虚拟机以及通过调用类加载器中的 defineClass 方法自动构造的，因此不能显式地声明一个Class对象。 
+
+  虚拟机为每种类型管理一个独一无二的Class对象。也就是说，每个类（型）都有一个Class对象。运行程序时，Java虚拟机(JVM)首先检查是否所要加载的类对应的Class对象是否已经加载。如果没有加载，JVM就会根据类名查找.class文件，并将其Class对象载入。
+
+  基本的 Java 类型（boolean、byte、char、short、int、long、float 和 double）和关键字 void 也都对应一个 Class 对象。 
+
+  每个数组属于被映射为 Class 对象的一个类，所有具有相同元素类型和维数的数组都共享该 Class 对象。
+
+- Class 对象的获取方式
+
+  1. Class.forName("类名字符串")
+  2. 类名.class
+  3. 实例对象.getClass()
+  
 - 关键字 instanceof **VS** Class.isInstance（参数）
 
   ```java
@@ -665,27 +692,27 @@ Fu f = new Zi();System.out.println(f.age);
 
   - LRU 缓存实现 (Java)
 
-- 原子变量
+- 软引用和弱引用
 
-  - XXXAtomic 原子类
-
-  - AtomicXXXFieldUpdater 原子更新器
-
-    在 Java5 中，JDK 就开始提供原子类了，当然也包括原子的更新器——即后缀为 FieldUpdater 的类
-
-    已经有了原子类，为啥还额外提供一套原子更新器呢？
-
-    > 简单的说有两个原因，以 int 变量为例，基于 AtomicIntegerFieldUpdater 实现的原子计数器，比单纯的直接用 AtomicInteger 包装 int 变量的花销要小，因为前者只需要一个全局的静态变量 AtomicIntegerFieldUpdater 即可包装 volatile 修饰的非静态共享变量，然后配合 CAS 就能实现原子更新，而这样做，使得后续同一个类的每个对象中只需要共享这个静态的原子更新器即可为对象计数器实现原子更新，而**原子类**是为同一个类的**每个对象**中都创建了一个**计数器** + **AtomicInteger 对象**，这种开销显然就比较大了。
+  被软引用关联的对象只有在内存不足时才会被回收，而被弱引用关联的对象在JVM进行垃圾回收时总会被回收。针对上面的特性，软引用适合用来进行缓存，当内存不够时能让JVM回收内存，弱引用能用来在回调函数中防止内存泄露。因为回调函数往往是匿名内部类，隐式保存有对外部类的引用，所以如果回调函数是在另一个线程里面被回调，而这时如果需要回收外部类，那么就会内存泄露，因为匿名内部类保存有对外部类的强引用。
 
 
 
 ### 对象序列化
 
-ObjectInputStream、ObjectOutputStream
+- Serializable
+
+- readResolve() 与 单例
+
+- ObjectInputStream、ObjectOutputStream
+
+  看看readObject与writeObject方法源码
 
 
 
 ### 对象拷贝
+
+- 深复制（深克隆）和浅复制（浅克隆）
 
 - [BeanUtils 对象属性 copy 的性能对比以及源码分析](https://www.cnblogs.com/kancy/p/12089126.html)
 
@@ -953,11 +980,51 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
   那么遇到这种情况我们如何解决呢？有两种方式：升级 MySQL 到 5.6 或更高版本，并且将表字符集切换至 utf8mb4。第二种方法就是在把内容存入到数据库之前做一次过滤，将 Emoji 字符替换成一段特殊的文字编码，然后再存入数据库中。之后从数据库获取或者前端展示时再将这段特殊文字编码转换成 Emoji 显示。第二种方法我们假设用-*-1F601-*-来替代 4 字节的 Emoji，那么具体实现 python 代码可以参见[Stackoverflow 上的回答](http://stackoverflow.com/questions/3220031/how-to-filter-or-replace-unicode-characters-that-would-take-more-than-3-bytes)
 
-- 补码
 
-  补码(为什么按位取反再加一)：告诉你一个其实很简单的问题 [原文](https://blog.csdn.net/wenxinwukui234/article/details/42119265)
 
-  其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于 0 才对**
+
+### 补码
+
+补码(为什么按位取反再加一)：告诉你一个其实很简单的问题 [原文](https://blog.csdn.net/wenxinwukui234/article/details/42119265)
+
+其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于 0 才对**
+
+
+
+### 设计模式
+
+#### 六大设计原则
+
+单一职责原则(Single Responsibility Principle - SRP)
+
+开放封闭原则(Open Closed Principle - OCP)
+
+里氏替换原则(Liskov Substitution Principle - LSP)
+
+最少知识原则(Least Knowledge Principle - LKP)
+
+接口隔离原则(Interface Segregation Principle - ISP)
+
+依赖倒置原则(Dependence Inversion Principle - DIP)
+
+
+
+
+
+#### 设计模式
+
+- 单例
+  - 双重校验锁 
+
+参考：
+
+[Java开发中的23种设计模式详解(转) - maowang - 博客园 (cnblogs.com)](https://www.cnblogs.com/maowang1991/archive/2013/04/15/3023236.html)
+
+
+
+#### 反模式
+
+上帝类(God Class)，这个类里面控制了很多其他的类，同时也依赖其他很多类。整个类不光负责自己的主要单一功能，而且还负责了其他很多功能，包括一些辅助功能。
 
 
 
@@ -1498,7 +1565,19 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 - Atomic 类
 
-  AtomicStampedReference 它还维护了一个时间戳，解决 ABA 问题
+  概念：原子变量，CAS
+
+  其他：
+
+  - AtomicStampedReference 它还维护了一个时间戳，解决 ABA 问题
+
+  - AtomicXXXFieldUpdater 原子更新器
+
+    在 Java5 中，JDK 就开始提供原子类了，当然也包括原子的更新器——即后缀为 FieldUpdater 的类
+
+    已经有了原子类，为啥还额外提供一套原子更新器呢？
+
+    > 简单的说有两个原因，以 int 变量为例，基于 AtomicIntegerFieldUpdater 实现的原子计数器，比单纯的直接用 AtomicInteger 包装 int 变量的花销要小，因为前者只需要一个全局的静态变量 AtomicIntegerFieldUpdater 即可包装 volatile 修饰的非静态共享变量，然后配合 CAS 就能实现原子更新，而这样做，使得后续同一个类的每个对象中只需要共享这个静态的原子更新器即可为对象计数器实现原子更新，而**原子类**是为同一个类的**每个对象**中都创建了一个**计数器** + **AtomicInteger 对象**，这种开销显然就比较大了。
 
 - 了解一下 **LongAdder** 与 **Striped64**
 
@@ -1974,6 +2053,16 @@ Classloader 将数据加载到内存中经过的步骤：
       - [4. GC 算法(实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
       - [7. GC 调优(实战篇) - GC参考手册](https://blog.csdn.net/renfufei/article/details/61924893)
 
+- Java 方法
+
+  - finalize()
+
+    该方法会在垃圾收集器交换回收对象之前被调用。如果在finalize()方法中，又使得该对象被程序引用(俗称复活了)，则该对象就变成了可触及的对象，暂时不会被垃圾收集了。每个对象只能调用一次finalize( )方法，所以每个对象也只可能 "复活 "一次。
+
+  - System.gc()
+
+    建议执行垃圾收集
+
 - GC 日志
 
   - 日志解读
@@ -2086,6 +2175,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
     主要使用的是上表中黑体字表示的这四种组合。其余的要么是被废弃(deprecated)，要么是不支持或者是不太适用于生产环境。
     
+
 
 
 ### 性能调优工具

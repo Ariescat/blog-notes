@@ -42,6 +42,8 @@
   - [启动](/Awesome/Java.md#启动)
   - [语法糖](/Awesome/Java.md#语法糖)
   - [字符编解码](/Awesome/Java.md#字符编解码)
+  - [补码](/Awesome/Java.md#补码)
+  - [设计模式](/Awesome/Java.md#设计模式)
   - [Swing/Awt](/Awesome/Java.md#swingawt)
 
 - [Java IO](/Awesome/Java.md#java-io)
@@ -88,10 +90,14 @@
 
 - [算法](/Awesome/数据结构与算法.md#算法)
 
-  - [算法类型](/Awesome/数据结构与算法.md#算法类型)
+  - [基础算法](/Awesome/数据结构与算法.md#基础算法)
+  - [进阶算法](/Awesome/数据结构与算法.md#进阶算法)
   - [时间空间复杂度](/Awesome/数据结构与算法.md#时间空间复杂度)
   - [经典题目](/Awesome/数据结构与算法.md#经典题目)
+  - [有意思的题目](/Awesome/数据结构与算法.md#有意思的题目)
+  - [面试题](/Awesome/数据结构与算法.md#面试题)
   - [练习平台](/Awesome/数据结构与算法.md#练习平台)
+  - [书单](/Awesome/数据结构与算法.md#书单)
 
 
 
@@ -138,6 +144,8 @@
   - [大数据](/Awesome/系统设计.md#大数据)
   - [人工智能](/Awesome/系统设计.md#人工智能)
   - [思想](/Awesome/系统设计.md#思想)
+
+- [代码评审](/Awesome/系统设计.md#代码评审)
 
 - [安全](/Awesome/系统设计.md#安全)
 
@@ -214,8 +222,6 @@
 
 ## 其他编程语言
 
-- [C/C++](/Awesome/其他编程语言.md#cc)
-
 - [动态语言与动态类型语言](/Awesome/其他编程语言.md#动态语言与动态类型语言)
 
 - [Groovy](/Awesome/其他编程语言.md#groovy)
@@ -232,6 +238,11 @@
 
 - [Android](/Awesome/其他编程语言.md#android)
 
+- [C/C++](/Awesome/其他编程语言.md#cc)
+
+  - [基础](/Awesome/其他编程语言.md#基础_1)
+  - [技巧用法](/Awesome/其他编程语言.md#技巧用法)
+
 
 
 ## 游戏
@@ -243,11 +254,20 @@
 ## 必备链接
 
 - [Github 干货](/Awesome/必备链接.md#github-干货)
+
 - [知识体系](/Awesome/必备链接.md#知识体系)
+
 - [面经汇总](/Awesome/必备链接.md#面经汇总)
+
+  - [技术问题](/Awesome/必备链接.md#技术问题)
+  - [主观问题](/Awesome/必备链接.md#主观问题)
+
 - [博主](/Awesome/必备链接.md#博主)
+
 - [博文](/Awesome/必备链接.md#博文)
+
 - [常用社区](/Awesome/必备链接.md#常用社区)
+
 - [简历](/Awesome/必备链接.md#简历)
 
 
