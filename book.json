@@ -22,7 +22,9 @@
     "tbfed-pagefooter",
     "hide-element",
     "gittalk",
-    "addcssjs"
+    "addcssjs",
+    "pageview-count",
+    "expandable-chapters"
   ],
   "pluginsConfig": {
     "theme-default": {
