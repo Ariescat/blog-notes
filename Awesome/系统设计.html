@@ -1906,12 +1906,12 @@
     
         <li class="chapter " data-level="5.1.3" data-path="数据库.html">
             
-                <a href="数据库.html#锁">
+                <a href="数据库.html#范式">
             
                     
                         <b>5.1.3.</b>
                     
-                    锁
+                    范式
             
                 </a>
             
@@ -1921,12 +1921,12 @@
     
         <li class="chapter " data-level="5.1.4" data-path="数据库.html">
             
-                <a href="数据库.html#事务">
+                <a href="数据库.html#锁">
             
                     
                         <b>5.1.4.</b>
                     
-                    事务
+                    锁
             
                 </a>
             
@@ -1936,12 +1936,12 @@
     
         <li class="chapter " data-level="5.1.5" data-path="数据库.html">
             
-                <a href="数据库.html#索引">
+                <a href="数据库.html#事务">
             
                     
                         <b>5.1.5.</b>
                     
-                    索引
+                    事务
             
                 </a>
             
@@ -1951,12 +1951,12 @@
     
         <li class="chapter " data-level="5.1.6" data-path="数据库.html">
             
-                <a href="数据库.html#存储引擎">
+                <a href="数据库.html#索引">
             
                     
                         <b>5.1.6.</b>
                     
-                    存储引擎
+                    索引
             
                 </a>
             
@@ -1966,12 +1966,12 @@
     
         <li class="chapter " data-level="5.1.7" data-path="数据库.html">
             
-                <a href="数据库.html#日志">
+                <a href="数据库.html#存储引擎">
             
                     
                         <b>5.1.7.</b>
                     
-                    日志
+                    存储引擎
             
                 </a>
             
@@ -1981,12 +1981,12 @@
     
         <li class="chapter " data-level="5.1.8" data-path="数据库.html">
             
-                <a href="数据库.html#备份与恢复">
+                <a href="数据库.html#日志">
             
                     
                         <b>5.1.8.</b>
                     
-                    备份与恢复
+                    日志
             
                 </a>
             
@@ -1996,12 +1996,12 @@
     
         <li class="chapter " data-level="5.1.9" data-path="数据库.html">
             
-                <a href="数据库.html#高级">
+                <a href="数据库.html#备份与恢复">
             
                     
                         <b>5.1.9.</b>
                     
-                    高级
+                    备份与恢复
             
                 </a>
             
@@ -2011,10 +2011,25 @@
     
         <li class="chapter " data-level="5.1.10" data-path="数据库.html">
             
-                <a href="数据库.html#分布式">
+                <a href="数据库.html#高级">
             
                     
                         <b>5.1.10.</b>
+                    
+                    高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.11" data-path="数据库.html">
+            
+                <a href="数据库.html#分布式">
+            
+                    
+                        <b>5.1.11.</b>
                     
                     分布式
             
@@ -2253,6 +2268,21 @@
                         <b>5.4.</b>
                     
                     MongoDB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="数据库.html">
+            
+                <a href="数据库.html#oracle">
+            
+                    
+                        <b>5.5.</b>
+                    
+                    Oracle
             
                 </a>
             
@@ -3394,14 +3424,76 @@
 <h3 id="mysql"><a name="mysql" class="anchor-navigation-ex-anchor" href="#mysql"><i class="fa fa-link" aria-hidden="true"></i></a>MySQL</h3>
 <h4 id="sharding-jdbc"><a name="sharding-jdbc" class="anchor-navigation-ex-anchor" href="#sharding-jdbc"><i class="fa fa-link" aria-hidden="true"></i></a>sharding-jdbc</h4>
 <p>&#x652F;&#x6301;&#x6570;&#x636E;&#x5206;&#x7247;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x6CBB;&#x7406;</p>
+<h4 id="&#x8FDE;&#x63A5;&#x6C60;"><a name="&#x8FDE;&#x63A5;&#x6C60;" class="anchor-navigation-ex-anchor" href="#&#x8FDE;&#x63A5;&#x6C60;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8FDE;&#x63A5;&#x6C60;</h4>
+<p>&#x76EE;&#x7684;&#xFF1A;&#x89E3;&#x51B3;&#x5EFA;&#x7ACB;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x8017;&#x8D39;&#x8D44;&#x6E90;&#x548C;&#x65F6;&#x95F4;&#x5F88;&#x591A;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x3002;</p>
+<p>&#x81EA;&#x5B9A;&#x4E49;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x6C60;&#x8981;&#x5B9E;&#x73B0; javax.sql.DataSource &#x63A5;&#x53E3;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x53EB;&#x6570;&#x636E;&#x6E90;&#x3002;</p>
+<p><strong>&#x5E38;&#x7528;&#x7684;&#x6570;&#x636E;&#x6E90;&#xFF1A;</strong></p>
+<p>DBCP&#xFF1A;Apache&#x63A8;&#x51FA;&#x7684;Database Connection Pool</p>
+<p>C3P0&#xFF1A;&#x5F00;&#x6E90;&#x7684; JDBC &#x8FDE;&#x63A5;&#x6C60;</p>
 <h4 id="&#x5176;&#x4ED6;"><a name="&#x5176;&#x4ED6;" class="anchor-navigation-ex-anchor" href="#&#x5176;&#x4ED6;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5176;&#x4ED6;</h4>
-<p>TDDL&#x3001;cobar &#x7B49;</p>
+<ul>
+<li><p>apache DBUtils</p>
+<p>DBUtils&#x7B80;&#x5316;&#x4E86;JDBC&#x7684;&#x5F00;&#x53D1;&#x6B65;&#x9AA4;&#xFF0C;&#x4F7F;&#x5F97;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;&#x66F4;&#x5C11;&#x91CF;&#x7684;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+</li>
+<li><p>TDDL&#x3001;cobar &#x7B49;</p>
+</li>
+</ul>
 <h3 id="&#x641C;&#x7D22;&#x5F15;&#x64CE;"><a name="&#x641C;&#x7D22;&#x5F15;&#x64CE;" class="anchor-navigation-ex-anchor" href="#&#x641C;&#x7D22;&#x5F15;&#x64CE;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x641C;&#x7D22;&#x5F15;&#x64CE;</h3>
 <h4 id="elasticsearch"><a name="elasticsearch" class="anchor-navigation-ex-anchor" href="#elasticsearch"><i class="fa fa-link" aria-hidden="true"></i></a>Elasticsearch</h4>
 <ul>
-<li><a href="http://blog.csdn.net/cnweike/article/details/33736429" target="_blank">Elasticsearch &#x57FA;&#x7840;&#x6559;&#x7A0B; - CSDN &#x535A;&#x5BA2;</a></li>
+<li><p><a href="http://blog.csdn.net/cnweike/article/details/33736429" target="_blank">Elasticsearch &#x57FA;&#x7840;&#x6559;&#x7A0B; - CSDN &#x535A;&#x5BA2;</a></p>
+</li>
+<li><p><strong>&#x5012;&#x6392;&#x7D22;&#x5F15;</strong></p>
+</li>
+<li><p>&#x548C; &#x4F20;&#x7EDF;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93; &#x7684;&#x5BF9;&#x6BD4;</p>
+<table>
+  <thead>
+    <tr>
+      <th>Relational DB</th>
+      <th>Databases</th>
+      <th>Tables</th>
+      <th>Rows</th>
+      <th>Columns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;</td>
+      <td>&#x6570;&#x636E;&#x5E93;</td>
+      <td>&#x8868;</td>
+      <td>&#x884C;</td>
+      <td>&#x5217;</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Elasticsearch</th>
+      <th>Indices</th>
+      <th>Types</th>
+      <th>Documents</th>
+      <th>Fields</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&#x641C;&#x7D22;&#x5F15;&#x64CE;</td>
+      <td>&#x7D22;&#x5F15;</td>
+      <td>&#x7C7B;&#x578B;</td>
+      <td>&#x6587;&#x6863;</td>
+      <td>&#x57DF;&#xFF08;&#x5B57;&#x6BB5;&#xFF09;</td>
+    </tr>
+  </tbody>
+</table>
+</li>
+<li><p>&#x4F7F;&#x7528;</p>
+<ul>
 <li><a href="https://blog.csdn.net/liuxigiant/article/details/52105024" target="_blank">Spring Data ElasticSearch_liuxigiant&#x7684;&#x4E13;&#x680F;-CSDN&#x535A;&#x5BA2;</a></li>
 <li><a href="https://es.yemengying.com/5/5.1/5.1.2.html" target="_blank">&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;&#x914D;&#x7F6E; - Spring-Data-Elasticsearch</a></li>
+</ul>
+</li>
 </ul>
 <h4 id="kibana"><a name="kibana" class="anchor-navigation-ex-anchor" href="#kibana"><i class="fa fa-link" aria-hidden="true"></i></a>Kibana</h4>
 <p>TODO</p>
@@ -3444,7 +3536,7 @@
 </li>
 <li><p>SnowFlake</p>
 <p><a href="https://blog.csdn.net/bjweimengshu/article/details/80162731" target="_blank">&#x6F2B;&#x753B;&#xFF1A;&#x4EC0;&#x4E48;&#x662F;SnowFlake&#x7B97;&#x6CD5;&#xFF1F;</a></p>
-<p><a href="https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/NtO5sialJZGovUVwFkfA0yRdCYoer9mqxdkKsBd5aD96r6ygicrXlKjwmsIBCZpF4rrkUM7FR1U1zZdL4yjEF1Fw/640?wx_fmt=png" data-lightbox="38a32391-32af-41d6-b249-537214610919" data-title="" target="_blank"><img src="https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/NtO5sialJZGovUVwFkfA0yRdCYoer9mqxdkKsBd5aD96r6ygicrXlKjwmsIBCZpF4rrkUM7FR1U1zZdL4yjEF1Fw/640?wx_fmt=png" alt=""></a></p>
+<p><a href="https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/NtO5sialJZGovUVwFkfA0yRdCYoer9mqxdkKsBd5aD96r6ygicrXlKjwmsIBCZpF4rrkUM7FR1U1zZdL4yjEF1Fw/640?wx_fmt=png" data-lightbox="4c5e0d98-4784-45bc-88f9-6b7a497d502d" data-title="" target="_blank"><img src="https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/NtO5sialJZGovUVwFkfA0yRdCYoer9mqxdkKsBd5aD96r6ygicrXlKjwmsIBCZpF4rrkUM7FR1U1zZdL4yjEF1Fw/640?wx_fmt=png" alt=""></a></p>
 </li>
 </ul>
 </li>
@@ -3595,7 +3687,7 @@
 <li>tomcat</li>
 </ul>
 <p></p><footer class="page-footer"><span class="copyright">Copyright &#xA9; Ariescat all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#xFF1A;
-2021-12-18 03:28
+2021-12-18 05:59
 </span></footer><div id="gitalk-container"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><p></p>
 </body></html>
                                 
@@ -3640,7 +3732,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"框架","level":"4.1","depth":1,"next":{"title":"基础工具库","level":"4.1.1","depth":2,"anchor":"#基础工具库","path":"Awesome/系统设计.md","ref":"Awesome/系统设计.md#基础工具库","articles":[]},"previous":{"title":"书单","level":"3.2.8","depth":2,"anchor":"#书单","path":"Awesome/数据结构与算法.md","ref":"Awesome/数据结构与算法.md#书单","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","-lunr","-search","search-pro","insert-logo","github","code","lightbox","splitter","anchor-navigation-ex","tbfed-pagefooter","hide-element","gittalk","addcssjs"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Ariescat","modify_label":"最后修改时间：","modify_format":"YYYY-MM-DD HH:mm"},"github":{"url":"https://github.com/Ariescat/Metis-Awesome/"},"splitter":{},"search-pro":{},"addcssjs":{"css":["css/custom.css"],"js":[]},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link",".copyright"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"mode":"float","pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"isRewritePageTitle":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","showGoTop":true,"isShowTocTitleIcon":true,"printLog":false,"multipleH1":true,"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false}},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"gittalk":{"clientID":"ac995666edfcde8e6079","clientSecret":"0e981d5d0c91bbb33cf33a356ea4962d137aafdc","repo":"Metis-Awesome","owner":"Ariescat","admin":["Ariescat"],"id":"gittalk-comment"},"insert-logo":{"style":"background:none;max-height:129px","url":"/img/logo.png"}},"theme":"default","author":"Ariescat","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Awesome","links":{"sidebar":{"LINKS - Ariescat Home":"https://home.ariescat.top/","LINKS - Ariescat Github":"https://github.com/Ariescat/"}},"gitbook":"*","description":"记录一些令人头秃的知识"},"file":{"path":"Awesome/系统设计.md","mtime":"2021-12-18T03:28:41.582Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-12-18T03:30:08.535Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"框架","level":"4.1","depth":1,"next":{"title":"基础工具库","level":"4.1.1","depth":2,"anchor":"#基础工具库","path":"Awesome/系统设计.md","ref":"Awesome/系统设计.md#基础工具库","articles":[]},"previous":{"title":"书单","level":"3.2.8","depth":2,"anchor":"#书单","path":"Awesome/数据结构与算法.md","ref":"Awesome/数据结构与算法.md#书单","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","-lunr","-search","search-pro","insert-logo","github","code","lightbox","splitter","anchor-navigation-ex","tbfed-pagefooter","hide-element","gittalk","addcssjs"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Ariescat","modify_label":"最后修改时间：","modify_format":"YYYY-MM-DD HH:mm"},"github":{"url":"https://github.com/Ariescat/Metis-Awesome/"},"splitter":{},"search-pro":{},"addcssjs":{"css":["css/custom.css"],"js":[]},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link",".copyright"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"mode":"float","pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"isRewritePageTitle":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","showGoTop":true,"isShowTocTitleIcon":true,"printLog":false,"multipleH1":true,"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false}},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"gittalk":{"clientID":"ac995666edfcde8e6079","clientSecret":"0e981d5d0c91bbb33cf33a356ea4962d137aafdc","repo":"Metis-Awesome","owner":"Ariescat","admin":["Ariescat"],"id":"gittalk-comment"},"insert-logo":{"style":"background:none;max-height:129px","url":"/img/logo.png"}},"theme":"default","author":"Ariescat","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Awesome","links":{"sidebar":{"LINKS - Ariescat Home":"https://home.ariescat.top/","LINKS - Ariescat Github":"https://github.com/Ariescat/"}},"gitbook":"*","description":"记录一些令人头秃的知识"},"file":{"path":"Awesome/系统设计.md","mtime":"2021-12-18T05:59:47.565Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-12-18T06:01:04.432Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
