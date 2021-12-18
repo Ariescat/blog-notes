@@ -161,6 +161,7 @@
 
   - [数据类型](/Awesome/数据库.md#数据类型)
   - [SQL 语句](/Awesome/数据库.md#sql-语句)
+  - [范式](/Awesome/数据库.md#范式)
   - [锁](/Awesome/数据库.md#锁)
   - [事务](/Awesome/数据库.md#事务)
   - [索引](/Awesome/数据库.md#索引)
@@ -169,7 +170,9 @@
   - [备份与恢复](/Awesome/数据库.md#备份与恢复)
   - [高级](/Awesome/数据库.md#高级)
   - [分布式](/Awesome/数据库.md#分布式)
+
 - [Redis](/Awesome/数据库.md#redis)
+
   - [概述](/Awesome/数据库.md#概述)
   - [数据类型](/Awesome/数据库.md#数据类型_1)
   - [数据结构](/Awesome/数据库.md#数据结构)
@@ -182,8 +185,12 @@
   - [额外的知识点](/Awesome/数据库.md#额外的知识点)
   - [Redis模块](/Awesome/数据库.md#redis模块)
   - [书籍](/Awesome/数据库.md#书籍)
+
 - [Memcache](/Awesome/数据库.md#memcache)
+
 - [MongoDB](/Awesome/数据库.md#mongodb)
+
+- [Oracle](/Awesome/数据库.md#oracle)
 
 
 
