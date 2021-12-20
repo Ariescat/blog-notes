@@ -262,13 +262,13 @@
 
 - [Github](/Awesome/资料整理.md#github)
 
+- [知识体系](/Awesome/资料整理.md#知识体系)
+
 - [技术团队](/Awesome/资料整理.md#技术团队)
 
 - [极客时间](/Awesome/资料整理.md#极客时间)
 
 - [博主](/Awesome/资料整理.md#博主)
-
-- [知识体系](/Awesome/资料整理.md#知识体系)
 
 - [面试](/Awesome/资料整理.md#面试)
 
