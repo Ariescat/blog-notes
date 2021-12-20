@@ -258,24 +258,26 @@
 
 
 
-## 必备链接
+## 资料整理
 
-- [Github 干货](/Awesome/必备链接.md#github-干货)
+- [Github](/Awesome/资料整理.md#github)
 
-- [知识体系](/Awesome/必备链接.md#知识体系)
+- [技术团队](/Awesome/资料整理.md#技术团队)
 
-- [面经汇总](/Awesome/必备链接.md#面经汇总)
+- [极客时间](/Awesome/资料整理.md#极客时间)
 
-  - [技术问题](/Awesome/必备链接.md#技术问题)
-  - [主观问题](/Awesome/必备链接.md#主观问题)
+- [博主](/Awesome/资料整理.md#博主)
 
-- [博主](/Awesome/必备链接.md#博主)
+- [知识体系](/Awesome/资料整理.md#知识体系)
 
-- [博文](/Awesome/必备链接.md#博文)
+- [面试](/Awesome/资料整理.md#面试)
 
-- [常用社区](/Awesome/必备链接.md#常用社区)
+  - [技术问题](/Awesome/资料整理.md#技术问题)
+  - [主观问题](/Awesome/资料整理.md#主观问题)
 
-- [简历](/Awesome/必备链接.md#简历)
+- [文章收藏](/Awesome/资料整理.md#文章收藏)
+
+- [简历](/Awesome/资料整理.md#简历)
 
 
 
