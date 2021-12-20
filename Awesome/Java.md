@@ -1979,7 +1979,9 @@ Classloader 将数据加载到内存中经过的步骤：
     关于 Minor GC 事件，我们需要了解一些相关的内容：
 
     1. 当 JVM 无法为新对象分配内存空间时就会触发 Minor GC（ 一般就是 Eden 区用满了）。如果对象的分配速率很快，那么 Minor GC 的次数也就会很多，频率也就会很快。
+
     2. Minor GC 事件不处理老年代，所以会把所有从老年代指向年轻代的引用都当做 GC Root。从年轻代指向老年代的引用则在标记阶段被忽略。
+
     3. 与我们一般的认知相反，Minor GC 每次都会引起 STW 停顿（stop-the-world），挂起所有的应用线程。对大部分应用程序来说，Minor GC 的暂停时间可以忽略不计，因为 Eden 区里面的对象大部分都是垃圾，也不怎么复制到存活区/老年代。但如果不符合这种情况，那么很多新创建的对象就不能被 GC 清理，Minor GC 的停顿时间就会增大，就会产生比较明显的 GC 性能影响。
 
   - Major GC vs. Full GC
@@ -1989,6 +1991,7 @@ Classloader 将数据加载到内存中经过的步骤：
     我们知道，除了 Minor GC 外，另外两种 GC 事件则是：
 
     - Major GC（大型 GC）：清理老年代空间（Old Space）的 GC 事件。
+
     - Full GC（完全 GC）：清理整个堆内存空间的 GC 事件，包括年轻代空间和老年代空间。
 
     其实 Major GC 和 Full GC 有时候并不能很好地区分。更复杂的情况是，很多 Major GC 是由 Minor GC 触发的，所以很多情况下这两者是不可分离的。
@@ -2007,8 +2010,32 @@ Classloader 将数据加载到内存中经过的步骤：
 
   - **CMS**
 
-    - [CMS 垃圾回收器详解](https://blog.csdn.net/zqz_zqz/article/details/70568819)
+    - CMS 也可称为“并发标记清除垃圾收集器”。其设计目标是避免在老年代 GC 时出现长时间的卡顿。默认情况下，CMS 使用的并发线程数等于 CPU 内核数的 1/4。
 
+      [CMS 垃圾回收器详解](https://blog.csdn.net/zqz_zqz/article/details/70568819)
+
+    - 过程
+
+      阶段 1：Initial Mark（初始标记）
+
+      阶段 2：Concurrent Mark（并发标记）
+
+      阶段 3：Concurrent Preclean（并发预清理）
+
+      阶段 4：Concurrent Abortable Preclean（可取消的并发预清理）
+
+      阶段 5：Final Remark（最终标记）
+
+      阶段 6：Concurrent Sweep（并发清除）
+
+      阶段 7：Concurrent Reset（并发重置）
+
+      结合下面两篇文章看：
+      
+      [14 常见的 GC 算法（ParallelCMSG1）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/14 常见的 GC 算法（ParallelCMSG1）.md)
+      
+      [19 GC 日志解读与分析（实例分析中篇）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/19 GC 日志解读与分析（实例分析中篇）.md)
+      
     - CMS 之 promotion failed & concurrent mode failure
 
       然后 CMS 的并发周期就会被一次 Full GC 代替，退回到 Serial Old 收集器进行回收，这是一次长 Stop The World
@@ -2017,7 +2044,13 @@ Classloader 将数据加载到内存中经过的步骤：
 
   - **G1**
 
-    - CMS 收集器和 G1 收集器 他们的优缺点对比
+    - 概要
+
+      实现高吞吐量的同时，尽可能的满足垃圾收集暂停时间的要求。
+
+      它仍然属于分代收集器，但新生代，老年代的物理空间划分取消了，传统上的堆内存结构被抛弃。
+
+      G1收集器通过将对象从一个区域复制到另外一个区域，完成了清理工作。这就意味着，在正常的处理过程中，G1完成了堆的压缩（至少是部分堆的压缩），这样也就不会有 cms 内存碎片问题的存在了。
 
     - 不要设置年轻代的大小，通过`-Xmn`显式设置年轻代的大小，会干扰G1收集器的默认行为
 
@@ -2027,15 +2060,41 @@ Classloader 将数据加载到内存中经过的步骤：
 
       其中`-XX:+UseG1GC`为开启G1垃圾收集器，`-Xmx32g`设计堆内存的最大内存为32G，`-XX:MaxGCPauseMillis=200`设置GC的最大暂停时间为200ms。如果我们需要调优，在内存大小一定的情况下，我们只需要修改最大暂停时间即可。
 
+    - -XX:InitiatingHeapOccupancyPercent
+
+      整个堆使用到达这个阈值时，触发一次 mixed gc，默认是45%
+
+    - 并发标记过程
+
+      阶段 1：Initial Mark（初始标记）
+
+      阶段 2：Root Region Scan（Root 区扫描）  
+    
+      阶段 3：Concurrent Mark（并发标记）
+    
+      阶段 4：Remark（再次标记）
+    
+      阶段 5：Cleanup（清理）
+    
+    - Full GC
+
+      G1中的 Full GC 也而是单线程串行的，而且是全暂停，使用的是标记-整理算法，代价非常高。G1的初衷就是要**避免** Full GC 的出现。
+
+    - CMS 收集器和 G1 收集器 他们的优缺点对比
+
     - 参考：
 
-      [可能是最全面的 Java G1学习笔记](https://blog.csdn.net/xiaoye319/article/details/85252195)
+      [可能是最全面的 Java G1学习笔记_xiaoye的博客-CSDN博客](https://blog.csdn.net/xiaoye319/article/details/85252195)
 
-      [【JVM】7、深入理解Java G1垃圾收集器](https://www.cnblogs.com/wangzhongqiu/p/10250868.html)
+      [转：深入理解Java G1垃圾收集器 - sidesky - 博客园 (cnblogs.com)](https://www.cnblogs.com/sidesky/p/10797382.html)
+    
+      [G1垃圾回收器详解 - 简书 (jianshu.com)](https://www.jianshu.com/p/aef0f4765098)
 
   - **ZGC**
 
   - Shenandoah
+
+  - Epsilon：实验性的 GC，供性能分析使用
 
   - 他们什么阶段会**stop the world**？
 
@@ -2048,9 +2107,13 @@ Classloader 将数据加载到内存中经过的步骤：
   - 参考：
 
     - [Java虚拟机垃圾回收——7种垃圾收集器](https://blog.csdn.net/li_c_yang/article/details/116158374)
+
     - [垃圾收集器_晏霖/胖虎的博客](https://blog.csdn.net/weixin_38003389/article/details/109760194)
+
     - [GC 性能优化](https://blog.csdn.net/renfufei/column/info/14851)
+
       - [4. GC 算法(实现篇) - GC 参考手册](https://blog.csdn.net/renfufei/article/details/54885190)
+
       - [7. GC 调优(实战篇) - GC参考手册](https://blog.csdn.net/renfufei/article/details/61924893)
 
 - Java 方法
@@ -2073,6 +2136,8 @@ Classloader 将数据加载到内存中经过的步骤：
 
     [18 GC 日志解读与分析（实例分析上篇）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/18 GC 日志解读与分析（实例分析上篇）.md)
 
+    [19 GC 日志解读与分析（实例分析中篇）.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/19 GC 日志解读与分析（实例分析中篇）.md)
+
   - Java9 后的日志格式变化
 
     使用：-XX:+PrintCommandLineFlags -Xlog:gc*=debug:./gc.log:level,time,tags
@@ -2085,7 +2150,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - 调优
 
-  - GC日志中real时间比user+sys时间长该如何处理？
+  - GC日志中 real 时间比 user + sys 时间长该如何处理？
 
   - 可能导致 FullGC 的原因有以下几种。
 
@@ -2101,80 +2166,91 @@ Classloader 将数据加载到内存中经过的步骤：
 
 - 参数
 
-  - Jdk9+
+  <table>
+      <thead>
+          <tr>
+              <th><b>Young</b></th>
+              <th><b>Tenured</b></th>
+              <th><b>JVM options</b></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Incremental(增量GC)</td>
+              <td>Incremental</td>
+              <td>-Xincgc</td>
+          </tr>
+          <tr>
+              <td><b>Serial</b></td>
+              <td><b>Serial</b></td>
+              <td><b>-XX:+UseSerialGC</b></td>
+          </tr>
+          <tr>
+              <td>Parallel Scavenge</td>
+              <td>Serial</td>
+              <td>-XX:+UseParallelGC -XX:-UseParallelOldGC</td>
+          </tr>
+          <tr>
+              <td>Parallel New</td>
+              <td>Serial</td>
+              <td>N/A</td>
+          </tr>
+          <tr>
+              <td>Serial</td>
+              <td>Parallel Old</td>
+              <td>N/A</td>
+          </tr>
+          <tr>
+              <td><b>Parallel Scavenge</b></td>
+              <td><b>Parallel Old</b></td>
+              <td><b>-XX:+UseParallelGC -XX:+UseParallelOldGC</b></td>
+          </tr>
+          <tr>
+              <td>Parallel New</td>
+              <td>Parallel Old</td>
+              <td>N/A</td>
+          </tr>
+          <tr>
+              <td>Serial</td>
+              <td>CMS</td>
+              <td>-XX:-UseParNewGC -XX:+UseConcMarkSweepGC</td>
+          </tr>
+          <tr>
+              <td>Parallel Scavenge</td>
+              <td>CMS</td>
+              <td>N/A</td>
+          </tr>
+          <tr>
+              <td><b>Parallel New</b></td>
+              <td><b>CMS</b></td>
+              <td><b>-XX:+UseParNewGC -XX:+UseConcMarkSweepGC</b></td>
+          </tr>
+          <tr>
+              <td colspan="2" align="middle"><b>G1</b></td>
+              <td><b>-XX:+UseG1GC</b></td>
+          </tr>
+      </tbody>
+  </table>
+  
+  主要使用的是上表中黑体字表示的这四种组合。其余的要么是被废弃(deprecated)，要么是不支持或者是不太适用于生产环境。
 
-    `-XX:+PrintCommandLineFlags -Xlog:gc*=debug:./running_data/gc.log:level,time,tags`
-
-  - Jdk8
-
-    <table>
-        <thead>
-            <tr>
-                <th><b>Young</b></th>
-                <th><b>Tenured</b></th>
-                <th><b>JVM options</b></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Incremental(增量GC)</td>
-                <td>Incremental</td>
-                <td>-Xincgc</td>
-            </tr>
-            <tr>
-                <td><b>Serial</b></td>
-                <td><b>Serial</b></td>
-                <td><b>-XX:+UseSerialGC</b></td>
-            </tr>
-            <tr>
-                <td>Parallel Scavenge</td>
-                <td>Serial</td>
-                <td>-XX:+UseParallelGC -XX:-UseParallelOldGC</td>
-            </tr>
-            <tr>
-                <td>Parallel New</td>
-                <td>Serial</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Serial</td>
-                <td>Parallel Old</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td><b>Parallel Scavenge</b></td>
-                <td><b>Parallel Old</b></td>
-                <td><b>-XX:+UseParallelGC -XX:+UseParallelOldGC</b></td>
-            </tr>
-            <tr>
-                <td>Parallel New</td>
-                <td>Parallel Old</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td>Serial</td>
-                <td>CMS</td>
-                <td>-XX:-UseParNewGC -XX:+UseConcMarkSweepGC</td>
-            </tr>
-            <tr>
-                <td>Parallel Scavenge</td>
-                <td>CMS</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <td><b>Parallel New</b></td>
-                <td><b>CMS</b></td>
-                <td><b>-XX:+UseParNewGC -XX:+UseConcMarkSweepGC</b></td>
-            </tr>
-            <tr>
-                <td colspan="2" align="middle"><b>G1</b></td>
-                <td><b>-XX:+UseG1GC</b></td>
-            </tr>
-        </tbody>
-    </table>
-
-    主要使用的是上表中黑体字表示的这四种组合。其余的要么是被废弃(deprecated)，要么是不支持或者是不太适用于生产环境。
-    
+  eg.
+  
+  **Jdk8：**
+  
+  `-XX:+PrintCommandLineFlags -Xms52m -Xmx52m -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps` 
+  
+  Serial：`-XX:+UseSerialGC`
+  
+  Parallel：`-XX:+UseParallelGC -XX:+UseParallelOldGC`
+  
+  CMS：`-XX:+UseConcMarkSweepGC`
+  
+  G1：`-XX:+UseG1GC`
+  
+  **Jdk9+：**
+  
+  `-XX:+PrintCommandLineFlags -Xms52m -Xmx52m -Xlog:gc*=debug:gc.log:level,time,tags`
 
 
 
