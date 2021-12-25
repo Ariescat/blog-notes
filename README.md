@@ -56,9 +56,12 @@ Hey，I'm <strong>Ariescat</strong>，一只在广州苟活的程序猿。
 
 **Timeline：**
 
+* 2021-12-25：由于 Coding Page 将于年底停止提供「网站托管」服务，现已迁移至某云的 Serverless 托管。
+
 * 2021-09-30：引入 gittalk 评论系统。
 
 * 2021-09-18：采用 Github Actions，自动持续集成部署，解放双手~~ 此后只要提交到 Github 就行啦。
+
 * 2021-09-17：完成模块拆分，细分笔记。
 
 * 2021-09-16：由于部署太繁琐，采用了 [gh-pages - npm (npmjs.com)](https://www.npmjs.com/package/gh-pages)，并编写了脚本进行部署。
