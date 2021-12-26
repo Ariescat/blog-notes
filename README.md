@@ -2,9 +2,9 @@
 
 
 
-> 浊以静之徐清
+> 试问天人仙人
 >
-> 安以动之徐生
+> 谁敢来此人间996
 
 
 
@@ -30,9 +30,9 @@ Hey，I'm <strong>Ariescat</strong>，一只在广州苟活的程序猿。
 
 ### 关于 Awesome
 
-这是我利用 [GitBook](https://www.gitbook.com/) 搭建的笔记记录，在踏上编程的不归路后，陆陆续续把看到的学到的知识记录于此，以便于温故知新~
+这是我利用 [GitBook](https://www.gitbook.com/) 搭建的笔记记录：📖 [Ariescat‘s Awesome](https://awesome.ariescat.top/)
 
-我称之为《Coder 头秃区》：📖 [Ariescat‘s Awesome](https://awesome.ariescat.top/)
+此非大而全的知识图谱，只是在下踏上编程的不归路后，陆陆续续把学到的知识记录于此，以便于温故知新~
 
 （我还搭建了个小破站 [Ariescat‘s Blog](https://ariescat.top/)，偶尔想起来的时候也会写写博客的）
 
