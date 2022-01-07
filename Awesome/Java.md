@@ -1231,9 +1231,13 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * InterruptedException
 
-  何时抛出？
+  - 何时抛出？
 
-* interrupted()
+  - java.util.concurrent.ThreadPoolExecutor#shutdown
+
+    看看 interruptWorkers，interruptIdleWorkers
+
+* interrupted 和 isInterrupted 区别
 
 
 
@@ -1889,13 +1893,27 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 
 
+### 不错的系列文章
+
+- [JVM 核心技术 32 讲（完） (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/)
+
+
+
 ### 内存管理
 
 - 内存划分
 
   [JVM中的五大内存区域划分详解及快速扫盲](https://segmentfault.com/a/1190000022080301)
 
-  ![](https://image-static.segmentfault.com/234/102/2341028142-93fdd749b30a7515_fix732)
+  注意 1.7 和 1.8之后的区别
+
+  1.7之前：
+
+  ![1-7](https://image-static.segmentfault.com/234/102/2341028142-93fdd749b30a7515_fix732)
+
+  1.8之后：
+
+  ![1-8](http://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/JVM%20%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%2032%20%E8%AE%B2%EF%BC%88%E5%AE%8C%EF%BC%89/assets/b8e25a80-71db-11ea-964d-61a29639fe46)
 
 - 堆是线程共享的内存区域？
 
@@ -1908,6 +1926,28 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 这个关系到线程，线程安全，具体看 Java并发-同步互斥-内存模型
 
 （不要和内存管理的内存划分搞混）
+
+
+
+### 内存分析
+
+- 一个Java对象到底占多少个字节？
+
+  可以用 `ClassLayout.parseInstance(new Integer(5)).toPrintable()` 工具输出，注意在不同位数的JVM和是否开启指针压缩的场景下，输出会有不同。
+
+
+
+### 字节码
+
+- 局部变量表中的 Slot
+
+  为什么 JVM 局部变量表的一个 slot 至少要能容纳一个 int 类型的变量？
+
+  为什么 Java 虚拟机 JVM 要把 byte 和 short 的运算都转为 int ？
+
+- Class 类的文件结构
+
+  方法表，属性表...
 
 
 
@@ -1932,20 +1972,6 @@ Classloader 将数据加载到内存中经过的步骤：
 1. Q：同一个 Class 的**static 字段**，被不同的 ClassLoader 加载，会有产生几份？
 
    A：会是两份，也就是 JVM 里有两份内存（某次面试时问到的，但自己没试过）
-
-
-
-### 字节码
-
-- 局部变量表中的 Slot
-
-  为什么 JVM 局部变量表的一个 slot 至少要能容纳一个 int 类型的变量？
-
-  为什么 Java 虚拟机 JVM 要把 byte 和 short 的运算都转为 int ？
-
-- Class 类的文件结构
-
-  方法表，属性表...
 
 
 
@@ -2254,27 +2280,31 @@ Classloader 将数据加载到内存中经过的步骤：
 
 
 
-### 性能调优工具
+### 性能调优
 
-- 参数
+#### JVM参数
 
-  注意 JDK 版本，不一定都通用
+注意 JDK 版本，不一定都通用
 
-  **堆区：**
+**堆区：**
 
-  - -Xms and -Xmx (or: -XX:InitialHeapSize and -XX:MaxHeapSize，实际上是两者的缩写)
-  - -Xmn（or: -XX:NewSize and -XX:MaxnewSize，-Xmn 是对两者的同时配置，JDK4生效）
-  - -Xss，设置每个线程的堆栈大小，JDK5.0以后每个线程堆栈大小为1M
-  - -XX:NewRatio  -XX:SurvivorRatio
-  - -XX:MetaspaceSize  -XX:MaxMetaspaceSize，JDK8后替换永久代
-  - -XX:+UseCompressedOops  -XX:+UseCompressedClassPointers，目的是为了在 64bit 机器上使用 32bit 的原始对象指针
+- -Xms and -Xmx (or: -XX:InitialHeapSize and -XX:MaxHeapSize，实际上是两者的缩写)
+- -Xmn（or: -XX:NewSize and -XX:MaxnewSize，-Xmn 是对两者的同时配置，JDK4生效）
+- -Xss，设置每个线程的堆栈大小，JDK5.0以后每个线程堆栈大小为1M
+- -XX:NewRatio  -XX:SurvivorRatio
+- -XX:MetaspaceSize  -XX:MaxMetaspaceSize，JDK8后替换永久代
+- -XX:+UseCompressedOops  -XX:+UseCompressedClassPointers，目的是为了在 64bit 机器上使用 32bit 的原始对象指针
 
-  **非堆区：**
+**非堆区：**
 
-  - -XX:PermSize
-  - -XX:MaxPermSize
+- -XX:PermSize
+- -XX:MaxPermSize
 
-  [JVM调优总结 -Xms -Xmx -Xmn -Xss](https://www.cnblogs.com/likehua/p/3369823.html)
+[JVM调优总结 -Xms -Xmx -Xmn -Xss](https://www.cnblogs.com/likehua/p/3369823.html)
+
+
+
+#### 工具
 
 - jps、jstat、jinfo、jstack、jmap、jhat
 
