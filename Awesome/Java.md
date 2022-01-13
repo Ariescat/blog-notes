@@ -2326,6 +2326,15 @@ Classloader 将数据加载到内存中经过的步骤：
 
   [Arthas 使用指南](https://segmentfault.com/a/1190000014618329?utm_source=tag-newest)
 
+- FastThread
+
+  FastThread 是一款线程转储(Thread Dump)分析工具，官网地址为：http://fastthread.io/ 。
+
+  这款工具由 [tier1app 公司](https://tier1app.com/) 开发和支持，这家公司现在主要提供 3 款 JVM 分析工具，除了 FastThread 还有：
+
+  - GCEasy，访问地址：https://gceasy.io/，详情请参考前面的文章 [《GC 日志解读与分析（番外篇可视化工具）》]。
+  - HeapHero，官网地址：https://heaphero.io/，顾名思义，这是一款 Heap Dump 分析工具。
+
 
 
 ### Q&A
