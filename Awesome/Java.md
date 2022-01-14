@@ -793,6 +793,41 @@ Fu f = new Zi();System.out.println(f.age);
 
 
 
+### JVMTI
+
+JVM Tool Interface，是jvm暴露出来的一些供用户扩展的接口集合，JVMTI是基于事件驱动的，JVM每执行到一定的逻辑就会调用一些事件的回调接口（如果有的话），这些接口可以供开发者去扩展自己的逻辑。
+
+#### JVMTIAgent
+
+JVMTIAgent其实就是一个动态库，利用JVMTI暴露出来的一些接口来干一些我们想做但是正常情况下又做不到的事情，不过为了和普通的动态库进行区分，它一般会实现如下的一个或者多个函数：
+
+```c++
+JNIEXPORT jint JNICALL
+Agent_OnLoad(JavaVM *vm, char *options, void *reserved);
+
+JNIEXPORT jint JNICALL
+Agent_OnAttach(JavaVM* vm, char* options, void* reserved);
+
+JNIEXPORT void JNICALL
+Agent_OnUnload(JavaVM *vm); 
+```
+
+JVM启动参数：-agentlib:libname[=options]、-agentpath:pathname[=options]。
+
+比如：-agentlib:hprof，会搜到环境变量PATH中的dll/so库；而-agentpath会按全路径装载本地库，不再搜索PATH中的路径，其他功能和agentlib相同。
+
+
+
+#### javaagent
+
+`javaagent`是由一个叫做`instrument`的`JVMTIAgent`（linux下对应的动态库是`libinstrument.so`）来实现的，另外`instrument agent`还有个别名叫`JPLISAgent`（Java Programming Language Instrumentation Services Agent），从这名字里也完全体现了其最本质的功能：就是专门为java语言编写的插桩服务提供支持的。
+
+JVM启动参数：-javaagent:jarpath[=options]
+
+参考：[java agent基础原理_ancinsdn的博客](https://blog.csdn.net/ancinsdn/article/details/58276945)
+
+
+
 ### System#exit
 
 1. 注册的关闭勾子会在以下几种时机被调用到

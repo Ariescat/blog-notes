@@ -34,6 +34,7 @@
   - [对象序列化](/Awesome/Java.md#对象序列化)
   - [对象拷贝](/Awesome/Java.md#对象拷贝)
   - [热更新](/Awesome/Java.md#热更新)
+  - [JVMTI](/Awesome/Java.md#jvmti)
   - [System#exit](/Awesome/Java.md#systemexit)
   - [ServiceLoader](/Awesome/Java.md#serviceloader)
   - [Observable](/Awesome/Java.md#observable)
