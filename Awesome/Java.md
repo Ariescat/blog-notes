@@ -1049,7 +1049,8 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 #### 设计模式
 
 - 单例
-  - 双重校验锁 
+  - double check
+  - volatile 禁止new的指令重排
 
 参考：
 
@@ -1782,8 +1783,8 @@ AbstractQueuedSynchronizer
 
 Executors 返回线程池对象的弊端如下：
 
-1. FixedThreadPool 和 SingleThreadExecutor ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
-2. CachedThreadPool 和 ScheduledThreadPool ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
+1. FixedThreadPool 和 SingleThreadExecutor ： 允许**请求的队列长度**为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
+2. CachedThreadPool 和 ScheduledThreadPool ： 允许**创建的线程数量**为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
 
 
 
@@ -1842,8 +1843,7 @@ public void execute(Runnable command) {
 
 链接：
 
-1. https://www.jianshu.com/p/d5e2e3513ba3
-2. https://www.cnblogs.com/duanxz/p/3252267.html
+[SynchronousQueue应用 - hongdada - 博客园 (cnblogs.com)](https://www.cnblogs.com/hongdada/p/6147834.html)
 
 
 
@@ -2364,6 +2364,8 @@ Classloader 将数据加载到内存中经过的步骤：
   Arthas 是基于 Greys 进行二次开发的全新在线诊断工具
 
   [Arthas 使用指南](https://segmentfault.com/a/1190000014618329?utm_source=tag-newest)
+
+  [快速入门 — Arthas 3.5.5 文档 (aliyun.com)](https://arthas.aliyun.com/doc/quick-start.html)
 
 - FastThread
 
