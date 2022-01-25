@@ -390,6 +390,12 @@ TreeSet 同理，红黑树实现
 
 
 
+#### 线程安全的类
+
+另看：[并发容器](#并发容器)
+
+
+
 #### fail-fast 和 fail-safe
 
 [快速失败(fail-fast)和安全失败(fail-safe)的区别 - 那啥快看 - 博客园 (cnblogs.com)](https://www.cnblogs.com/shamo89/p/6685216.html)
@@ -1243,6 +1249,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
     当使用调用 wait 时，虽然当前的线程还在 schronized 同步块中， 但是也会让出锁，要不然，notify 永远拿不到锁，永远得不到执行。
 
     同样当使用完 notify 后，是不会立即释放锁的，必须使你当前线程走完 schronized 的代码，也就是说只有当前线程走完 schronized 代码块之后，wait 才会被执行。
+    
+    可以看下这个：[13 案例分析：多线程锁的优化.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/Java 性能优化实战-完/13  案例分析：多线程锁的优化.md) 里面的 synchronied 小节
 
 * await() signal() signalAll()
 
@@ -1622,6 +1630,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 - 了解一下 **LongAdder** 与 **Striped64**
 
   LongAdder 区别于 AtomicLong ，在高并发中有更好的性能体现
+  
+  JDK 1.8 中新增的 LongAdder，通过把原值进行拆分，最后再以 sum 的方式，减少 CAS 操作冲突的概率，性能要比 AtomicLong 高出 10 倍左右。
 
 * 链接
   * [《吊打面试官》系列-乐观锁、悲观锁](https://mp.weixin.qq.com/s/WtAdXvaRuBZ-SXayIKu1mA)
@@ -1700,15 +1710,26 @@ AbstractQueuedSynchronizer
 
 #### 并发容器
 
-- LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
+下面的每一个对比，都是面试中的知识点，想要更加深入地理解，你需要阅读 JDK 的源码。
 
-- CopyOnWriteArrayList
+- StringBuilder 对应着 StringBuffer。后者主要是通过 synchronized 关键字实现了线程的同步。值得注意的是，在单个方法区域里，这两者是没有区别的，JIT 的编译优化会去掉 synchronized 关键字的影响。
 
-- ConcurrentHashMap (JDK8)，ConcurrentHashMapV8 (netty 提供)
+- HashMap 对应着 ConcurrentHashMap。ConcurrentHashMap 的话题很大，java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
 
-  > java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
+  了解 computeIfAbsent
 
-  - computeIfAbsent
+  ConcurrentHashMapV8 (netty 提供)
+
+- LinkedList 对应着 ArrayBlockingQueue。ArrayBlockingQueue 对默认是不公平锁，可以修改构造参数，将其改成公平阻塞队列，它在 concurrent 包里使用得非常频繁。
+
+  同时还有LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
+
+- ArrayList 对应着 CopyOnWriteArrayList。后者是写时复制的概念，适合读多写少的场景。
+
+- HashSet 对应着 CopyOnWriteArraySet。
+
+了解：
+
 
 - SkipList（跳表）
 
@@ -1722,7 +1743,13 @@ AbstractQueuedSynchronizer
 
 1. ThreadLocal
 
-   ThreadLocal 有一个**value 内存泄露**的隐患
+   隐患：ThreadLocal 有一个 **value内存泄露** 的隐患
+
+   FastThreadLocal：
+
+   既然 Java 中有了 ThreadLocal 类了，为什么 Netty 还自己创建了一个叫作 FastThreadLocal 的结构？
+
+   底层的 InternalThreadLocalMap 对 cacheline 也做了相应的优化。（伪共享问题）
 
 2. WeakReference 和 **ReferenceQueue**
 
@@ -1895,6 +1922,8 @@ ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 #### 线程池异常处理
 
 java.util.concurrent.ThreadPoolExecutor#runWorker
+
+使用 execute 方法提交的任务一般没问题
 
 有需要可以重写 afterExecute
 
