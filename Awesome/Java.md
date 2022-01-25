@@ -1714,15 +1714,47 @@ AbstractQueuedSynchronizer
 
 - StringBuilder 对应着 StringBuffer。后者主要是通过 synchronized 关键字实现了线程的同步。值得注意的是，在单个方法区域里，这两者是没有区别的，JIT 的编译优化会去掉 synchronized 关键字的影响。
 
-- HashMap 对应着 ConcurrentHashMap。ConcurrentHashMap 的话题很大，java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
+- HashMap 
 
-  了解 computeIfAbsent
+  ConcurrentHashMap：ConcurrentHashMap 的话题很大，java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
+
+  了解 computeIfAbsent 等并发处理方法
 
   ConcurrentHashMapV8 (netty 提供)
 
-- LinkedList 对应着 ArrayBlockingQueue。ArrayBlockingQueue 对默认是不公平锁，可以修改构造参数，将其改成公平阻塞队列，它在 concurrent 包里使用得非常频繁。
+- LinkedList
 
-  同时还有LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
+  ArrayBlockingQueue：
+
+  > ArrayBlockingQueue 对默认是不公平锁，可以修改构造参数，将其改成公平阻塞队列，它在 concurrent 包里使用得非常频繁。
+
+  同时还有 LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
+
+  ConcurrentLinkedQueue：
+
+  > 最典型的**无锁队列**实现，使用 CAS 来处理对数据的并发访问，这是无锁算法得以实现的基础。
+  >
+  > CAS 指令不会引起上下文切换和线程调度，是非常轻量级的多线程同步机制。它还把入队、出队等对 head 和 tail 节点的一些原子操作，拆分出更细的步骤，进一步缩小了 CAS 控制的范围。
+  >
+  > 性能很高，但不是很常用。千万不要和阻塞队列 LinkedBlockingQueue（内部基于锁）搞混了。
+
+  **阻塞队列归类：**
+
+  不存储元素：
+
+  > - SynchronousQueue：一个不存储元素的阻塞队列。
+
+  有界：
+
+  > - ArrayBlockingQueue ：一个由数组结构组成的有界阻塞队列。
+  > - LinkedBlockingQueue ：一个由链表结构组成的有界阻塞队列。
+
+  无界：
+
+  > - PriorityBlockingQueue ：一个支持优先级排序的无界阻塞队列。
+  > - DelayQueue：一个使用优先级队列实现的无界阻塞队列。
+  > - LinkedTransferQueue：一个由链表结构组成的无界阻塞队列。
+  > - LinkedBlockingDeque：一个由链表结构组成的**双向**阻塞队列。
 
 - ArrayList 对应着 CopyOnWriteArrayList。后者是写时复制的概念，适合读多写少的场景。
 
