@@ -566,7 +566,9 @@ TreeSet 同理，红黑树实现
 
   **并发导致垃圾类创建：**
 
-    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
+    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**（关于元空间的回收看[JVM内存管理](#内存管理)）
+
+      后来发现JDK17加了个乐观锁判断 `U.compareAndSetInt(this, GENERATED_OFFSET, 0, 1)`，应该是修复过这个问题了（但JDK8并没有修复）
 
   **其他 JVM 相关文章:**
 
@@ -579,6 +581,28 @@ TreeSet 同理，红黑树实现
 - 其他链接
 
   [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
+
+
+
+#### MethodHandle
+
+反射获取的信息比 MethodHandle 要多。
+
+反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
+
+`MethodHandle` 和 反射 相比好处是：
+
+- 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
+- 性能好得多，类似标准的方法调用。
+- 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
+
+看 [指令集](#指令集)
+
+
+
+#### VarHandle
+
+VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
 
 
 
@@ -2011,6 +2035,12 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
   ![1-8](http://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/JVM%20%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%2032%20%E8%AE%B2%EF%BC%88%E5%AE%8C%EF%BC%89/assets/b8e25a80-71db-11ea-964d-61a29639fe46)
 
+  注意：Metaspace 使用的是本地内存（native memory），所以它的最大内存可以达到机器内存的极限
+
+  `-XX:MetaspaceSize` 并不代表初始的 Metaspace 大小。大致意思就是当 MetaspaceSize 接近一个指定水位（high-water mark）的时候，会引发垃圾回收。
+
+  [G1调优实践日记--被误解的MetaspaceSize_葵续浅笑的博客-CSDN博客](https://blog.csdn.net/lovejj1994/article/details/119936780)
+
 - 堆是线程共享的内存区域？
 
   不完全正确。因为 HotSpot 中，TLAB 是堆内存的一部分，他在**读取上**确实是**线程共享**的，但是在**内存分配上**，是**线程独享**的。[链接](https://mp.weixin.qq.com/s/Jj5Z1DZKpAgrj9wpYUZ_JQ)
@@ -2068,6 +2098,28 @@ Classloader 将数据加载到内存中经过的步骤：
 1. Q：同一个 Class 的**static 字段**，被不同的 ClassLoader 加载，会有产生几份？
 
    A：会是两份，也就是 JVM 里有两份内存（某次面试时问到的，但自己没试过）
+
+
+
+### 指令集
+
+#### 方法调用
+
+JVM提供了5种方法调用指令，其作用列举如下：
+
+> invokestatic：该指令用于调用静态方法，即使用 static 关键字修饰的方法；
+>
+> invokespecial：该指令用于三种场景：调用实例构造方法，调用私有方法（即private关键字修饰的方法）和父类方法（即super关键字调用的方法）；
+>
+> invokeinterface：该指令用于调用接口方法，在运行时再确定一个实现此接口的对象；
+>
+> invokevirtual：该指令用于调用虚方法（就是除了上述三种情况之外的方法）；
+>
+> invokedynamic：在运行时动态解析出调用点限定符所引用的方法之后，调用该方法；在JDK1.7中推出，主要用于支持JVM上的动态脚本语言（如Groovy，Jython等）。
+
+[通过实例一行一行分析JVM的invokespecial和invokevirtual指令 | wxweven 梦想之家](http://wxweven.win/2017/09/15/JVM-invokespecial和invokevirtual/)，这篇文章一定要认真读一下！！
+
+[Java中MethodHandle的使用问题？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/40427344/answer/86545388)
 
 
 
@@ -2482,14 +2534,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
     主要包含了 `CallSite、MethodHandle、MethodType` 等类
 
-    > 反射获取的信息比 MethodHandle 要多。
-    > 反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
-
-    > `MethodHandle`和反射相比好处是：
-    >
-    > - 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
-    > - 性能好得多，类似标准的方法调用。
-    > - 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
+    MethodHandle 看 [MethodHandle](#MethodHandle )
 
   - 新增了 invokedynamic 指令
 
