@@ -72,30 +72,10 @@ Hey，I'm <strong>Ariescat</strong>，一只在广州苟活的程序猿。
 
 
 
-**感谢：**
+### 感谢
 
 GitBook：[GitBook 简明教程](https://www.mapull.com/gitbook/comscore/)
 
 在线排版工具：[TTS (cyc2018.github.io)](https://cyc2018.github.io/Text-Typesetting/)
 
 表格转HTML：要想 MarkDown 中插入复杂表格时，可以先在 word 或 excel 中把表格写好，然后在如下网站进行转化为标记对形式：http://pressbin.com/tools/excel_to_html_table/index.html
-
-<br>
-
-
-
-### Metis 项目列表
-
-Metis 工程是一系列**算法、代码、工具、功能、框架**的用法与使用心得，**Metis** 这个名字取自希腊神话中的智慧女神**墨提斯**。
-
-[Metis](https://github.com/Ariescat/Metis)：功能测试，用例
-
-[Metis-Awesome](https://github.com/Ariescat/Metis-Awesome)：笔记总结（**也就是本工程**）
-
-[Metis-DailyRecords](https://github.com/Ariescat/Metis-DailyRecords)：随笔（private，个人使用）
-
-[Metis-Leetcode](https://github.com/Ariescat/Metis-Leetcode) ：leetcode 日常解题
-
-[Metis-Mall](https://github.com/Ariescat/Metis-Mall) ：分布式电商商城练习
-
-[Metis-Seckill](https://github.com/Ariescat/Metis-Seckill)：电商秒杀练习
