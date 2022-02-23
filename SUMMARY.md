@@ -34,6 +34,7 @@
   - [对象序列化](/Awesome/Java.md#对象序列化)
   - [对象拷贝](/Awesome/Java.md#对象拷贝)
   - [热更新](/Awesome/Java.md#热更新)
+  - [JVMTI](/Awesome/Java.md#jvmti)
   - [System#exit](/Awesome/Java.md#systemexit)
   - [ServiceLoader](/Awesome/Java.md#serviceloader)
   - [Observable](/Awesome/Java.md#observable)
@@ -64,13 +65,16 @@
 - [Java 虚拟机](/Awesome/Java.md#java-虚拟机)
 
   - [前言](/Awesome/Java.md#前言)
+  - [不错的系列文章](/Awesome/Java.md#不错的系列文章)
   - [内存管理](/Awesome/Java.md#内存管理)
   - [内存模型](/Awesome/Java.md#内存模型_1)
-  - [类加载 ClassLoader](/Awesome/Java.md#类加载-classloader)
+  - [内存分析](/Awesome/Java.md#内存分析)
   - [字节码](/Awesome/Java.md#字节码)
+  - [类加载 ClassLoader](/Awesome/Java.md#类加载-classloader)
+  - [指令集](/Awesome/Java.md#指令集)
   - [编译与优化](/Awesome/Java.md#编译与优化)
   - [GC](/Awesome/Java.md#gc)
-  - [性能调优工具](/Awesome/Java.md#性能调优工具)
+  - [性能调优](/Awesome/Java.md#性能调优)
   - [Q&A](/Awesome/Java.md#qa_1)
 
 - [Java 新特性](/Awesome/Java.md#java-新特性)
@@ -129,6 +133,8 @@
   - [思想](/Awesome/系统设计.md#思想)
 
 - [代码评审](/Awesome/系统设计.md#代码评审)
+
+- [性能优化](/Awesome/系统设计.md#性能优化)
 
 - [安全](/Awesome/系统设计.md#安全)
 

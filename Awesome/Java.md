@@ -311,7 +311,7 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
   ConcurrentHashMap 1194 行会死锁
 
-  ![deadlock](/img/awesome/map1.png)
+  ![deadlock](../img/awesome/map1.png)
 
 
 
@@ -387,6 +387,12 @@ TreeSet 同理，红黑树实现
 原始类型集合库**Koloboke**，避免大量的装箱拆箱，Koloboke 的目标是替换标准的 Java 集合和流的 API，提供更高效的实现。
 
 同类型的还有 HPPC，Eclipse Collections 等。
+
+
+
+#### 线程安全的类
+
+另看：[并发容器](#并发容器)
 
 
 
@@ -560,7 +566,9 @@ TreeSet 同理，红黑树实现
 
   **并发导致垃圾类创建：**
 
-    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**
+    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**（关于元空间的回收看[JVM内存管理](#内存管理)）
+
+      后来发现JDK17加了个乐观锁判断 `U.compareAndSetInt(this, GENERATED_OFFSET, 0, 1)`，应该是修复过这个问题了（但JDK8并没有修复）
 
   **其他 JVM 相关文章:**
 
@@ -573,6 +581,28 @@ TreeSet 同理，红黑树实现
 - 其他链接
 
   [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
+
+
+
+#### MethodHandle
+
+反射获取的信息比 MethodHandle 要多。
+
+反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
+
+`MethodHandle` 和 反射 相比好处是：
+
+- 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
+- 性能好得多，类似标准的方法调用。
+- 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
+
+看 [指令集](#指令集)
+
+
+
+#### VarHandle
+
+VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
 
 
 
@@ -793,6 +823,41 @@ Fu f = new Zi();System.out.println(f.age);
 
 
 
+### JVMTI
+
+JVM Tool Interface，是jvm暴露出来的一些供用户扩展的接口集合，JVMTI是基于事件驱动的，JVM每执行到一定的逻辑就会调用一些事件的回调接口（如果有的话），这些接口可以供开发者去扩展自己的逻辑。
+
+#### JVMTIAgent
+
+JVMTIAgent其实就是一个动态库，利用JVMTI暴露出来的一些接口来干一些我们想做但是正常情况下又做不到的事情，不过为了和普通的动态库进行区分，它一般会实现如下的一个或者多个函数：
+
+```c++
+JNIEXPORT jint JNICALL
+Agent_OnLoad(JavaVM *vm, char *options, void *reserved);
+
+JNIEXPORT jint JNICALL
+Agent_OnAttach(JavaVM* vm, char* options, void* reserved);
+
+JNIEXPORT void JNICALL
+Agent_OnUnload(JavaVM *vm); 
+```
+
+JVM启动参数：-agentlib:libname[=options]、-agentpath:pathname[=options]。
+
+比如：-agentlib:hprof，会搜到环境变量PATH中的dll/so库；而-agentpath会按全路径装载本地库，不再搜索PATH中的路径，其他功能和agentlib相同。
+
+
+
+#### javaagent
+
+`javaagent`是由一个叫做`instrument`的`JVMTIAgent`（linux下对应的动态库是`libinstrument.so`）来实现的，另外`instrument agent`还有个别名叫`JPLISAgent`（Java Programming Language Instrumentation Services Agent），从这名字里也完全体现了其最本质的功能：就是专门为java语言编写的插桩服务提供支持的。
+
+JVM启动参数：-javaagent:jarpath[=options]
+
+参考：[java agent基础原理_ancinsdn的博客](https://blog.csdn.net/ancinsdn/article/details/58276945)
+
+
+
 ### System#exit
 
 1. 注册的关闭勾子会在以下几种时机被调用到
@@ -958,11 +1023,11 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
        在计算机内存中，统一使用 Unicode 编码，当需要保存到硬盘或者需要传输的时候，就转换为 UTF-8 编码。
        用记事本编辑的时候，从文件读取的 UTF-8 字符被转换为 Unicode 字符到内存里，编辑完成后，保存的时候再把 Unicode 转换为 UTF-8 保存到文件：
 
-       ![字符编码·图 1](/img/awesome/Unicode1.png)
+       ![字符编码·图 1](../img/awesome/Unicode1.png)
 
        浏览网页的时候，服务器会把动态生成的 Unicode 内容转换为 UTF-8 再传输到浏览器：
 
-       ![字符编码·图 2](/img/awesome/Unicode2.png)
+       ![字符编码·图 2](../img/awesome/Unicode2.png)
 
        所以你看到很多网页的源码上会有类似`<meta charset="UTF-8" />`的信息，表示该网页正是用的 UTF-8 编码。
 
@@ -1014,7 +1079,8 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 #### 设计模式
 
 - 单例
-  - 双重校验锁 
+  - double check
+  - volatile 禁止new的指令重排
 
 参考：
 
@@ -1186,7 +1252,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 #### 线程之间协作
 
-![thread](/img/awesome/thread1.png)
+![thread](../img/awesome/thread1.png)
 
 * join
 
@@ -1207,6 +1273,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
     当使用调用 wait 时，虽然当前的线程还在 schronized 同步块中， 但是也会让出锁，要不然，notify 永远拿不到锁，永远得不到执行。
 
     同样当使用完 notify 后，是不会立即释放锁的，必须使你当前线程走完 schronized 的代码，也就是说只有当前线程走完 schronized 代码块之后，wait 才会被执行。
+    
+    可以看下这个：[13 案例分析：多线程锁的优化.md (lianglianglee.com)](http://learn.lianglianglee.com/专栏/Java 性能优化实战-完/13  案例分析：多线程锁的优化.md) 里面的 synchronied 小节
 
 * await() signal() signalAll()
 
@@ -1231,9 +1299,13 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 * InterruptedException
 
-  何时抛出？
+  - 何时抛出？
 
-* interrupted()
+  - java.util.concurrent.ThreadPoolExecutor#shutdown
+
+    看看 interruptWorkers，interruptIdleWorkers
+
+* interrupted 和 isInterrupted 区别
 
 
 
@@ -1413,7 +1485,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   在多处理器系统中，每个处理器都有自己的高速缓存，而它们又共享同一主内存（MainMemory）。
 
-  ![java_jmm_1](/img/awesome/java_jmm_1.webp)
+  ![java_jmm_1](../img/awesome/java_jmm_1.webp)
 
 * JMM
 
@@ -1429,7 +1501,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
   >
   > 不同线程之间也不能直接访问对方工作内存中的变量，线程间变量的值的传递需要通过主内存中转来完成。
 
-  ![java_jmm_2](/img/awesome/java_jmm_2.webp)
+  ![java_jmm_2](../img/awesome/java_jmm_2.webp)
 
   **正是因为这样的机制，才导致了可见性问题的存在**
 
@@ -1467,7 +1539,7 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   为了提高性能，**编译器**和**处理器**常常会对既定的代码执行顺序进行指令重排序。
 
-  ![java_jmm_3](/img/awesome/java_jmm_3.webp)
+  ![java_jmm_3](../img/awesome/java_jmm_3.webp)
 
   一般重排序可以分为如下三种：
 
@@ -1487,17 +1559,17 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   为了实现 volatile 的内存语义，JMM 会限制特定类型的编译器和处理器重排序，JMM 会针对编译器制定 volatile 重排序规则表：
 
-  ![java_jmm_4](/img/awesome/java_jmm_4.webp)
+  ![java_jmm_4](../img/awesome/java_jmm_4.webp)
 
   需要注意的是：volatile 写是在前面和后面**分别插入内存屏障**，而 volatile 读操作是在**后面插入两个内存屏障**。
 
   **写**
 
-  ![java_jmm_5](/img/awesome/java_jmm_5.webp)
+  ![java_jmm_5](../img/awesome/java_jmm_5.webp)
 
   **读**
 
-  ![java_jmm_6](/img/awesome/java_jmm_6.webp)
+  ![java_jmm_6](../img/awesome/java_jmm_6.webp)
 
 * happens-before
 
@@ -1582,6 +1654,8 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 - 了解一下 **LongAdder** 与 **Striped64**
 
   LongAdder 区别于 AtomicLong ，在高并发中有更好的性能体现
+  
+  JDK 1.8 中新增的 LongAdder，通过把原值进行拆分，最后再以 sum 的方式，减少 CAS 操作冲突的概率，性能要比 AtomicLong 高出 10 倍左右。
 
 * 链接
   * [《吊打面试官》系列-乐观锁、悲观锁](https://mp.weixin.qq.com/s/WtAdXvaRuBZ-SXayIKu1mA)
@@ -1660,15 +1734,58 @@ AbstractQueuedSynchronizer
 
 #### 并发容器
 
-- LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
+下面的每一个对比，都是面试中的知识点，想要更加深入地理解，你需要阅读 JDK 的源码。
 
-- CopyOnWriteArrayList
+- StringBuilder 对应着 StringBuffer。后者主要是通过 synchronized 关键字实现了线程的同步。值得注意的是，在单个方法区域里，这两者是没有区别的，JIT 的编译优化会去掉 synchronized 关键字的影响。
 
-- ConcurrentHashMap (JDK8)，ConcurrentHashMapV8 (netty 提供)
+- HashMap 
 
-  > java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
+  ConcurrentHashMap：ConcurrentHashMap 的话题很大，java8 中的 ConcurrentHashMap 实现已经抛弃了 java7 中分段锁的设计，而采用更为轻量级的 CAS 来协调并发，效率更佳。
 
-  - computeIfAbsent
+  了解 computeIfAbsent 等并发处理方法
+
+  ConcurrentHashMapV8 (netty 提供)
+
+- LinkedList
+
+  ArrayBlockingQueue：
+
+  > ArrayBlockingQueue 对默认是不公平锁，可以修改构造参数，将其改成公平阻塞队列，它在 concurrent 包里使用得非常频繁。
+
+  同时还有 LinkedBlockingQueue，ConcurrentLinkedQueue 等，要看看源码如何实现（offer，take 方法）！
+
+  ConcurrentLinkedQueue：
+
+  > 最典型的**无锁队列**实现，使用 CAS 来处理对数据的并发访问，这是无锁算法得以实现的基础。
+  >
+  > CAS 指令不会引起上下文切换和线程调度，是非常轻量级的多线程同步机制。它还把入队、出队等对 head 和 tail 节点的一些原子操作，拆分出更细的步骤，进一步缩小了 CAS 控制的范围。
+  >
+  > 性能很高，但不是很常用。千万不要和阻塞队列 LinkedBlockingQueue（内部基于锁）搞混了。
+
+  **阻塞队列归类：**
+
+  不存储元素：
+
+  > - SynchronousQueue：一个不存储元素的阻塞队列。
+
+  有界：
+
+  > - ArrayBlockingQueue ：一个由数组结构组成的有界阻塞队列。
+  > - LinkedBlockingQueue ：一个由链表结构组成的有界阻塞队列。
+
+  无界：
+
+  > - PriorityBlockingQueue ：一个支持优先级排序的无界阻塞队列。
+  > - DelayQueue：一个使用优先级队列实现的无界阻塞队列。
+  > - LinkedTransferQueue：一个由链表结构组成的无界阻塞队列。
+  > - LinkedBlockingDeque：一个由链表结构组成的**双向**阻塞队列。
+
+- ArrayList 对应着 CopyOnWriteArrayList。后者是写时复制的概念，适合读多写少的场景。
+
+- HashSet 对应着 CopyOnWriteArraySet。
+
+了解：
+
 
 - SkipList（跳表）
 
@@ -1682,7 +1799,13 @@ AbstractQueuedSynchronizer
 
 1. ThreadLocal
 
-   ThreadLocal 有一个**value 内存泄露**的隐患
+   隐患：ThreadLocal 有一个 **value内存泄露** 的隐患
+
+   FastThreadLocal：
+
+   既然 Java 中有了 ThreadLocal 类了，为什么 Netty 还自己创建了一个叫作 FastThreadLocal 的结构？
+
+   底层的 InternalThreadLocalMap 对 cacheline 也做了相应的优化。（伪共享问题）
 
 2. WeakReference 和 **ReferenceQueue**
 
@@ -1743,8 +1866,8 @@ AbstractQueuedSynchronizer
 
 Executors 返回线程池对象的弊端如下：
 
-1. FixedThreadPool 和 SingleThreadExecutor ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
-2. CachedThreadPool 和 ScheduledThreadPool ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
+1. FixedThreadPool 和 SingleThreadExecutor ： 允许**请求的队列长度**为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
+2. CachedThreadPool 和 ScheduledThreadPool ： 允许**创建的线程数量**为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
 
 
 
@@ -1803,8 +1926,7 @@ public void execute(Runnable command) {
 
 链接：
 
-1. https://www.jianshu.com/p/d5e2e3513ba3
-2. https://www.cnblogs.com/duanxz/p/3252267.html
+[SynchronousQueue应用 - hongdada - 博客园 (cnblogs.com)](https://www.cnblogs.com/hongdada/p/6147834.html)
 
 
 
@@ -1857,6 +1979,8 @@ ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 
 java.util.concurrent.ThreadPoolExecutor#runWorker
 
+使用 execute 方法提交的任务一般没问题
+
 有需要可以重写 afterExecute
 
 但注意 sumbit 这种情况，FutureTask 自己封装处理了异常，不通过 Future 是获取不到的，看看这篇文章：
@@ -1889,17 +2013,56 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 
 
+### 不错的系列文章
+
+- [JVM 核心技术 32 讲（完） (lianglianglee.com)](http://learn.lianglianglee.com/专栏/JVM 核心技术 32 讲（完）/)
+
+
+
 ### 内存管理
 
 - 内存划分
 
   [JVM中的五大内存区域划分详解及快速扫盲](https://segmentfault.com/a/1190000022080301)
 
-  ![](https://image-static.segmentfault.com/234/102/2341028142-93fdd749b30a7515_fix732)
+  注意 1.7 和 1.8之后的区别
+
+  1.7之前：
+
+  ![1-7](https://image-static.segmentfault.com/234/102/2341028142-93fdd749b30a7515_fix732)
+
+  1.8之后：
+
+  ![1-8](http://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/JVM%20%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%2032%20%E8%AE%B2%EF%BC%88%E5%AE%8C%EF%BC%89/assets/b8e25a80-71db-11ea-964d-61a29639fe46)
+
+  注意：Metaspace 使用的是本地内存（native memory），所以它的最大内存可以达到机器内存的极限
+
+  `-XX:MetaspaceSize` 并不代表初始的 Metaspace 大小。大致意思就是当 MetaspaceSize 接近一个指定水位（high-water mark）的时候，会引发垃圾回收。
+
+  [G1调优实践日记--被误解的MetaspaceSize_葵续浅笑的博客-CSDN博客](https://blog.csdn.net/lovejj1994/article/details/119936780)
 
 - 堆是线程共享的内存区域？
 
   不完全正确。因为 HotSpot 中，TLAB 是堆内存的一部分，他在**读取上**确实是**线程共享**的，但是在**内存分配上**，是**线程独享**的。[链接](https://mp.weixin.qq.com/s/Jj5Z1DZKpAgrj9wpYUZ_JQ)
+
+- 字符串常量池在那个区域中？
+
+  答案：这个要看 JDK 版本。
+
+  在 JDK 1.8 之前，是没有元空间这个概念的，当时的方法区是放在一个叫作永久代的空间中。
+
+  而在 JDK 1.7 之前，字符串常量池也放在这个叫作永久带的空间中。但在 JDK 1.7 版本，已经将字符串常量池从永久带移动到了堆上。
+
+  所以，从 1.7 版本开始，字符串常量池就一直存在于堆上。对于 JDK1.8 时，HostSpot VM 对 JVM 模型进行了改造，将**元数据放到本地内存**，将**常量池和静态变量放到了Java堆里**。
+
+- 直接内存和本地内存
+
+  直接内存，指的是使用了 Java 的直接内存 API，进行操作的内存。**这部分内存可以受到 JVM 的管控**，比如 ByteBuffer 类所申请的内存，就可以使用具体的参数进行控制。
+
+  需要注意的是直接内存和本地内存不是一个概念。
+
+  - **直接内存**比较专一，有具体的 API（这里指的是ByteBuffer），也可以使用 `-XX:MaxDirectMemorySize` 参数控制它的大小；
+  - **本地内存**是一个统称，比如使用 native 函数操作的内存就是本地内存，**本地内存的使用 JVM 是限制不住的**，使用的时候一定要小心。
 
 
 
@@ -1908,6 +2071,28 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 这个关系到线程，线程安全，具体看 Java并发-同步互斥-内存模型
 
 （不要和内存管理的内存划分搞混）
+
+
+
+### 内存分析
+
+- 一个Java对象到底占多少个字节？
+
+  可以用 `ClassLayout.parseInstance(new Integer(5)).toPrintable()` 工具输出，注意在不同位数的JVM和是否开启指针压缩的场景下，输出会有不同。
+
+
+
+### 字节码
+
+- 局部变量表中的 Slot
+
+  为什么 JVM 局部变量表的一个 slot 至少要能容纳一个 int 类型的变量？
+
+  为什么 Java 虚拟机 JVM 要把 byte 和 short 的运算都转为 int ？
+
+- Class 类的文件结构
+
+  方法表，属性表...
 
 
 
@@ -1935,17 +2120,25 @@ Classloader 将数据加载到内存中经过的步骤：
 
 
 
-### 字节码
+### 指令集
 
-- 局部变量表中的 Slot
+#### 方法调用
 
-  为什么 JVM 局部变量表的一个 slot 至少要能容纳一个 int 类型的变量？
+JVM提供了5种方法调用指令，其作用列举如下：
 
-  为什么 Java 虚拟机 JVM 要把 byte 和 short 的运算都转为 int ？
+> invokestatic：该指令用于调用静态方法，即使用 static 关键字修饰的方法；
+>
+> invokespecial：该指令用于三种场景：调用实例构造方法，调用私有方法（即private关键字修饰的方法）和父类方法（即super关键字调用的方法）；
+>
+> invokeinterface：该指令用于调用接口方法，在运行时再确定一个实现此接口的对象；
+>
+> invokevirtual：该指令用于调用虚方法（就是除了上述三种情况之外的方法）；
+>
+> invokedynamic：在运行时动态解析出调用点限定符所引用的方法之后，调用该方法；在JDK1.7中推出，主要用于支持JVM上的动态脚本语言（如Groovy，Jython等）。
 
-- Class 类的文件结构
+[通过实例一行一行分析JVM的invokespecial和invokevirtual指令 | wxweven 梦想之家](http://wxweven.win/2017/09/15/JVM-invokespecial和invokevirtual/)，这篇文章一定要认真读一下！！
 
-  方法表，属性表...
+[Java中MethodHandle的使用问题？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/40427344/answer/86545388)
 
 
 
@@ -2254,27 +2447,31 @@ Classloader 将数据加载到内存中经过的步骤：
 
 
 
-### 性能调优工具
+### 性能调优
 
-- 参数
+#### JVM参数
 
-  注意 JDK 版本，不一定都通用
+注意 JDK 版本，不一定都通用
 
-  **堆区：**
+**堆区：**
 
-  - -Xms and -Xmx (or: -XX:InitialHeapSize and -XX:MaxHeapSize，实际上是两者的缩写)
-  - -Xmn（or: -XX:NewSize and -XX:MaxnewSize，-Xmn 是对两者的同时配置，JDK4生效）
-  - -Xss，设置每个线程的堆栈大小，JDK5.0以后每个线程堆栈大小为1M
-  - -XX:NewRatio  -XX:SurvivorRatio
-  - -XX:MetaspaceSize  -XX:MaxMetaspaceSize，JDK8后替换永久代
-  - -XX:+UseCompressedOops  -XX:+UseCompressedClassPointers，目的是为了在 64bit 机器上使用 32bit 的原始对象指针
+- -Xms and -Xmx (or: -XX:InitialHeapSize and -XX:MaxHeapSize，实际上是两者的缩写)
+- -Xmn（or: -XX:NewSize and -XX:MaxnewSize，-Xmn 是对两者的同时配置，JDK4生效）
+- -Xss，设置每个线程的堆栈大小，JDK5.0以后每个线程堆栈大小为1M
+- -XX:NewRatio  -XX:SurvivorRatio
+- -XX:MetaspaceSize  -XX:MaxMetaspaceSize，JDK8后替换永久代
+- -XX:+UseCompressedOops  -XX:+UseCompressedClassPointers，目的是为了在 64bit 机器上使用 32bit 的原始对象指针
 
-  **非堆区：**
+**非堆区：**
 
-  - -XX:PermSize
-  - -XX:MaxPermSize
+- -XX:PermSize
+- -XX:MaxPermSize
 
-  [JVM调优总结 -Xms -Xmx -Xmn -Xss](https://www.cnblogs.com/likehua/p/3369823.html)
+[JVM调优总结 -Xms -Xmx -Xmn -Xss](https://www.cnblogs.com/likehua/p/3369823.html)
+
+
+
+#### 工具
 
 - jps、jstat、jinfo、jstack、jmap、jhat
 
@@ -2286,6 +2483,10 @@ Classloader 将数据加载到内存中经过的步骤：
 
   [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 
+- jmc
+
+  JDK Mission Control
+
 - MAT
 
   Eclipse Memory Analyzer
@@ -2295,6 +2496,17 @@ Classloader 将数据加载到内存中经过的步骤：
   Arthas 是基于 Greys 进行二次开发的全新在线诊断工具
 
   [Arthas 使用指南](https://segmentfault.com/a/1190000014618329?utm_source=tag-newest)
+
+  [快速入门 — Arthas 3.5.5 文档 (aliyun.com)](https://arthas.aliyun.com/doc/quick-start.html)
+
+- FastThread
+
+  FastThread 是一款线程转储(Thread Dump)分析工具，官网地址为：http://fastthread.io/ 。
+
+  这款工具由 [tier1app 公司](https://tier1app.com/) 开发和支持，这家公司现在主要提供 3 款 JVM 分析工具，除了 FastThread 还有：
+
+  - GCEasy，访问地址：https://gceasy.io/，详情请参考前面的文章 [《GC 日志解读与分析（番外篇可视化工具）》]。
+  - HeapHero，官网地址：https://heaphero.io/，顾名思义，这是一款 Heap Dump 分析工具。
 
 
 
@@ -2341,14 +2553,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
     主要包含了 `CallSite、MethodHandle、MethodType` 等类
 
-    > 反射获取的信息比 MethodHandle 要多。
-    > 反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
-
-    > `MethodHandle`和反射相比好处是：
-    >
-    > - 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
-    > - 性能好得多，类似标准的方法调用。
-    > - 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
+    MethodHandle 看 [MethodHandle](#MethodHandle )
 
   - 新增了 invokedynamic 指令
 
