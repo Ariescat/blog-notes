@@ -233,10 +233,13 @@
 
 
 
-## C/C++
+## C++
 
-- [基础](/Awesome/C++.md#基础_1)
-- [技巧用法](/Awesome/C++.md#技巧用法)
+- [C++基础](/Awesome/C++.md#c基础)
+
+- [C++标准库](/Awesome/C++.md#c标准库)
+
+- [高级](/Awesome/C++.md#高级)
 
 
 
