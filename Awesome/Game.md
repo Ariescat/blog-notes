@@ -6,11 +6,18 @@
 
 ### 网络
 
+通信：
+
 - 可靠 UDP 的实现：KCP
 
 - TCP
 
   启用和禁用TCP_NODELAY有什么影响？
+
+应用层协议：
+
+- Json，MessagePack
+- ProtoBuf
 
 
 
@@ -48,16 +55,16 @@
 - 导航网格（navmesh）
 
   导航网格的生成会分为下面几个步骤：
-  
+
   1. 场景模型体素化（Voxelization），或者叫“栅格化”（Rasterization）
   2. 过滤出可行走面（Walkable Suface）
   3. 生成 Region
   4. 生成 Contour（边缘）
   5. 生成 Poly Mesh
   6. 生成 Detailed Mesh
-  
+
   参考：
-  
+
   - 《腾讯游戏开发精粹》：第5章 3D游戏碰撞之体素内存、效率优化
   - [游戏的寻路导航 1：导航网格 - 简书 (jianshu.com)](https://www.jianshu.com/p/490a9128b248)
   - [NMGen Study](http://www.critterai.org/projects/nmgen_study/) 项目，NMGen研究是Java中 [Recast静态网格](https://github.com/memononen/recastnavigation) 功能的改编，用于研究和实验目的。
@@ -80,7 +87,7 @@
   - **Actor 模型**
   - [akka 设计模式系列-基础模式](https://yq.aliyun.com/articles/616951?spm=a2c4e.11153940.blogcont616952.14.28751adcybgYqt)
 - skynet
-  
+
   - [LuaAPI · cloudwu/skynet Wiki (github.com)](https://github.com/cloudwu/skynet/wiki/LuaAPI)
   - [skynet源码赏析 (manistein.github.io)](https://manistein.github.io/blog/post/server/skynet/skynet源码赏析/)
   - [skynet教程（1）--服务的编写 - 简书 (jianshu.com)](https://www.jianshu.com/p/d843fe686fc0)
