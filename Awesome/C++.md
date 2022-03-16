@@ -14,15 +14,31 @@
 
 
 
-### 字符串、向量和数组
+### 字符串
+
+C语言没有原生的字符串类型！
+
+C风格字符串就是最后一位为'\0'的**字符数组**！C语言通过字符指针来管理字符串！
+
+在C++语言中，除了继承了C语言中的这种字符串表达形式外，还新添了string类用来表达字符串。为了区分C++中这两种不同的字符串，使用“C风格字符串”来特指来源于C语言的字符串存储方式。
 
 - string.h
+
+  注意：
+
+  `#include <string.h>` 和 `#include <cstring>` 是相同作用的，而`#include <string>`是C++字符串变量 string 必须要的头文件（包含一些操作符的重载等）。
+
+  一些重要的方法：
 
   - memcpy
 
   - memset
 
   [C 标准库 –  | 菜鸟教程 (runoob.com)](https://www.runoob.com/cprogramming/c-standard-library-string-h.html)
+
+
+
+### 向量和数组
 
 - [动态申请二维数组](https://blog.csdn.net/qq_41822235/article/details/81142107)
 

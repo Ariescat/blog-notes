@@ -2285,6 +2285,8 @@ JVM提供了5种方法调用指令，其作用列举如下：
 
   - **ZGC**
 
+    [新一代垃圾回收器ZGC的探索与实践 - 美团技术团队 (meituan.com)](https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html)
+
   - Shenandoah
 
   - Epsilon：实验性的 GC，供性能分析使用
