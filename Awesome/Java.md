@@ -59,6 +59,10 @@
 
   毕竟我和在座的各位都是人才，Java 知识底蕴不能如此短浅，这题还没谢幕我们还能对面试官多哔哔几句：字符串常量池在不同版本的 jvm 中可能位置不同，那么这又是一个老梗了。（在 JDK6.0 及之前版本，字符串常量池是放在 Perm Gen 区 (也就是方法区) 中；在 JDK7.0 版本，字符串常量池被移到了堆中了）
 
+- StringBuilder
+
+  [国内 Java 面试总是问 StringBuffer，StringBuilder 区别是啥？档次为什么这么低？](https://www.hollischuang.com/archives/3912)
+
   扩展：
 
   1. intern 方法
@@ -603,6 +607,13 @@ TreeSet 同理，红黑树实现
 #### VarHandle
 
 VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
+
+
+
+#### 反射缺点
+
+1. 由于是本地方法调用，让 JVM 无法优化 (还有 JIT？)
+2. 反射方法调用还有验证过程和参数问题，参数需要装箱拆箱、需要组装成 Object[] 形式、异常的包装等等问题
 
 
 
@@ -1420,11 +1431,21 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   [偏向锁与 hashcode 能共存吗？_Saintyyu 的博客-CSDN 博客](https://blog.csdn.net/Saintyyu/article/details/108295657)
 
+- Q&A
+
+  - synchronized 或其他锁的产生的阻塞，其和 wait 的区别？
+
+  - 当一个线程的时间片耗尽之后，其 synchronized 的代码会发生原子性问题吗？
+
+    线程 1 在执行`monitorenter`指令的时候，会对 Monitor 进行加锁，加锁后其他线程无法获得锁，除非线程 1 主动解锁。即使在执行过程中，由于某种原因，比如 CPU 时间片用完，线程 1 放弃了 CPU，但是，他并没有进行解锁。而由于`synchronized`的锁是可重入的，下一个时间片还是只能被他自己获取到，还是会继续执行代码。直到所有代码执行完。这就保证了原子性。
+
 
 
 #### 锁优化
 
 这里的锁优化主要是指 JVM 对 synchronized 的优化。
+
+JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应性自旋锁，锁粗化 (自旋锁在 1.4 就有，只不过默认的是关闭的，jdk1.6 是默认开启的)
 
 * 自旋锁、锁消除、锁粗化
 
@@ -1720,6 +1741,7 @@ AbstractQueuedSynchronizer
      * compareAndSwap...
   2. [LockSupport](https://www.jianshu.com/p/e3afe8ab8364)（提供 park/unpark 操作）
      * AbstractFuture (一旦调用 get 就会阻塞)
+     * unpark必须在thread start之后才有用，之前调用没有任何效果；thread start之后，**unpark在park之前还是之后，作用是一样的，都会重新唤醒线程**。
 - 与 Object 类的 wait/notify 机制相比，park/unpark 有两个优点：
   1. 以 thread 为操作对象更符合阻塞线程的直观定义
   2. 操作更精准，可以准确地唤醒某一个线程（notify 随机唤醒一个线程，notifyAll 唤醒所有等待的线程），增加了灵活性。
@@ -2072,6 +2094,10 @@ Java 语言并没有对协程的原生支持，但是某些开源框架模拟出
 
 （不要和内存管理的内存划分搞混）
 
+扩展：
+
+计算机内存模型 与 Java 内存模型
+
 
 
 ### 内存分析
@@ -2144,7 +2170,7 @@ JVM提供了5种方法调用指令，其作用列举如下：
 
 ### 编译与优化
 
-- HotSpot 虚拟机 JIT
+- 执行
 
   - 解释执行
 
@@ -2153,6 +2179,12 @@ JVM提供了5种方法调用指令，其作用列举如下：
   - 即时编译（Just-in-time ，JIT）
 
     将一个方法中包含的所有字节码编译成机器码后再执行。
+
+- HotSpot 虚拟机 JIT
+
+  JITWatch：
+
+  [jitwatch介绍和使用 - 树之下 - 博客园 (cnblogs.com)](https://www.cnblogs.com/shuzhixia/p/13359299.html)
 
 - 逃逸分析
 
@@ -2447,6 +2479,10 @@ JVM提供了5种方法调用指令，其作用列举如下：
   
   `-XX:+PrintCommandLineFlags -Xms52m -Xmx52m -Xlog:gc*=debug:gc.log:level,time,tags`
 
+- Q&A
+  - static 会被 GC 回收吗？static 的在内存中的存放位置？
+  - 永久代不够会触发 Full GC 吗
+
 
 
 ### 性能调优
@@ -2481,13 +2517,13 @@ JVM提供了5种方法调用指令，其作用列举如下：
 
   [Java性能调优工具](https://www.cnblogs.com/timlearn/p/4088626.html)
 
-- JVisualVM
-
-  [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
-
 - jmc
 
   JDK Mission Control
+
+- JVisualVM
+
+  [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
 
 - MAT
 
@@ -2510,34 +2546,13 @@ JVM提供了5种方法调用指令，其作用列举如下：
   - GCEasy，访问地址：https://gceasy.io/，详情请参考前面的文章 [《GC 日志解读与分析（番外篇可视化工具）》]。
   - HeapHero，官网地址：https://heaphero.io/，顾名思义，这是一款 Heap Dump 分析工具。
 
+- 反汇编
 
+  大多数情况下，通过诸如javap等反编译工具来查看源码的字节码已经能够满足我们的日常需求，但是不排除在有些特定场景下，我们需要通过反汇编来查看相应的汇编指令。
 
-### Q&A
+  两个很好用的工具——HSDIS、JITWatch
 
-- 计算机内存模型 与 Java 内存模型
-
-- GC
-
-  - static 会被 GC 回收吗？static 的在内存中的存放位置？
-  - 永久代不够会触发 Full GC 吗
-
-- 锁
-
-  - synchronized 或其他锁的产生的阻塞，其和 wait 的区别？
-
-  - 当一个线程的时间片耗尽之后，其 synchronized 的代码会发生原子性问题吗？
-
-    线程 1 在执行`monitorenter`指令的时候，会对 Monitor 进行加锁，加锁后其他线程无法获得锁，除非线程 1 主动解锁。即使在执行过程中，由于某种原因，比如 CPU 时间片用完，线程 1 放弃了 CPU，但是，他并没有进行解锁。而由于`synchronized`的锁是可重入的，下一个时间片还是只能被他自己获取到，还是会继续执行代码。直到所有代码执行完。这就保证了原子性。
-
-  - JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应性自旋锁，锁粗化 (自旋锁在 1.4 就有，只不过默认的是关闭的，jdk1.6 是默认开启的)
-
-- [国内 Java 面试总是问 StringBuffer，StringBuilder 区别是啥？档次为什么这么低？](https://www.hollischuang.com/archives/3912)
-
-- 反射缺点？
-
-  1.由于是本地方法调用，让 JVM 无法优化 (还有 JIT？)
-
-  2.反射方法调用还有验证过程和参数问题，参数需要装箱拆箱、需要组装成 Object[] 形式、异常的包装等等问题
+  [Java反汇编：HSDIS、JITWatch - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/158168592)
 
 
 
