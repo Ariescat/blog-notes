@@ -223,7 +223,8 @@
   - [进程管理](/Awesome/操作系统.md#进程管理)
   - [内存管理](/Awesome/操作系统.md#内存管理)
   - [磁盘](/Awesome/操作系统.md#磁盘)
-  - [Orther](/Awesome/操作系统.md#orther)
+  - [设备](/Awesome/操作系统.md#设备)
+  - [系统监控](/Awesome/操作系统.md#系统监控)
 
 - [Windows](/Awesome/操作系统.md#windows)
 
@@ -269,26 +270,26 @@
 
 
 
-## 资料整理
+## 资料收藏
 
-- [Github](/Awesome/资料整理.md#github)
+- [Github](/Awesome/资料收藏.md#github)
 
-- [知识体系](/Awesome/资料整理.md#知识体系)
+- [知识体系](/Awesome/资料收藏.md#知识体系)
 
-- [极客时间](/Awesome/资料整理.md#极客时间)
+- [极客时间](/Awesome/资料收藏.md#极客时间)
 
-- [技术团队](/Awesome/资料整理.md#技术团队)
+- [技术团队](/Awesome/资料收藏.md#技术团队)
 
-- [博主](/Awesome/资料整理.md#博主)
+- [博主](/Awesome/资料收藏.md#博主)
 
-- [面试](/Awesome/资料整理.md#面试)
+- [面试](/Awesome/资料收藏.md#面试)
 
-  - [技术问题](/Awesome/资料整理.md#技术问题)
-  - [主观问题](/Awesome/资料整理.md#主观问题)
+  - [技术问题](/Awesome/资料收藏.md#技术问题)
+  - [主观问题](/Awesome/资料收藏.md#主观问题)
 
-- [文章收藏](/Awesome/资料整理.md#文章收藏)
+- [文章收藏](/Awesome/资料收藏.md#文章收藏)
 
-- [简历](/Awesome/资料整理.md#简历)
+- [简历](/Awesome/资料收藏.md#简历)
 
 
 
