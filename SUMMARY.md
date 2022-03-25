@@ -218,7 +218,7 @@
 
 ## 操作系统
 
-- [操作系统](/Awesome/操作系统.md#操作系统)
+- [Linux](/Awesome/操作系统.md#Linux)
 
   - [进程管理](/Awesome/操作系统.md#进程管理)
   - [内存管理](/Awesome/操作系统.md#内存管理)
