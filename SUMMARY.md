@@ -273,22 +273,11 @@
 ## 资料收藏
 
 - [Github](/Awesome/资料收藏.md#github)
-
 - [知识体系](/Awesome/资料收藏.md#知识体系)
-
 - [极客时间](/Awesome/资料收藏.md#极客时间)
-
 - [技术团队](/Awesome/资料收藏.md#技术团队)
-
 - [博主](/Awesome/资料收藏.md#博主)
-
-- [面试](/Awesome/资料收藏.md#面试)
-
-  - [技术问题](/Awesome/资料收藏.md#技术问题)
-  - [主观问题](/Awesome/资料收藏.md#主观问题)
-
 - [文章收藏](/Awesome/资料收藏.md#文章收藏)
-
 - [简历](/Awesome/资料收藏.md#简历)
 
 
