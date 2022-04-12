@@ -2511,23 +2511,25 @@ JVM提供了5种方法调用指令，其作用列举如下：
 
 #### 工具
 
-- jps、jstat、jinfo、jstack、jmap、jhat
+- 原生工具
 
-  jstat -gcutil
+  - jps、jstat、jinfo、jstack、jmap、jhat
 
-  [Java性能调优工具](https://www.cnblogs.com/timlearn/p/4088626.html)
+    jstat -gcutil
 
-- jmc
+    [Java性能调优工具](https://www.cnblogs.com/timlearn/p/4088626.html)
 
-  JDK Mission Control
+- 图形化工具
 
-- JVisualVM
+  - JMC（JDK Mission Control）
 
-  [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
+  - JFR（Java Flight Recorder）
 
-- MAT
+  - JVisualVM
 
-  Eclipse Memory Analyzer
+    [使用 VisualVM 进行性能分析及调优](https://www.ibm.com/developerworks/cn/java/j-lo-visualvm/)
+
+  - MAT（Eclipse Memory Analyzer）
 
 - Atthas
 
