@@ -17,6 +17,7 @@
 应用层协议：
 
 - Json，MessagePack
+
 - ProtoBuf
 
 
@@ -24,9 +25,13 @@
 ### AI
 
 - 状态机
+
 - 行为树
+
   - 入门
+
     - [Java游戏服务器开发之行为树_cmqwan的博客-CSDN](https://blog.csdn.net/cmqwan/article/details/80453352)
+
   - 进阶
     - 事件行为树
 
@@ -66,9 +71,13 @@
   参考：
 
   - 《腾讯游戏开发精粹》：第5章 3D游戏碰撞之体素内存、效率优化
+
   - [游戏的寻路导航 1：导航网格 - 简书 (jianshu.com)](https://www.jianshu.com/p/490a9128b248)
+
   - [NMGen Study](http://www.critterai.org/projects/nmgen_study/) 项目，NMGen研究是Java中 [Recast静态网格](https://github.com/memononen/recastnavigation) 功能的改编，用于研究和实验目的。
+
   - [Recast&Detour_游蓝海 的专栏-CSDN博客](https://blog.csdn.net/you_lan_hai/category_7114516.html)
+
   - [寻路_长三月的游戏开发-CSDN博客](https://blog.csdn.net/needmorecode/category_7909722.html)
 
 
@@ -84,13 +93,19 @@
 ### 游戏框架
 
 - Akka
+
   - **Actor 模型**
+
   - [akka 设计模式系列-基础模式](https://yq.aliyun.com/articles/616951?spm=a2c4e.11153940.blogcont616952.14.28751adcybgYqt)
+
 - skynet
 
   - [LuaAPI · cloudwu/skynet Wiki (github.com)](https://github.com/cloudwu/skynet/wiki/LuaAPI)
+
   - [skynet源码赏析 (manistein.github.io)](https://manistein.github.io/blog/post/server/skynet/skynet源码赏析/)
+
   - [skynet教程（1）--服务的编写 - 简书 (jianshu.com)](https://www.jianshu.com/p/d843fe686fc0)
+
 - Pinus
 
 
@@ -100,6 +115,7 @@
 #### 架构
 
 - [MMORPG服务器架构 - I want to fly higher - BlogJava](http://www.blogjava.net/landon/archive/2012/07/14/383092.html)
+
 - [高性能分布式游戏服务器框架_剑心！的博客-CSDN](https://blog.csdn.net/dcba2014/article/details/72615487)
 
 
@@ -121,6 +137,7 @@ TODO robot
 ### 安全
 
 - [游戏安全实验室](https://gslab.qq.com/portal.php?mod=view&aid=94)
+
 - [“黑客”深度学习之“游戏外挂原理与实现”](https://t.cj.sina.com.cn/articles/view/6497007699/18340785300100cnws?qq-pf-to=pcqq.c2c)
 
 
@@ -156,6 +173,7 @@ TODO robot
 ## 游戏门户
 
 - [GameRes 游资网-游戏开发者门户](https://www.gameres.com/)
+
 - [游戏学院 - 腾讯大学](https://daxue.qq.com/game)
 
 
@@ -165,5 +183,7 @@ TODO robot
 ## 书籍
 
 - 2018腾讯移动游戏 技术评审标准与实践案例
+
 - 《腾讯游戏开发精粹》
+
 - 《腾讯游戏开发精粹Ⅱ》
