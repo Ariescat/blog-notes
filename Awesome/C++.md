@@ -160,4 +160,20 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 
 - skynet
 
-- libevent
+- 网络库
+  - libevent
+  
+  - boost的asio
+  
+    [Boost.Asio的使用技巧 | blog | 逍遥郡 (jqian.net)](http://blog.jqian.net/post/boost-asio.html)
+  
+  - zeromq
+  
+    [云风的 BLOG: ZeroMQ 的模式 (codingnow.com)](https://blog.codingnow.com/2011/02/zeromq_message_patterns.html)
+  
+    引用：
+  
+    > 基于定义好的模型，我们可以看到，api 可以实现的非常简单易用。我们不再需要 bind/listen/accept 来架设服务器，因为这个模型天然是 1:N 而不是 1:1 的，**不需要为每个通道保留一个句柄**。我们也不必在意 server 是否先启动（bind），而后才能让 client 工作起来（connect）。
+  
+- 服务发现
+  - etcd
