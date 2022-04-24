@@ -154,26 +154,52 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 
   gcc无法进行库文件的连接，即无法编译完成步骤4；而g++则能完整编译出可执行文件。（实质上，g++从步骤1-步骤3均是调用gcc完成，步骤4连接则由自己完成）
 
+- std::move
+
+  [什么是move？理解C++ Value categories，move， move in Rust](https://zhuanlan.zhihu.com/p/374392832)
+
+
+
+
+
+## 调用其他语言
+
+- Python
+  - C++调用Python
+  - Python调用C++
+
+
+
 
 
 ## 第三方库
 
 - skynet
 
+  一个基于C跟lua的开源服务端并发框架，这个框架是单进程多线程模型
+
+- boost
+
+  Boost 库通过加入一些在实践中非常有用的函数对 C++ 标准进行了补充。
+
+  [Boost C++ 库-在线教程](https://www.mianquan.net/tutorial/boost/)
+
 - 网络库
   - libevent
-  
-  - boost的asio
-  
+
+  - boost 的 asio
+
+    一个很强大的实现socket通讯方式的跨平台（windows、linux、solaris、mac os x）解决方案，能同时支持数千个并发的连接。
+
     [Boost.Asio的使用技巧 | blog | 逍遥郡 (jqian.net)](http://blog.jqian.net/post/boost-asio.html)
-  
+
   - zeromq
-  
+
     [云风的 BLOG: ZeroMQ 的模式 (codingnow.com)](https://blog.codingnow.com/2011/02/zeromq_message_patterns.html)
-  
+
     引用：
-  
+
     > 基于定义好的模型，我们可以看到，api 可以实现的非常简单易用。我们不再需要 bind/listen/accept 来架设服务器，因为这个模型天然是 1:N 而不是 1:1 的，**不需要为每个通道保留一个句柄**。我们也不必在意 server 是否先启动（bind），而后才能让 client 工作起来（connect）。
-  
+
 - 服务发现
   - etcd
