@@ -157,6 +157,8 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 - std::move
 
   [什么是move？理解C++ Value categories，move， move in Rust](https://zhuanlan.zhihu.com/p/374392832)
+  
+  [std::move和右值引用_液压姬的博客](https://blog.csdn.net/crazty/article/details/113092170)
 
 
 
@@ -193,13 +195,32 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 
     [Boost.Asio的使用技巧 | blog | 逍遥郡 (jqian.net)](http://blog.jqian.net/post/boost-asio.html)
 
+    关于 Boost.Asio 的多线程模型：
+
+    [浅谈 Boost.Asio 的多线程模型 - Boblim - 博客园 (cnblogs.com)](https://www.cnblogs.com/fnlingnzb-learner/p/10402276.html)
+
   - zeromq
 
+    七大消息模式：
+  
+    [重头戏！带你全览ZeroMQ的七大消息模式_董哥的黑板报的博客-CSDN博客](https://blog.csdn.net/qq_41453285/article/details/106865539)
+  
+    主要API接口：
+    
+    [消息队列库——ZeroMQ - 如果的事 - 博客园 (cnblogs.com)](https://www.cnblogs.com/chenny7/p/6245236.html)
+    
+    指南：
+    
+    [介绍 | ZMQ 指南 (gitbooks.io)](https://wizardforcel.gitbooks.io/zmq-guide/content/)
+    
     [云风的 BLOG: ZeroMQ 的模式 (codingnow.com)](https://blog.codingnow.com/2011/02/zeromq_message_patterns.html)
-
+    
     引用：
-
+    
     > 基于定义好的模型，我们可以看到，api 可以实现的非常简单易用。我们不再需要 bind/listen/accept 来架设服务器，因为这个模型天然是 1:N 而不是 1:1 的，**不需要为每个通道保留一个句柄**。我们也不必在意 server 是否先启动（bind），而后才能让 client 工作起来（connect）。
-
+    
+    [全网仅此一篇！万字详解ZeroMQ的zmq_msg_t消息处理、多部分消息、及消息接口_董哥的黑板报的博客-CSDN博客](https://blog.csdn.net/qq_41453285/article/details/106794294)
+  
 - 服务发现
+  
   - etcd
