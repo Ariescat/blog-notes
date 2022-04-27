@@ -255,23 +255,23 @@
 
 
 
-## 其他编程语言
+## Program
 
-- [动态语言与动态类型语言](/Awesome/其他编程语言.md#动态语言与动态类型语言)
+- [动态语言与动态类型语言](/Awesome/Program.md#动态语言与动态类型语言)
 
-- [Groovy](/Awesome/其他编程语言.md#groovy)
+- [Groovy](/Awesome/Program.md#groovy)
 
-- [前端](/Awesome/其他编程语言.md#前端)
+- [前端](/Awesome/Program.md#前端)
 
-  - [基础](/Awesome/其他编程语言.md#基础)
-  - [框架](/Awesome/其他编程语言.md#框架)
-  - [其他](/Awesome/其他编程语言.md#其他)
+  - [基础](/Awesome/Program.md#基础)
+  - [框架](/Awesome/Program.md#框架)
+  - [其他](/Awesome/Program.md#其他)
 
-- [跨平台](/Awesome/其他编程语言.md#跨平台)
+- [跨平台](/Awesome/Program.md#跨平台)
 
-  - [Weex](/Awesome/其他编程语言.md#weex)
+  - [Weex](/Awesome/Program.md#weex)
 
-- [Android](/Awesome/其他编程语言.md#android)
+- [Android](/Awesome/Program.md#android)
 
 
 
