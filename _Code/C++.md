@@ -174,6 +174,16 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 
 
 
+## 包管理工具
+
+- vcpkg
+
+  vcpkg是Microsoft的跨平台开源软件包管理器，极大地简化了 Windows、Linux 和 macOS 上第三方库的购置与安装。如果项目要使用第三方库，建议通过 vcpkg 来安装它们。
+
+
+
+
+
 ## 第三方库
 
 - skynet
