@@ -275,6 +275,12 @@
 
 
 
+## 数学
+
+- [向量](/Awesome/数学.md#向量)
+
+
+
 ## Game
 
 - [游戏开发](/Awesome/Game.md)
