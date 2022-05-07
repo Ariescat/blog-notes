@@ -129,38 +129,238 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 
 ## 高级
 
-- 内存对齐
+### 内存对齐
 
-  为什么要内存对齐：[C++：内存对齐_六月的翅膀的博客-CSDN博客](https://blog.csdn.net/cd_yourheart/article/details/109341988)
+为什么要内存对齐：[C++：内存对齐_六月的翅膀的博客-CSDN博客](https://blog.csdn.net/cd_yourheart/article/details/109341988)
 
-  结构体占用内存大小
-
-- .hpp与.h区别
-
-  .hpp，本质就是将.cpp的实现代码混入.h头文件当中，定义与实现都包含在同一文件，则该类的调用者只需要include该.hpp文件即可，无需再将cpp加入到project中进行编译。而实现代码将直接编译到调用者的obj文件中，不再生成单独的obj，采用hpp将大幅度减少调用project中的cpp文件数与编译次数，也不用再发布lib与dll文件，因此非常适合用来编写公用的开源库。
-
-  原文链接：https://blog.csdn.net/f_zyj/article/details/51735416
-
-- gcc与g++的区别
-
-  编译的四个阶段
-
-  1. 预处理：编译处理宏定义等宏命令（eg:#define）——生成后缀为“.i”的文件
-  2. 编译：将预处理后的文件转换成汇编语言——生成后缀为“.s”的文件
-  3. 汇编：由汇编生成的文件翻译为二进制目标文件——生成后缀为“.o”的文件
-  4. 连接：多个目标文件（二进制）结合库函数等综合成的能直接独立执行的执行文件——生成后缀为“.out”的文件
-
-  在我们理解了上述四个流程后，我们在关注[gcc](https://so.csdn.net/so/search?q=gcc&spm=1001.2101.3001.7020)和g++在流程上的区别。
-
-  gcc无法进行库文件的连接，即无法编译完成步骤4；而g++则能完整编译出可执行文件。（实质上，g++从步骤1-步骤3均是调用gcc完成，步骤4连接则由自己完成）
-
-- std::move
-
-  [什么是move？理解C++ Value categories，move， move in Rust](https://zhuanlan.zhihu.com/p/374392832)
-  
-  [std::move和右值引用_液压姬的博客](https://blog.csdn.net/crazty/article/details/113092170)
+结构体占用内存大小
 
 
+
+### .hpp与.h区别
+
+.hpp，本质就是将.cpp的实现代码混入.h头文件当中，定义与实现都包含在同一文件，则该类的调用者只需要include该.hpp文件即可，无需再将cpp加入到project中进行编译。而实现代码将直接编译到调用者的obj文件中，不再生成单独的obj，采用hpp将大幅度减少调用project中的cpp文件数与编译次数，也不用再发布lib与dll文件，因此非常适合用来编写公用的开源库。
+
+原文链接：https://blog.csdn.net/f_zyj/article/details/51735416
+
+
+
+### gcc与g++的区别
+
+编译的四个阶段
+
+1. 预处理：编译处理宏定义等宏命令（eg:#define）——生成后缀为“.i”的文件
+2. 编译：将预处理后的文件转换成汇编语言——生成后缀为“.s”的文件
+3. 汇编：由汇编生成的文件翻译为二进制目标文件——生成后缀为“.o”的文件
+4. 连接：多个目标文件（二进制）结合库函数等综合成的能直接独立执行的执行文件——生成后缀为“.out”的文件
+
+在我们理解了上述四个流程后，我们在关注[gcc](https://so.csdn.net/so/search?q=gcc&spm=1001.2101.3001.7020)和g++在流程上的区别。
+
+gcc无法进行库文件的连接，即无法编译完成步骤4；而g++则能完整编译出可执行文件。（实质上，g++从步骤1-步骤3均是调用gcc完成，步骤4连接则由自己完成）
+
+
+
+
+
+## C++11
+
+### 右值引用
+
+[C++之右值引用 - 简书 (jianshu.com)](https://www.jianshu.com/p/de859b5cd42d)
+
+右值引用是 C++11 引入的与 Lambda 表达式齐名的重要特性之一。它的引入解决了 C++ 中大量的历史遗留问题，消除了诸如 std::vector、std::string 之类的额外开销。
+
+左值就有内存地址的，存活的生命周期较长的，而右值一般是无法获取到内存地址的（比如整形字面量）。
+
+右值引用的特点之一是可以延长右值的生命周期；**但，延长临时对象生命周期并不是这里右值引用的最终目标，其真实目标应该是减少对象复制，提升程序性能。**
+
+**将亡值：**
+
+[【乔红】裤衩 C++ 之 右值引用（一）为什么会有右值引用_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Vq4y1K7ut?spm_id_from=333.1007.partition_recommend.content.click)
+
+
+
+### 移动构造函数
+
+**先说拷贝构造函数，默认拷贝构造函数：**
+
+c++类的中有两个特殊的构造函数，(1)无参构造函数，(2)拷贝构造函数。它们的特殊之处在于：
+
+(1)当类中没有定义任何构造函数时，编译器会默认提供一个无参构造函数且其函数体为空；
+
+(2)当类中没有定义拷贝构造函数时，编译器会默认提供一个拷贝构造函数，进行成员变量之间的拷贝。(这个拷贝操作是浅拷贝)
+
+**了解深拷贝和浅拷贝：**
+
+拷贝者和被拷贝者若是同一个地址，则为浅拷贝，反之为深拷贝。 
+
+类的默认拷贝构造函数只会用**被拷贝类的成员的值**为拷贝类简单初始化，也就是说二者的p指针指向的内存空间是一致的。
+
+**默认拷贝构造函数的弊端：**
+
+[c++ 拷贝构造函数(重点在内含指针的浅拷贝和深拷贝) - 知行者的博客 - 博客园 (cnblogs.com)](https://www.cnblogs.com/r-yan/p/11727889.html)
+
+```c++
+class TestCls{
+public:
+    int a;
+    int *p;
+public:
+    TestCls(){
+        p = new int;
+    }
+    ~TestCls(){
+        delete p;
+    }
+};
+int main(void){
+    TestCls t1;
+    TestCls t2 = t1; //效果等同于TestCls t2(t1); 
+    return 0;
+}
+```
+
+编译器为我们默认定义的拷贝构造函数为：
+
+```c++
+TestCls(const TestCls &testCls)
+{
+    a = testCls.a;
+    p = testCls.p; //两个类的p指针指向的地址一致。
+};
+```
+
+main函数将要退出时，拷贝类t2的析构函数先得到执行，它把自身p指向的堆空间释放了；接下来，t1的析构函数得到调用，被拷贝类t1的析构函数得到调用，它同样要去析构自身的p指向指向的堆空间，但是该空间和t2类中p指向的空间一样，造成重复释放，程序运行崩溃。（当然，如果只有基本类型数据是没有问题的）
+
+解决办法就是自定义拷贝构造函数：
+
+```c++
+class TestCls{
+public:
+    int a;
+    int *p;
+public:
+    TestCls(){
+        p = new int;
+    }
+    TestCls(const TestCls &testCls){
+        a = testCls.a;
+        // p = testCls.p;
+        p = new int;
+        *p = *(testCls.p); //为拷贝类的p指针分配空间，实现深度拷贝
+    }
+    ~TestCls(){
+        delete p;
+    }
+};
+```
+
+所以，当类中拥有指针类型的成员变量时，拷贝构造函数中需要以深拷贝（而非浅拷贝）的方式复制该指针成员。
+
+**C++11移动构造函数的功能和用法：**
+
+直接看这篇吧：
+
+[C++11移动构造函数的功能和用法_Hardy20200507的博客-CSDN博客](https://blog.csdn.net/Hardy20200507/article/details/123315890)
+
+```c++
+TestCls(TestCls &&t) : p(t.p)
+{
+    t.p = NULL;
+    std::cout << "move construct!" << std::endl;
+}
+```
+
+也就是，在之前 TestCls 类的基础上，我们手动为其添加了一个构造函数。和其它构造函数不同，此构造函数使用右值引用形式的参数，又称为移动构造函数。**并且在此构造函数中，num 指针变量采用的是浅拷贝的复制方式，同时在函数内部重置了 d.num，有效避免了“同一块对空间被释放多次”情况的发生。**
+
+在实际开发中，**通常在类中自定义移动构造函数的同时，会再为其自定义一个适当的拷贝构造函数，由此当用户利用右值初始化类对象时，会调用移动构造函数；使用左值（非右值）初始化类对象时，会调用拷贝构造函数。**
+
+
+
+### std::move
+
+[什么是move？理解C++ Value categories，move， move in Rust](https://zhuanlan.zhihu.com/p/374392832)
+
+[std::move和右值引用_液压姬的博客](https://blog.csdn.net/crazty/article/details/113092170)
+
+
+
+### std::forward
+
+回顾上面的「C++之右值引用 - 简书 (jianshu.com)」链接：
+
+**先了解万能引用：**
+
+所谓的万能引用就是既可以引用左值，也可以引用右值的引用。
+
+```c++
+void test(int &t){
+    // 左值引用
+}
+void test(int &&t){
+    // 右值引用，有明确的类型
+}
+template<typename T>
+void test(T &&){
+    // 万能引用，因为模板需要类型推导
+}
+int getNum(){
+    return 20;
+}
+int main() {
+    int &&num1 = getNum(); // 右值引用
+    auto &&num2 = getNum(); // 万能引用，类型推导
+    return 0;
+}
+```
+
+在上面的注释中我们发现只要发生了类型推导就会是万能引用，在`T&&`和`auto&&`的初始化过程中都会发生类型的推导所以它们是万能引用。在这个推导过程中，初始化的源对象如果是一个左值，则目标对象会推导出左值引用；反之如果源对象是一个右值，则会推导出右值引用。
+
+**完美转发：**
+
+万能引用，它的一个重要用途就是进行完美转发，所谓完美转发指的是**函数模板可以将自己的参数“完美”地转发给内部调用的其它函数**，不仅能准确地转发参数的值，还能保证被转发参数的左、右值属性不变。在C++11使用标准库中的`std::forward`函数就可以试下完美转发：
+
+```c++
+void test(int &t){
+    // 左值引用
+    cout << "左值" << endl;
+}
+
+void test(int &&t){
+    // 右引用
+    cout << "右值" << endl;
+}
+
+template<typename T>
+void funcForward(T &&t){
+    // 进行了转发，根据传递进来的值类型而调用不同test
+    test(std::forward<T>(t));
+}
+
+template<typename T>
+void funcNormal(T &&t){
+    // 没有进行转发，始终调用的都是左值的test
+    test(t);
+}
+
+int main() {
+    int a = 20;
+    funcNormal(1); // 右值，但是调用的是左值的test
+    funcNormal(a); // 左值
+    cout << "----------------------" << endl;
+    funcForward(1); // 右值
+    funcForward(a); // 左值
+    return 0;
+}
+```
+
+
+
+### 智能指针
+
+C++11 新标准增添了 unique_ptr、shared_ptr 以及 weak_ptr 这 3 个智能指针来实现堆内存的自动回收。
+
+[C++之智能指针 (qq.com)](https://mp.weixin.qq.com/s/mJCQkl_ombv89FxhiQ7haA)
 
 
 
