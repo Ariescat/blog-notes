@@ -275,12 +275,6 @@
 
 
 
-## Game
-
-- [游戏开发](/_Code/Game.md)
-
-
-
 ## 资料收藏
 
 - [Github](/_Code/资料收藏.md#github)
@@ -290,6 +284,12 @@
 - [博主](/_Code/资料收藏.md#博主)
 - [文章收藏](/_Code/资料收藏.md#文章收藏)
 - [简历](/_Code/资料收藏.md#简历)
+
+
+
+## Game
+
+- [游戏开发](/_Awesome/Game.md)
 
 
 

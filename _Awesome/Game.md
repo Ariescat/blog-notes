@@ -2,19 +2,38 @@
 
 
 
-## 游戏技术
+## 网络
 
-### 网络
+### 信道
 
-通信：
+- 丢包率
+- 延时
+- 带宽 单位时间通过的数据量
 
-- 可靠 UDP 的实现：KCP
+
+
+### 网络协议
 
 - TCP
 
   启用和禁用TCP_NODELAY有什么影响？
 
-应用层协议：
+- UDP
+
+  可靠 UDP 的实现：
+
+  - KCP
+
+  - FEC（牺牲带宽换取效率）
+    - kcp + fec
+    - 自适应模块
+      - 丢包探测
+      - grp协议 开关
+    - *RS编码*，又称里所码，即Reed-solomon codes
+
+
+
+### 应用层协议
 
 - Json，MessagePack
 
@@ -22,22 +41,16 @@
 
 
 
-### AI
+### 字节压缩
 
-- 状态机
-
-- 行为树
-
-  - 入门
-
-    - [Java游戏服务器开发之行为树_cmqwan的博客-CSDN](https://blog.csdn.net/cmqwan/article/details/80453352)
-
-  - 进阶
-    - 事件行为树
+- gzip
 
 
 
-### 数据同步
+
+
+
+## 数据同步
 
 - 帧锁定同步算法
 
@@ -61,7 +74,23 @@
 
 
 
-### 寻路
+
+
+## AI
+
+- 状态机
+- 行为树
+
+  - 入门
+
+    - [Java游戏服务器开发之行为树_cmqwan的博客-CSDN](https://blog.csdn.net/cmqwan/article/details/80453352)
+- 事件行为树
+
+
+
+
+
+## 寻路
 
 - A* 及其变种算法
 
@@ -95,18 +124,25 @@
   参考：
 
   - 《腾讯游戏开发精粹》：第5章 3D游戏碰撞之体素内存、效率优化
-
   - [游戏的寻路导航 1：导航网格 - 简书 (jianshu.com)](https://www.jianshu.com/p/490a9128b248)
-
   - [NMGen Study](http://www.critterai.org/projects/nmgen_study/) 项目，NMGen研究是Java中 [Recast静态网格](https://github.com/memononen/recastnavigation) 功能的改编，用于研究和实验目的。
-
   - [Recast&Detour_游蓝海 的专栏-CSDN博客](https://blog.csdn.net/you_lan_hai/category_7114516.html)
-
   - [寻路_长三月的游戏开发-CSDN博客](https://blog.csdn.net/needmorecode/category_7909722.html)
+  - [detour 寻路核心逻辑 CrowdToolState::updateTick dtCrowd::update_只要你在的博客-CSDN博客](https://blog.csdn.net/icebergliu1234/article/details/80381342)
+
+- **抗锯齿**
+
+  - A* 上：
+
+    1. 延长寻路目标
+
+    2. a* 增加拐角代价函数
 
 
 
-### 碰撞检测
+
+
+## 碰撞检测
 
 [碰撞检测的向量实现 - 掘金 (juejin.cn)](https://juejin.cn/post/6844903928501387277#heading-11)
 
@@ -114,13 +150,27 @@
 
 
 
-### 包围盒
+
+
+## 包围盒
 
 - BVH（Bounding Volume Hierarchies 层次包围盒）
 
 
 
-### 游戏框架
+
+
+## 服务端
+
+### 架构
+
+- [MMORPG服务器架构 - I want to fly higher - BlogJava](http://www.blogjava.net/landon/archive/2012/07/14/383092.html)
+
+- [高性能分布式游戏服务器框架_剑心！的博客-CSDN](https://blog.csdn.net/dcba2014/article/details/72615487)
+
+
+
+### 第三方框架
 
 - Akka
 
@@ -140,39 +190,13 @@
 
 
 
-### 服务端
+### 压测
 
-#### 架构
-
-- [MMORPG服务器架构 - I want to fly higher - BlogJava](http://www.blogjava.net/landon/archive/2012/07/14/383092.html)
-
-- [高性能分布式游戏服务器框架_剑心！的博客-CSDN](https://blog.csdn.net/dcba2014/article/details/72615487)
+robot
 
 
 
-#### 压测
-
-TODO robot
-
-
-
-### 工具
-
-- 弱网环境
-
-  Clumsy
-
-
-
-### 安全
-
-- [游戏安全实验室](https://gslab.qq.com/portal.php?mod=view&aid=94)
-
-- [“黑客”深度学习之“游戏外挂原理与实现”](https://t.cj.sina.com.cn/articles/view/6497007699/18340785300100cnws?qq-pf-to=pcqq.c2c)
-
-
-
-### 源码学习
+### 服务端源码学习
 
 - [hstcscolor / awesome-gameserver-cn](https://github.com/hstcscolor/awesome-gameserver-cn)  中文游戏服务器资源大全
 
@@ -192,9 +216,33 @@ TODO robot
 
 
 
+
+
+## 游戏引擎
+
 ### Unity3d
 
 - 愤怒的小鸟 [https://www.bilibili.com/video/av35565116/](https://www.bilibili.com/video/av35565116/)
+
+
+
+
+
+## 工具
+
+- 弱网环境
+
+  Clumsy
+
+
+
+
+
+## 游戏安全
+
+- [游戏安全实验室](https://gslab.qq.com/portal.php?mod=view&aid=94)
+
+- [“黑客”深度学习之“游戏外挂原理与实现”](https://t.cj.sina.com.cn/articles/view/6497007699/18340785300100cnws?qq-pf-to=pcqq.c2c)
 
 
 

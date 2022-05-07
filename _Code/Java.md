@@ -1388,7 +1388,9 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 - 原理
 
-  [死磕 Synchronized 底层实现](https://mp.weixin.qq.com/s/2ka1cDTRyjsAGk_-ii4ngw)
+  [死磕Synchronized底层实现 (qq.com)](https://mp.weixin.qq.com/s/2ka1cDTRyjsAGk_-ii4ngw)
+
+  [Java synchronized原理总结 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/29866981)
 
   * 保证了原子性、可见性、有序性
 
@@ -1489,6 +1491,10 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
 * 重排序（编译器重排，处理器重排）
 
   happen-before 原则：[深入理解 happens-before 规则](https://www.jianshu.com/p/9464bf340234)
+
+- 原理
+
+  [Java volatile原理总结 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/29868853)
 
 
 
@@ -1651,6 +1657,8 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
   * [内存屏障 | 并发编程网 – ifeve.com](http://ifeve.com/memory-barriers-or-fences/)
 
   * [全面理解 Java 内存模型 (JMM) 及 volatile 关键字 - CSDN 博客](http://blog.csdn.net/javazejian/article/details/72772461)
+  
+  * [Java内存模型（JMM）总结 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/29881777)
 
 
 

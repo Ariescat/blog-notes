@@ -32,7 +32,8 @@ Google Guava 是 Google 公司内部 Java 开发工具库的开源版本。Googl
   9. **总线（EventBus）**
 - 一些有用的小工具：
   1. `BloomFilter`布隆过滤器的实现
-
+  1. Ordering排序器
+  
 - 源码分析：[https://ifeve.com/google-guava](https://ifeve.com/google-guava/)
 
 
@@ -86,6 +87,12 @@ Google Guava 是 Google 公司内部 Java 开发工具库的开源版本。Googl
 
      2. bean 是由 ScriptFactoryPostProcessor#scriptBeanFactory 生成的，这个 scriptBeanFactory 是一个全新的，然后 copyConfigurationFrom 了一次 parent 的属性
 
+- @Configuration
+
+  @Configuration注解的类为什么被CGLIB增强？
+
+  [@Configuration这注解为什么可以不加？加了和不加的区别，底层为什么使用cglib - 简书 (jianshu.com)](https://www.jianshu.com/p/0822470c1b85?utm_campaign=shakespeare&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)
+
 - Spring AOP
 
   - AOP 原理，ProxyFactory
@@ -117,6 +124,10 @@ Google Guava 是 Google 公司内部 Java 开发工具库的开源版本。Googl
     代理过程，用的什么代理，怎么代理
 
     这里有一点需要注意的地方，由于 SpringAOP 的原因，@Transactional 注解只能用到 public 方法上，如果用到 private 方法上，将会被忽略，这也是面试经常问的考点之一。
+
+
+
+#### 组件整合
 
 - [Spring Cache 介绍](https://www.cnblogs.com/rollenholt/p/4202631.html)
 
@@ -750,6 +761,18 @@ CAP 原理：
 Docker、中台、ServiceMesh(服务网格)
 
 大数据、人工智能、区块链等
+
+
+
+### 网络协议
+
+#### RSocket
+
+RSocket是一种二进制的点对点通信协议，是一种新的网络通信第七层协议。旨在用于分布式应用程序中。从这个意义上讲，RSocket是HTTP等其他协议的替代方案。它是一种基于Reactive Streams规范具有异步，背压的双向，多路复用，断线重连，基于消息等特性。它由Facebook，Netifi和Pivotal等工程师开发，提供Java，JavaScript，C ++和Kotlin等实现。
+
+入门使用：
+
+[RSocket协议初识-Java中使用（二）_后厂村老司机的博客-CSDN博客](https://blog.csdn.net/KouLouYiMaSi/article/details/106421826)
 
 
 
