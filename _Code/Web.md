@@ -393,9 +393,15 @@ Disruptor 是一个无锁、有界的队列框架，它的性能非常高。
 
 
 
+## Web容器
+
+- tomcat
+
+
+
+
+
 ## 中间件
-
-
 
 ### Zookeeper
 
@@ -410,6 +416,12 @@ Disruptor 是一个无锁、有界的队列框架，它的性能非常高。
   - [Zookeeper 的功能以及工作原理](https://www.cnblogs.com/felixzh/p/5869212.html)
   - [Leader 选举-选举过程介绍比较清晰](https://blog.csdn.net/gaoshan12345678910/article/details/67638657)
   - [ZAB 协议理解](https://blog.csdn.net/junchenbb0430/article/details/77583955)
+
+
+
+### Dubbo
+
+Dubbo是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。
 
 
 
@@ -756,14 +768,6 @@ CAP 原理：
 
 ## 前沿技术
 
-### 概述
-
-Docker、中台、ServiceMesh(服务网格)
-
-大数据、人工智能、区块链等
-
-
-
 ### 网络协议
 
 #### RSocket
@@ -778,26 +782,43 @@ RSocket是一种二进制的点对点通信协议，是一种新的网络通信�
 
 ### 容器化
 
-Docker 与 k8s
+**Docker**
+
+大家需要注意，**Docker本身并不是容器**，它是创建容器的工具，是应用容器引擎。
+
+想要搞懂Docker，其实看它的两句口号就行。
+
+第一句，是“**Build, Ship and Run**”。也就是，“搭建、发送、运行”，三板斧。
+
+第二句口号就是：“**Build once，Run anywhere（搭建一次，到处能用）**”。
 
 
 
-### 大数据
+**K8S**
 
-- ODPS离线分析
-- Hive
-- Spark
-- Hadoop
-- Hbase
-- HDFS
-- [大数据体系](https://mp.weixin.qq.com/s/7rW9eHxdRXtWJExVupcZZQ)
-- [Flink入门教程](https://mp.weixin.qq.com/s/xa2iGrmyoXq3FtZeU9GU-w)
+就在Docker容器技术被炒得热火朝天之时，大家发现，如果想要将Docker应用于具体的业务实现，是存在困难的——编排、管理和调度等各个方面，都不容易。于是，人们迫切需要一套管理系统，对Docker及容器进行更高级更灵活的管理。
+
+就在这个时候，K8S出现了。
+
+**K8S，就是基于容器的集群管理平台，它的全称，是kubernetes。**
 
 
 
-### 人工智能
+### ServiceMesh
 
-[1.1.1 什么是神经网络 - 床长人工智能教程 (captainbed.net)](https://www.captainbed.net/whatisnn/)
+ServiceMesh，也叫服务网格，是一种概念。
+
+**一言以蔽之：Service Mesh 是微服务时代的 TCP/IP 协议。**
+
+
+
+### 中台
+
+**构建中台的目的**
+
+中台的目的是**构建企业级统一的服务接口**，不只是数据，包括技术、业务、组织架构等，其实质是整合企业内的软硬件资源，包括人力资源。传统单体系统，一个系统一套软硬件开发和运维人员，这些系统所采用的厂商、技术、开发语言、技术架构、数据库等可能各不相同。随着信息化系统越来越多，系统间面临着数据共享的要求。所以系统集成技术就应运而生。
+
+[什么是中台？为什么需要中台？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/144497394)
 
 
 
@@ -897,3 +918,33 @@ https://github.com/JackOfMostTrades/gadgetinspector
 - dubbo
 - zookeeper
 - tomcat
+
+
+
+
+
+## 书单
+
+**Spring**
+
+- 《Spring 源码深度解析 第二版》《Spring 实战》
+- 《Spring Boot 编程思想（核心篇）》![书单·图 1](https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3621582485,3050859261&fm=58&bpow=800&bpoh=940)
+- 《Spring Boot 实战》
+- 《Spring 微服务实战》
+
+**MySQL**
+
+- 《高性能 MySQL》
+
+**Netty**
+
+- 《Netty 权威指南》
+
+**Tomcat**
+
+- 《Tomcat 架构解析 （刘光瑞）》
+
+**其他**
+
+- 《架构探险分布式服务框架 （李业兵）》
+

@@ -2676,3 +2676,13 @@ JVM提供了5种方法调用指令，其作用列举如下：
 ### Q&A
 
 - [JDK 1.8 下的 java.lang.Class 对象和 static 成员变量在堆还是方法区？](https://blog.csdn.net/xu_jl1997/article/details/89433916)
+
+
+
+
+
+## 书单
+
+- 《深入理解 Java 虚拟机（第 3 版）（周志明）》
+- 《Java 并发编程实战》
+- 《Effective Java》
