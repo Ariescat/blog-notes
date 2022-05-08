@@ -24,7 +24,8 @@
     "hide-element",
     "gittalk",
     "addcssjs",
-    "pageview-count"
+    "pageview-count",
+    "expandable-chapters"   // 左栏目录折叠
   ],
   "pluginsConfig": {
     "theme-default": {
