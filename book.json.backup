@@ -1,0 +1,78 @@
+{
+  "title": "Awesome",
+  "author": "Ariescat",
+  "description": "记录一些令人头秃的知识",
+  "links": {
+    "sidebar": {
+      "LINKS - Ariescat Home": "https://home.ariescat.top/",
+      "LINKS - Ariescat Blog": "https://ariescat.top/",
+      "LINKS - Ariescat Github": "https://github.com/ariescat/"
+    }
+  },
+  "plugins": [
+    "theme-comscore",
+    "-lunr",
+    "-search",
+    "search-pro",
+    "insert-logo",
+    "github",
+    "code",
+    "lightbox",
+    "splitter",
+    "anchor-navigation-ex",
+    "tbfed-pagefooter",
+    "hide-element",
+    "gittalk",
+    "addcssjs",
+    "pageview-count",
+    "expandable-chapters"   // 左栏目录折叠
+  ],
+  "pluginsConfig": {
+    "theme-default": {
+      "showLevel": true
+    },
+    "github": {
+      "url": "https://github.com/Ariescat/Metis-Awesome/"
+    },
+    "anchor-navigation-ex": {
+      "showLevel": false,
+      "showGoTop": true,
+      "isRewritePageTitle": false,
+      "isShowTocTitleIcon": true,
+      "tocLevel1Icon": "fa fa-hand-o-right",
+      "tocLevel2Icon": "fa fa-hand-o-right",
+      "tocLevel3Icon": "fa fa-hand-o-right"
+    },
+    "insert-logo": {
+      "url": "/img/logo.png",
+      "style": "background:none;max-height:129px"
+    },
+    "tbfed-pagefooter": {
+      "copyright": "Copyright &copy Ariescat",
+      "modify_label": "最后修改时间：",
+      "modify_format": "YYYY-MM-DD HH:mm"
+    },
+    "hide-element": {
+      "elements": [
+        ".gitbook-link",
+        ".copyright"
+      ]
+    },
+    "gittalk": {
+      "clientID": "ac995666edfcde8e6079",
+      "clientSecret": "0e981d5d0c91bbb33cf33a356ea4962d137aafdc",
+      "repo": "Metis-Awesome",
+      "owner": "Ariescat",
+      "admin": [
+        "Ariescat"
+      ],
+      "id": "gittalk-comment"
+    },
+    "addcssjs": {
+      "js": [],
+      "css": [
+        "css/custom.css"
+      ]
+    }
+  }
+}
