@@ -251,8 +251,8 @@
 - [C++基础](/_Code/C++.md#c基础)
 
   - [基本类型](/_Code/C++.md#基本类型)
-  - [字符串](/_Code/C++.md#字符串)
-  - [向量和数组](/_Code/C++.md#向量和数组)
+  - [string和字符串](/_Code/C++.md#string和字符串)
+  - [vector和数组](/_Code/C++.md#vector和数组)
 
 - [C++标准库](/_Code/C++.md#c标准库)
 
@@ -260,6 +260,10 @@
 
 - [高级](/_Code/C++.md#高级)
 
+  - [指针](/_Code/C++.md#指针)
+  - [引用](/_Code/C++.md#引用)
+  - [多态与重载](/_Code/C++.md#多态与重载)
+  - [delete和delete[\]](/_Code/C++.md#delete和delete)
   - [内存对齐](/_Code/C++.md#内存对齐)
   - [.hpp与.h区别](/_Code/C++.md#hpp与h区别)
   - [gcc与g++的区别](/_Code/C++.md#gcc与g的区别)
@@ -270,7 +274,9 @@
   - [移动构造函数](/_Code/C++.md#移动构造函数)
   - [std::move](/_Code/C++.md#stdmove)
   - [std::forward](/_Code/C++.md#stdforward)
+  - [RVO返回值优化](/_Code/C++.md#rvo返回值优化)
   - [智能指针](/_Code/C++.md#智能指针)
+  - [auto和decltype](/_Code/C++.md#auto和decltype)
 
 - [调用其他语言](/_Code/C++.md#调用其他语言)
 
