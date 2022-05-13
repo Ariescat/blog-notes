@@ -2,3 +2,18 @@
     margin-top: 2.5em;
     margin-bottom: 1.5em;
 }
+
+/* theme-lou start */
+.book-summary-title {
+    padding-left: 15px;
+}
+
+.gt-container img {
+    padding: 0;
+}
+
+.book-anchor-body {
+    max-height: 450px;
+}
+
+/* theme-lou end */

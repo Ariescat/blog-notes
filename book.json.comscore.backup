@@ -11,13 +11,14 @@
   },
   "plugins": [
     "theme-comscore",
+    "theme-lou", // https://gitee.com/zonglu/gitbook-plugin-theme-lou
     "-lunr",
     "-search",
     "search-pro",
     "insert-logo",
     "github",
-    "code",
-    "lightbox",
+    "code", // 代码行号、复制
+    "lightbox", // 弹出图片
     "splitter",
     "anchor-navigation-ex",
     "tbfed-pagefooter",
