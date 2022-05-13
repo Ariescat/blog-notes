@@ -1,62 +1,66 @@
 {
-  "title": "Awesome",
+  "title": "Ariescat's Note",
   "author": "Ariescat",
   "description": "记录一些令人头秃的知识",
-  "links": {
-    "sidebar": {
-      "LINKS - Ariescat Home": "https://home.ariescat.top/",
-      "LINKS - Ariescat Blog": "https://ariescat.top/",
-      "LINKS - Ariescat Github": "https://github.com/ariescat/"
-    }
-  },
   "plugins": [
-    "theme-comscore",
+    "theme-lou",
     "-lunr",
     "-search",
     "search-pro",
-    "insert-logo",
     "github",
     "code",
     "lightbox",
-    "splitter",
-    "anchor-navigation-ex",
     "tbfed-pagefooter",
-    "hide-element",
+    "expandable-chapters",
     "gittalk",
-    "addcssjs",
-    "pageview-count",
-    "expandable-chapters"
+    "addcssjs"
   ],
+  "variables": {
+    "themeLou": {
+      "nav": [
+        {
+          "target": "_blank",
+          "url": "https://home.ariescat.top/",
+          "name": "Home"
+        },
+        {
+          "target": "_blank",
+          "url": "https://ariescat.top/",
+          "name": "Blog"
+        },
+        {
+          "target": "_blank",
+          "url": "https://github.com/ariescat/",
+          "name": "Github"
+        }
+      ]
+    }
+  },
   "pluginsConfig": {
-    "theme-default": {
-      "showLevel": true
+    "theme-lou": {
+      "color": "#FF4848",
+      "logo": "/img/logo.png",
+      "search-placeholder": "在下想搜些啥呢......",
+      "book-summary-title": "目录",
+      "book-anchor-title": "本篇章节：",
+      "hide-elements": [
+        ".summary .gitbook-link",
+        ".summary .divider",
+        ".copyright"
+      ],
+      "imgStyle": {
+        "isCenter": true,
+        "isBox": false,
+        "otherStyle": "max-width: 80%;"
+      }
     },
     "github": {
       "url": "https://github.com/Ariescat/Metis-Awesome/"
-    },
-    "anchor-navigation-ex": {
-      "showLevel": false,
-      "showGoTop": true,
-      "isRewritePageTitle": false,
-      "isShowTocTitleIcon": true,
-      "tocLevel1Icon": "fa fa-hand-o-right",
-      "tocLevel2Icon": "fa fa-hand-o-right",
-      "tocLevel3Icon": "fa fa-hand-o-right"
-    },
-    "insert-logo": {
-      "url": "/img/logo.png",
-      "style": "background:none;max-height:129px"
     },
     "tbfed-pagefooter": {
       "copyright": "Copyright &copy Ariescat",
       "modify_label": "最后修改时间：",
       "modify_format": "YYYY-MM-DD HH:mm"
-    },
-    "hide-element": {
-      "elements": [
-        ".gitbook-link",
-        ".copyright"
-      ]
     },
     "gittalk": {
       "clientID": "ac995666edfcde8e6079",
