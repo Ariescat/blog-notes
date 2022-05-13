@@ -132,16 +132,10 @@
 ## Program
 
 - [动态语言与动态类型语言](/_Code/Program.md#动态语言与动态类型语言)
-
 - [Groovy](/_Code/Program.md#groovy)
-
 - [HTML/CSS/JS](/_Code/Program.md#htmlcssjs)
-
 - [Android](/_Code/Program.md#android)
-
-- [跨平台](/_Code/Program.md#跨平台)
-
-- - [Weex](/_Code/Program.md#weex)
+- [Weex](/_Code/Program.md#weex)
 
 
 

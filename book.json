@@ -24,7 +24,8 @@
     "hide-element",
     "gittalk",
     "addcssjs",
-    "pageview-count"
+    "pageview-count",
+    "expandable-chapters"
   ],
   "pluginsConfig": {
     "theme-default": {
