@@ -376,6 +376,7 @@ Disruptor 是一个无锁、有界的队列框架，它的性能非常高。
   - Gradle
     - [十分钟理解 Gradle - Bonker - 博客园](https://www.cnblogs.com/Bonker/p/5619458.html)
     - 慕课实战：Gradle3.0 自动化项目构建技术精讲+实战
+    - [Gradle Distributions](https://services.gradle.org/distributions)
 - 版本管理工具
   - Git
 - 持续集成部署
