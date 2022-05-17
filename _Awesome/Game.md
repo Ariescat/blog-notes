@@ -296,19 +296,21 @@ AI计算分配
 
 
 
-## 碰撞检测
+## 物理引擎
 
-[碰撞检测的向量实现 - 掘金 (juejin.cn)](https://juejin.cn/post/6844903928501387277#heading-11)
+### 碰撞检测
 
-这里面的参考链接也可以看看
+[碰撞检测的向量实现 - 掘金 (juejin.cn)](https://juejin.cn/post/6844903928501387277#heading-11) (这里面的参考链接也可以看看)
+
+[物理引擎 - 知乎 (zhihu.com)](https://www.zhihu.com/column/c_1406626318495117312)
 
 
 
+### 包围盒
 
+BVH（Bounding Volume Hierarchies 层次包围盒）
 
-## 包围盒
-
-- BVH（Bounding Volume Hierarchies 层次包围盒）
+通常简单的物体比较容易检查相互之间的重叠（也就是碰撞），也常应用于光线跟踪中。
 
 
 
