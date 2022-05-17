@@ -6,8 +6,8 @@
     "theme-lou",
     "-lunr",
     "-search",
+    "-sharing",
     "search-pro",
-    "github",
     "code",
     "lightbox",
     "tbfed-pagefooter",
@@ -39,7 +39,9 @@
   "pluginsConfig": {
     "theme-lou": {
       "color": "#FF4848",
+      "favicon": "/img/favicon.ico",
       "logo": "/img/logo.png",
+      "appleTouchIconPrecomposed152": "/img/apple-touch-icon.png",
       "search-placeholder": "在下想搜些啥呢......",
       "book-summary-title": "目录",
       "book-anchor-title": "本篇章节：",
@@ -53,9 +55,6 @@
         "isBox": false,
         "otherStyle": "max-width: 80%;"
       }
-    },
-    "github": {
-      "url": "https://github.com/Ariescat/Metis-Awesome/"
     },
     "tbfed-pagefooter": {
       "copyright": "Copyright &copy Ariescat",

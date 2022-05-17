@@ -246,51 +246,65 @@ AI计算分配
 
 ## 寻路
 
-- A* 及其变种算法
+### A* 及其变种算法
 
-  参考：
+[路径规划之 A* 算法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/54510444)
 
-  [路径规划之 A* 算法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/54510444)
 
-- JPS
 
-  参考：
+### JPS
 
-  《2018腾讯移动游戏技术评审标准与实践案例》：寻路算法 JPS 优化章节
+参考：
 
-  [「游戏」寻路算法之JPS原理和实现__Echo_-CSDN博客](https://blog.csdn.net/qq_37005831/article/details/115091377)
+《2018腾讯移动游戏技术评审标准与实践案例》：寻路算法 JPS 优化章节
 
-  [JPS（Jump Point Search）寻路及实现代码分析_燕临江下的蛋-CSDN博客](https://blog.csdn.net/u011265162/article/details/91048927)
+[「游戏」寻路算法之JPS原理和实现__Echo_-CSDN博客](https://blog.csdn.net/qq_37005831/article/details/115091377)
 
-  [[算法\]小学堂：JPS寻路算法浅析 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/25093275)
+[JPS（Jump Point Search）寻路及实现代码分析_燕临江下的蛋-CSDN博客](https://blog.csdn.net/u011265162/article/details/91048927)
 
-- 导航网格（navmesh）
+[[算法\]小学堂：JPS寻路算法浅析 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/25093275)
 
-  导航网格的生成会分为下面几个步骤：
 
-  1. 场景模型体素化（Voxelization），或者叫“栅格化”（Rasterization）
-  2. 过滤出可行走面（Walkable Suface）
-  3. 生成 Region
-  4. 生成 Contour（边缘）
-  5. 生成 Poly Mesh
-  6. 生成 Detailed Mesh
 
-  参考：
+### NavMesh
 
-  - 《腾讯游戏开发精粹》：第5章 3D游戏碰撞之体素内存、效率优化
-  - [游戏的寻路导航 1：导航网格 - 简书 (jianshu.com)](https://www.jianshu.com/p/490a9128b248)
-  - [NMGen Study](http://www.critterai.org/projects/nmgen_study/) 项目，NMGen研究是Java中 [Recast静态网格](https://github.com/memononen/recastnavigation) 功能的改编，用于研究和实验目的。
-  - [Recast&Detour_游蓝海 的专栏-CSDN博客](https://blog.csdn.net/you_lan_hai/category_7114516.html)
-  - [寻路_长三月的游戏开发-CSDN博客](https://blog.csdn.net/needmorecode/category_7909722.html)
-  - [detour 寻路核心逻辑 CrowdToolState::updateTick dtCrowd::update_只要你在的博客-CSDN博客](https://blog.csdn.net/icebergliu1234/article/details/80381342)
+**介绍：**
 
-- **抗锯齿**
+[游戏的寻路导航 1：导航网格 - 简书 (jianshu.com)](https://www.jianshu.com/p/490a9128b248)
 
-  - A* 上：
+**NavMesh 生成原理：**
 
-    1. 延长寻路目标
+导航网格的生成会分为下面几个步骤：
 
-    2. a* 增加拐角代价函数
+1. 场景模型体素化（Voxelization），或者叫“栅格化”（Rasterization）
+2. 过滤出可行走面（Walkable Suface）
+3. 生成 Region
+4. 生成 Contour（边缘）
+5. 生成 Poly Mesh
+6. 生成 Detailed Mesh
+
+**源码解析：**
+
+- [recast navigation navmesh 导航网格 寻路算法 源码分析_飞天大蟾蜍的博客-CSDN博客](https://blog.csdn.net/lsccsl/article/details/117435210)
+
+- [寻路_长三月的游戏开发-CSDN博客](https://blog.csdn.net/needmorecode/category_7909722.html)
+
+- [detour 寻路核心逻辑 CrowdToolState::updateTick dtCrowd::update_只要你在的博客-CSDN博客](https://blog.csdn.net/icebergliu1234/article/details/80381342)
+
+**参考：**
+
+- 《腾讯游戏开发精粹》：第5章 3D游戏碰撞之体素内存、效率优化
+- [NMGen Study](http://www.critterai.org/projects/nmgen_study/) 项目，NMGen研究是Java中 [Recast静态网格](https://github.com/memononen/recastnavigation) 功能的改编，用于研究和实验目的。
+
+
+
+### 抗锯齿
+
+- A* 上：
+
+  1. 延长寻路目标
+
+  2. a* 增加拐角代价函数
 
 
 
