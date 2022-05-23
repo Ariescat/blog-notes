@@ -321,6 +321,8 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
 
 #### TreeMap
 
+`HashMap<K, V>`的优势是能够在 O(1) 时间通过键查找对应的值，但要求键的类型`K`必须是「可哈希」的；而`TreeMap<K, V>`的特点是方便根据键的大小进行操作，但要求键的类型`K`必须是「可比较」的。
+
 TreeSet 同理，红黑树实现
 
 
