@@ -71,10 +71,6 @@ snappy是google基于LZ77的思路编写的快速数据压缩与解压程序库�
 
 
 
-### Limit
-
-限流 RPCLimit
-
 
 
 ## 数据同步
@@ -432,6 +428,16 @@ BVH（Bounding Volume Hierarchies 层次包围盒）
 
 
 ## 游戏安全
+
+Limit
+
+限流 RPCLimit
+
+权限
+
+GM权限，分等级，重要等级需要邮箱验证码
+
+参考
 
 - [游戏安全实验室](https://gslab.qq.com/portal.php?mod=view&aid=94)
 
