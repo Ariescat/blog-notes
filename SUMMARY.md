@@ -93,10 +93,10 @@
 
 - [C++基础](/_Code/C++.md#c基础)
 
-  - [基本类型](/_Code/C++.md#基本类型)
+- [基本类型](/_Code/C++.md#基本类型)
   - [string和字符串](/_Code/C++.md#string和字符串)
   - [vector和数组](/_Code/C++.md#vector和数组)
-
+  
 - [C++标准库](/_Code/C++.md#c标准库)
 
   - [IO库](/_Code/C++.md#io库)
@@ -126,6 +126,13 @@
 - [包管理工具](/_Code/C++.md#包管理工具)
 
 - [第三方库](/_Code/C++.md#第三方库)
+
+
+
+## Python
+
+- [Cython 与 CPython](/_Code/Python.md#cython-与-cpython)
+- [GIL](/_Code/Python.md#gil)
 
 
 

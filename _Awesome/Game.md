@@ -37,9 +37,11 @@
 
 ### 应用层协议
 
-- Json，MessagePack
+- Json，MessagePack (msgpack)
 
 - ProtoBuf
+
+  msgpack的序列化速度比protobuf要快一些，但反序列化要比protobuf要慢一些，但总体都接近
 
 
 
@@ -68,6 +70,10 @@ deflate 是最基础的算法，gzip 在 deflate 的 raw data 前增加了 10 �
 snappy是google基于LZ77的思路编写的快速数据压缩与解压程序库。它的目标并非最大压缩率或与其他压缩程序库的兼容性，而是非常高的速度和合理的压缩率。
 
 
+
+### Limit
+
+限流 RPCLimit
 
 
 
@@ -340,6 +346,10 @@ BVH（Bounding Volume Hierarchies 层次包围盒）
 
 
 
+### ECS结构
+
+
+
 ### 第三方框架
 
 - Akka
@@ -362,7 +372,20 @@ BVH（Bounding Volume Hierarchies 层次包围盒）
 
 ### 压测
 
-robot
+- robot
+- 建立基准、监控
+
+
+
+### 算法
+
+- AOI分层运算
+
+- 四叉树
+
+- 算力分摊
+
+  分摊给其他进程、或者客户端（客服端怪、单人副本）
 
 
 
