@@ -933,6 +933,28 @@ Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
 
 
 
+**Java SPI机制与Thread Context Classloader**
+
+以DriverManager为例，假设它在⾃⼰的代码⾥调⽤`Class.forName("com.mysql.cj.jdbc.driver");`
+
+我们看forName的代码
+
+```java
+@CallerSensitive 
+public static Class<?> forName(String className) throws ClassNotFoundException { 
+    Class<?> caller = Reflection.getCallerClass(); 
+    return forName0(className, true, ClassLoader.getClassLoader(caller), caller); 
+}
+```
+
+此处会寻找caller的类，然后找它的classloader，DriverManager调⽤的forName，所以此处的caller就是DriverManager.class，但是我们知道DriverManager是bootstrap加载的，那此处获取classloader就是null。forName0是native⽅法，它发现classloader是null就尝试⽤bootstrap加载，但是我们要加载的是mysql的类，bootstrap肯定是不能加载的。
+
+那怎么办呢？谁调⽤我，我就⽤谁的加载器，这个加载器放在哪呢，就跟线程绑定，也就是Thread Context ClassLoader。
+
+以上摘抄自：[Java SPI机制与Thread Context Classloader](https://blog.51cto.com/nxlhero/2697891)
+
+
+
 ### Observable
 
 操作 Vector 型变量 obs 的四个方法都加有同步关键字，Vector 类型为线程安全的，而上述四个方法为什么还要加同步关键字呢？
