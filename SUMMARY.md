@@ -12,78 +12,15 @@
 
 - [Java 基础](/_Code/Java.md#java-基础)
 
-  - [基本类型](/_Code/Java.md#基本类型)
-  - [String](/_Code/Java.md#string)
-  - [枚举](/_Code/Java.md#枚举)
-  - [数组](/_Code/Java.md#数组)
-  - [运算符](/_Code/Java.md#运算符)
-  - [日期与时间](/_Code/Java.md#日期与时间)
-  - [泛型](/_Code/Java.md#泛型)
-  - [异常](/_Code/Java.md#异常)
-  - [位运算](/_Code/Java.md#位运算)
-  - [Math](/_Code/Java.md#math)
-
 - [Java 高级](/_Code/Java.md#java-高级)
-
-  - [数据结构](/_Code/Java.md#数据结构)
-  - [集合容器](/_Code/Java.md#集合容器)
-  - [代理](/_Code/Java.md#代理)
-  - [反射](/_Code/Java.md#反射)
-  - [创建和销毁对象](/_Code/Java.md#创建和销毁对象)
-  - [对象引用](/_Code/Java.md#对象引用)
-  - [对象序列化](/_Code/Java.md#对象序列化)
-  - [对象拷贝](/_Code/Java.md#对象拷贝)
-  - [热更新](/_Code/Java.md#热更新)
-  - [JVMTI](/_Code/Java.md#jvmti)
-  - [System#exit](/_Code/Java.md#systemexit)
-  - [ServiceLoader](/_Code/Java.md#serviceloader)
-  - [Observable](/_Code/Java.md#observable)
-  - [Java 注解处理器](/_Code/Java.md#java-注解处理器)
-  - [JMX](/_Code/Java.md#jmx)
-  - [启动](/_Code/Java.md#启动)
-  - [语法糖](/_Code/Java.md#语法糖)
-  - [字符编解码](/_Code/Java.md#字符编解码)
-  - [补码](/_Code/Java.md#补码)
-  - [设计模式](/_Code/Java.md#设计模式)
-  - [Swing/Awt](/_Code/Java.md#swingawt)
 
 - [Java IO](/_Code/Java.md#java-io)
 
-  - [IO 流](/_Code/Java.md#io-流)
-  - [close()](/_Code/Java.md#close)
-  - [Path/Files](/_Code/Java.md#pathfiles)
-  - [NIO](/_Code/Java.md#nio)
-
 - [Java 并发](/_Code/Java.md#java-并发)
-
-  - [概述](/_Code/Java.md#概述)
-  - [线程](/_Code/Java.md#线程)
-  - [同步互斥](/_Code/Java.md#同步互斥)
-  - [线程池](/_Code/Java.md#线程池)
-  - [协程](/_Code/Java.md#协程)
 
 - [Java 虚拟机](/_Code/Java.md#java-虚拟机)
 
-  - [前言](/_Code/Java.md#前言)
-  - [不错的系列文章](/_Code/Java.md#不错的系列文章)
-  - [内存管理](/_Code/Java.md#内存管理)
-  - [内存模型](/_Code/Java.md#内存模型_1)
-  - [内存分析](/_Code/Java.md#内存分析)
-  - [字节码](/_Code/Java.md#字节码)
-  - [类加载 ClassLoader](/_Code/Java.md#类加载-classloader)
-  - [指令集](/_Code/Java.md#指令集)
-  - [编译与优化](/_Code/Java.md#编译与优化)
-  - [GC](/_Code/Java.md#gc)
-  - [性能调优](/_Code/Java.md#性能调优)
-
 - [Java 新特性](/_Code/Java.md#java-新特性)
-
-  - [Java 7](/_Code/Java.md#java-7)
-  - [Java 8](/_Code/Java.md#java-8)
-  - [Java 9](/_Code/Java.md#java-9)
-  - [Java 11](/_Code/Java.md#java-11)
-  - [Java 12](/_Code/Java.md#java-12)
-  - [Q&A](/_Code/Java.md#qa_1)
 
 - [书单](/_Code/Java.md#书单)
 
@@ -94,32 +31,12 @@
 - [C++基础](/_Code/C++.md#c基础)
 
 - [基本类型](/_Code/C++.md#基本类型)
-  - [string和字符串](/_Code/C++.md#string和字符串)
-  - [vector和数组](/_Code/C++.md#vector和数组)
-  
-- [C++标准库](/_Code/C++.md#c标准库)
 
-  - [IO库](/_Code/C++.md#io库)
+- [C++标准库](/_Code/C++.md#c标准库)
 
 - [高级](/_Code/C++.md#高级)
 
-  - [指针](/_Code/C++.md#指针)
-  - [引用](/_Code/C++.md#引用)
-  - [多态与重载](/_Code/C++.md#多态与重载)
-  - [delete和delete[\]](/_Code/C++.md#delete和delete)
-  - [内存对齐](/_Code/C++.md#内存对齐)
-  - [.hpp与.h区别](/_Code/C++.md#hpp与h区别)
-  - [gcc与g++的区别](/_Code/C++.md#gcc与g的区别)
-
 - [C++11](/_Code/C++.md#c11)
-
-  - [右值引用](/_Code/C++.md#右值引用)
-  - [移动构造函数](/_Code/C++.md#移动构造函数)
-  - [std::move](/_Code/C++.md#stdmove)
-  - [std::forward](/_Code/C++.md#stdforward)
-  - [RVO返回值优化](/_Code/C++.md#rvo返回值优化)
-  - [智能指针](/_Code/C++.md#智能指针)
-  - [auto和decltype](/_Code/C++.md#auto和decltype)
 
 - [调用其他语言](/_Code/C++.md#调用其他语言)
 

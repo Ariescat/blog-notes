@@ -9,8 +9,6 @@
 
 ## Java 基础
 
-
-
 ### 基本类型
 
 - 强转
@@ -206,12 +204,6 @@ Date 和 Calendar，LocalDateTime（Java8），ZonedDateTime（时区），Insta
   在 java.lang.math 类中的 log(double a) 代表以 e 为底的 a 的对数，因此 log2N 在 Java 中的表示为 `log((double)N)/log((double)2)`
 
 * pow
-
-
-
-
-
-## Java 高级
 
 
 
@@ -412,6 +404,8 @@ TreeSet 同理，红黑树实现。
 
 
 
+## Java 高级
+
 ### 代理
 
 - 按照代理的创建时期，代理类可以分为两种。
@@ -475,149 +469,6 @@ TreeSet 同理，红黑树实现。
   ```
 
   可扩展看看 `Spring` 的 `JdkDynamicAopProxy`，其实本质上 Spring 对代理的处理都差不多
-
-
-
-### 反射
-
-#### Class
-
-- Class类 与 Class 对象
-
-  Class 没有公共构造方法。Class 对象是在加载类时由 Java 虚拟机以及通过调用类加载器中的 defineClass 方法自动构造的，因此不能显式地声明一个Class对象。 
-
-  虚拟机为每种类型管理一个独一无二的Class对象。也就是说，每个类（型）都有一个Class对象。运行程序时，Java虚拟机(JVM)首先检查是否所要加载的类对应的Class对象是否已经加载。如果没有加载，JVM就会根据类名查找.class文件，并将其Class对象载入。
-
-  基本的 Java 类型（boolean、byte、char、short、int、long、float 和 double）和关键字 void 也都对应一个 Class 对象。 
-
-  每个数组属于被映射为 Class 对象的一个类，所有具有相同元素类型和维数的数组都共享该 Class 对象。
-
-- Class 对象的获取方式
-
-  1. Class.forName("类名字符串")
-  2. 类名.class
-  3. 实例对象.getClass()
-  
-- 关键字 instanceof **VS** Class.isInstance（参数）
-
-  ```java
-  System.err.println(son instanceof Parent);
-  System.err.println(Parent.class.isInstance(son));
-  ```
-
-- Class 的 getSuperclass 与 getGenericSuperclass
-
-  **getGenericSuperclass 会包含该超类的泛型。**
-
-- 判断当前类是什么类
-
-  ```java
-  boolean isLocalClass(); //判断是不是局部类，也就是方法里面的类，其实现：isLocalOrAnonymousClass() && !isAnonymousClass();
-  boolean isLocalOrAnonymousClass();
-  boolean isMemberClass(); //判断是不是成员内部类，也就是一个类里面定义的类
-  boolean isAnonymousClass(); //判断当前类是不是匿名类，一般为实例化的接口或实例化的抽象类
-  boolean isAnnotation();// 判断 Class 对象是否是注解类型
-  boolean isPrimitive(); // 判断 Class 是否为原始类型（int，double 等）
-  boolean isSynthetic(); // 判断是否由 Java 编译器生成（除了像默认构造函数这一类的）的方法或者类，Method 也有这个方法
-  ```
-
-  参考：
-
-  [Java 中冷门的 synthetic 关键字原理解读 - 老白讲互联网 - 博客园 (cnblogs.com)](https://www.cnblogs.com/bethunebtj/p/7761596.html)
-
-- 返回字符串 (String) 的方法
-
-  ```java
-  String getCanonicalName(); //返回 Java Language Specification 中所定义的底层类的规范化名称
-  String getName(); //以 String 的形式返回此 Class 对象所表示的实体（类、接口、数组类、基本类型或 void）名称（全限定名：包名.类名）。
-  String getSimpleName(); //返回源代码中给出的底层类的简称。
-  String toString(); //将对象转换为字符串。
-  ```
-
-- Class.forName 和 ClassLoader 的区别
-
-  都可用来对类进行加载。
-
-  不同：
-
-  1）Class.forName() 除了将类的.class 文件加载到 jvm 中之外，**还会对类进行解释，执行类中的 static 块，还会执行给静态变量赋值的静态方法**
-
-  2）classLoader 只干一件事情，就是将.class 文件加载到 jvm 中，不会执行 static 中的内容,只有在 newInstance 才会去执行 static 块。
-
-* 使用 Class.getResource 和 ClassLoader.getResource 方法获取文件路径
-
-  对于**class.getResource(path)**方法，其中的参数 path 有两种形式，一种是以“/”开头的，另一种是不以"/"开头
-
-  **Class.getClassLoader().getResource(String path)**，该方法中的参数 path 不能以“/“开头，path 表示的是从 classpath 下获取资源的
-
-
-
-#### Method
-
-- **Method**.invoke() 的实现原理
-
-  [假笨说-从一起 GC 血案谈到反射原理](https://mp.weixin.qq.com/s/5H6UHcP6kvR2X5hTj_SBjA)
-
-  **获取 Method：**
-
-    - reflectionData，这个属性主要是 SoftReference 的
-    - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
-
-  **Method 调用：**
-
-    - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
-
-  **MethodAccessor 的实现：**
-
-    - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
-    - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
-
-  **并发导致垃圾类创建：**
-
-    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**（关于元空间的回收看[JVM内存管理](#内存管理)）
-
-      后来发现JDK17加了个乐观锁判断 `U.compareAndSetInt(this, GENERATED_OFFSET, 0, 1)`，应该是修复过这个问题了（但JDK8并没有修复）
-
-  **其他 JVM 相关文章:**
-
-    - 该文章最后有其他 JVM 相关文章，感觉是干货
-
-- [反射代理类加载器的潜在内存使用问题](https://www.jianshu.com/p/20b7ab284c0a)！！
-
-  大量的类加载器 `sun/reflect/DelegatingClassLoader`，用来加载 `sun/reflect/GeneratedMethodAccessor` 类，可能导致潜在的占用大量本机内存空间问题，应用服务器进程占用的内存会显著增大。
-
-- 其他链接
-
-  [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
-
-
-
-#### MethodHandle
-
-反射获取的信息比 MethodHandle 要多。
-
-反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
-
-`MethodHandle` 和 反射 相比好处是：
-
-- 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
-- 性能好得多，类似标准的方法调用。
-- 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
-
-看 [指令集](#指令集)
-
-
-
-#### VarHandle
-
-VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
-
-
-
-#### 反射缺点
-
-1. 由于是本地方法调用，让 JVM 无法优化 (还有 JIT？)
-2. 反射方法调用还有验证过程和参数问题，参数需要装箱拆箱、需要组装成 Object[] 形式、异常的包装等等问题
 
 
 
@@ -808,153 +659,6 @@ Fu f = new Zi();System.out.println(f.age);
 
 
 
-### 热更新
-
-- 自定义类加载器
-
-  - [探秘 Java 热部署](https://www.jianshu.com/p/731bc8293365)
-  - [CSDN·自定义 classloader 实现 JAVA 热替换](https://blog.csdn.net/puhaiyang/article/details/78165465)
-
-- java.lang.instrument
-
-  类重新定义，这是 Instrumentation 提供的基础功能之一，这个类很早就出了，redefineClasses 这个方法可以更新方法级别的代码，但是不会触发一个类的初始化方法。
-
-  - [游戏服务器之 Java 热更新](https://www.cnblogs.com/wgslucky/p/9127681.html)
-  - [动态加载 class 文件](https://zheng12tian.iteye.com/blog/1495037)
-  - [JVM 源码分析之 javaagent 原理完全解读](https://www.imooc.com/article/42736)
-  - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
-  - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
-
-- 第三方工具
-
-  - [**Arthas**的使用](https://www.cnblogs.com/orange911/p/10583245.html)
-  - [Github · **HotswapAgent**](https://github.com/HotswapProjects/HotswapAgent)
-
-- 脚本语言
-
-  - groovy
-
-    使用 groovy 类加载器重载 java 代码 重载的 java 文件可以直接使用源文件，无需编译为 class
-
-
-
-### JVMTI
-
-JVM Tool Interface，是jvm暴露出来的一些供用户扩展的接口集合，JVMTI是基于事件驱动的，JVM每执行到一定的逻辑就会调用一些事件的回调接口（如果有的话），这些接口可以供开发者去扩展自己的逻辑。
-
-#### JVMTIAgent
-
-JVMTIAgent其实就是一个动态库，利用JVMTI暴露出来的一些接口来干一些我们想做但是正常情况下又做不到的事情，不过为了和普通的动态库进行区分，它一般会实现如下的一个或者多个函数：
-
-```c++
-JNIEXPORT jint JNICALL
-Agent_OnLoad(JavaVM *vm, char *options, void *reserved);
-
-JNIEXPORT jint JNICALL
-Agent_OnAttach(JavaVM* vm, char* options, void* reserved);
-
-JNIEXPORT void JNICALL
-Agent_OnUnload(JavaVM *vm); 
-```
-
-JVM启动参数：-agentlib:libname[=options]、-agentpath:pathname[=options]。
-
-比如：-agentlib:hprof，会搜到环境变量PATH中的dll/so库；而-agentpath会按全路径装载本地库，不再搜索PATH中的路径，其他功能和agentlib相同。
-
-
-
-#### javaagent
-
-`javaagent`是由一个叫做`instrument`的`JVMTIAgent`（linux下对应的动态库是`libinstrument.so`）来实现的，另外`instrument agent`还有个别名叫`JPLISAgent`（Java Programming Language Instrumentation Services Agent），从这名字里也完全体现了其最本质的功能：就是专门为java语言编写的插桩服务提供支持的。
-
-JVM启动参数：-javaagent:jarpath[=options]
-
-参考：[java agent基础原理_ancinsdn的博客](https://blog.csdn.net/ancinsdn/article/details/58276945)
-
-
-
-### System#exit
-
-1. 注册的关闭勾子会在以下几种时机被调用到
-
-- 程序正常退出
-  - 最后一个非守护线程执行完毕退出时
-  - System.exit 方法被调用时
-- 程序响应外部事件
-  - 程序响应用户输入事件，例如在控制台按 ctrl+c(^+c)
-  - 程序响应系统事件，如用户注销、系统关机等
-
-2. 这种方法永远不会正常返回。
-
-   意味着该方法不会返回；一旦一个线程进入那里，就不会再回来了。
-
-链接：
-
-- [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
-
-- [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
-
-  最后一楼说了：将 A 线程变为 while(true) 一直执行，就会发现 A 线程也会中止。两个线程各自执行，之前都循环十次，A 线程可能在 B 线程调用 System.exit(0) 之前就执行完了
-
-
-
-### ServiceLoader
-
-Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
-
-该类通过在资源目录 META-INF/services 中放置**提供者配置文件**来标识**服务提供者**。
-
-应用场景：
-
-1. JDBC 驱动加载
-
-   `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
-
-   因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
-
-   ```java
-   //a.导入驱动，加载具体的驱动类
-   Class.forName("com.mysql.jdbc.Driver");
-   //b.与数据库建立连接
-   connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-   ```
-
-2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
-
-   而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
-
-3. Dubbo 的扩展点加载
-
-   Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
-
-   META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
-
-   ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
-
-
-
-**Java SPI机制与Thread Context Classloader**
-
-以DriverManager为例，假设它在⾃⼰的代码⾥调⽤`Class.forName("com.mysql.cj.jdbc.driver");`
-
-我们看forName的代码
-
-```java
-@CallerSensitive 
-public static Class<?> forName(String className) throws ClassNotFoundException { 
-    Class<?> caller = Reflection.getCallerClass(); 
-    return forName0(className, true, ClassLoader.getClassLoader(caller), caller); 
-}
-```
-
-此处会寻找caller的类，然后找它的classloader，DriverManager调⽤的forName，所以此处的caller就是DriverManager.class，但是我们知道DriverManager是bootstrap加载的，那此处获取classloader就是null。forName0是native⽅法，它发现classloader是null就尝试⽤bootstrap加载，但是我们要加载的是mysql的类，bootstrap肯定是不能加载的。
-
-那怎么办呢？谁调⽤我，我就⽤谁的加载器，这个加载器放在哪呢，就跟线程绑定，也就是Thread Context ClassLoader。
-
-以上摘抄自：[Java SPI机制与Thread Context Classloader](https://blog.51cto.com/nxlhero/2697891)
-
-
-
 ### Observable
 
 操作 Vector 型变量 obs 的四个方法都加有同步关键字，Vector 类型为线程安全的，而上述四个方法为什么还要加同步关键字呢？
@@ -1090,6 +794,31 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 补码(为什么按位取反再加一)：告诉你一个其实很简单的问题 [原文](https://blog.csdn.net/wenxinwukui234/article/details/42119265)
 
 其核心思想就是：**一个正数对应的负数（也就是俩相反数），这两个数的二进制编码加起来必须等于 0 才对**
+
+
+
+### System#exit
+
+1. 注册的关闭勾子会在以下几种时机被调用到
+
+- 程序正常退出
+  - 最后一个非守护线程执行完毕退出时
+  - System.exit 方法被调用时
+- 程序响应外部事件
+  - 程序响应用户输入事件，例如在控制台按 ctrl+c(^+c)
+  - 程序响应系统事件，如用户注销、系统关机等
+
+2. 这种方法永远不会正常返回。
+
+   意味着该方法不会返回；一旦一个线程进入那里，就不会再回来了。
+
+链接：
+
+- [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
+
+- [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
+
+  最后一楼说了：将 A 线程变为 while(true) 一直执行，就会发现 A 线程也会中止。两个线程各自执行，之前都循环十次，A 线程可能在 B 线程调用 System.exit(0) 之前就执行完了
 
 
 
@@ -1248,23 +977,59 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 
 
+### 进程
+
+进程是一个独立的运行环境，而线程是在进程中执行的一个任务。
+
+进程单独占有一定的内存地址空间，进程的创建和销毁不仅需要保存寄存器和栈信息，还需要资源的分配回收以及页调度，开销较大；线程只需要保存寄存器和栈信息，开销较小。
+
+另外一个重要区别是，进程是操作系统进行资源分配的基本单位，而线程是操作系统进行调度的基本单位，即CPU分配时间的单位 。
+
+总结： 线程 是 进程 划分成的更小的运行单位。线程和进程最大的不同在于基本上各进程是独立的，而各线程则不一定，因为同一进程中的线程极有可能会相互影响。线程执行开销小，但不利于资源的管理和保护；而进程正相反
+
+
+
 ### 线程
 
 #### 线程创建
 
 有三种使用线程的方法：
 
-- 实现 Runnable 接口；
-- 实现 Callable 接口；
-- 继承 Thread 类。
+- 继承 Thread 类
+- 实现 Runnable 接口
+- 实现 Callable 接口
+  - Future接口
+  - FutureTask类
 
-链接：[Java 并发的四种风味](https://blog.csdn.net/yonlist/article/details/84736424)
+参考：[Java 并发的四种风味](https://blog.csdn.net/yonlist/article/details/84736424)
+
+
+
+#### 线程优先级
+
+Java中线程优先级可以指定，范围是1~10。
+
+Java只是给操作系统一个优先级的参考值，线程最终在操作系统的优先级是多少还是由操作系统决定。
+
+Java默认的线程优先级为5，线程的执行顺序由调度程序来决定，线程的优先级会在线程被调用之前设定。
 
 
 
 #### 线程状态
 
 `java.lang.Thread.State`，里面的注释内容讲解得很清楚了
+
+```java
+// Thread.State 源码
+public enum State {
+    NEW,//（新建）
+    RUNNABLE,//（可运行）
+    BLOCKED,//（阻塞）
+    WAITING,//（等待）
+    TIMED_WAITING,//（定时等待）
+    TERMINATED;//（终止）
+}
+```
 
 链接：
 
@@ -1346,9 +1111,213 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
 
 
+### 线程池
+
+介绍：[Executor 之 线程池及定时器 (novoland.github.io)](http://novoland.github.io/并发/2014/07/26/Executor 之 线程池及定时器.html)
+
+另外：
+
+《阿里巴巴 Java 开发手册》中强制线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险
+
+Executors 返回线程池对象的弊端如下：
+
+1. FixedThreadPool 和 SingleThreadExecutor ： 允许**请求的队列长度**为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
+2. CachedThreadPool 和 ScheduledThreadPool ： 允许**创建的线程数量**为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
+
+
+
+#### 主要参数
+
+- corePoolSize
+- maximumPoolSize
+- keepAliveTime
+- workQueue
+- handler
+
+
+
+#### 三种队列
+
+<table>
+   <tr>
+      <th> 队列 </th>
+      <th> 简单解释 </th>
+   </tr>
+   <tr>
+      <td>SynchrousQueue</td>
+      <td> 不会保存提交任务，超出直接 corePoolSize 个任务，直接创建新的线程来执行任务，直到 (corePoolSize＋新建线程) > maximumPoolSize。</td>
+   </tr>
+   <tr>
+      <td>LinkedBlockingQueue</td>
+      <td> 基于链表的先进先出，无界队列。超出直接 corePoolSize 个任务，则加入到该队列中，直到资源耗尽，所以 maximumPoolSize 不起作用。</td>
+   </tr>
+   <tr>
+      <td>ArrayBlockingQueue</td>
+      <td> 基于数组的先进先出，创建时必须指定大小，超出直接 corePoolSize 个任务，则加入到该队列中，只能加该 queue 设置的大小，其余的任务则创建线程，直到 (corePoolSize＋新建线程) > maximumPoolSize。</td>
+   </tr>
+</table>
+
+上表收录自：[线程池的三种缓存队列](https://blog.csdn.net/nihaomabmt/article/details/81667481)
+
+解释看起来文邹邹的，要不直接上代码：execute：
+
+```java
+public void execute(Runnable command) {
+    if (command == null)
+        throw new NullPointerException();
+    int c = ctl.get();
+    if (workerCountOf(c) < corePoolSize) {
+        if (addWorker(command, true))
+            return;
+        c = ctl.get();
+    }
+    if (isRunning(c) && workQueue.offer(command)) {
+        int recheck = ctl.get();
+        if (! isRunning(recheck) && remove(command))
+            reject(command);
+        else if (workerCountOf(recheck) == 0)
+            addWorker(null, false);
+    }
+    else if (!addWorker(command, false))
+        reject(command);
+}
+```
+
+注意：
+
+？`SynchronousQueue`误区：很多人把其认为其没有容量，不存储元素，这是错的。
+
+好好了解这个结构，并看看其核心算法`transfer`。后来实在看不懂...，先记住这句话吧：生产者线程对其的插入操作 put 必须等待消费者的移除操作 take，反过来也一样。你不能调用 peek() 方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。
+
+链接：
+
+[SynchronousQueue应用 - hongdada - 博客园 (cnblogs.com)](https://www.cnblogs.com/hongdada/p/6147834.html)
+
+
+
+#### 四种拒绝策略
+
+1. AbortPolicy // 默认，队列满了丢任务抛出异常
+2. DiscardPolicy // 队列满了丢任务不异常
+3. DiscardOldestPolicy // 将最早进入队列的任务删，之后再尝试加入队列
+4. CallerRunsPolicy // 如果添加到线程池失败，那么主线程会自己去执行该任务
+
+
+
+#### 原理
+
+ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
+
+- [Java线程池详解2--任务提交及执行](https://blog.csdn.net/WenWu_Both/article/details/107657698)
+- [ScheduledThreadPoolExecutor 原理](https://blog.csdn.net/luanmousheng/article/details/77816412)
+
+
+
+#### 线程池运行状态
+
+![thread-state](https://img-blog.csdnimg.cn/20191216171812869.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIwNzA1Ng==,size_16,color_FFFFFF,t_70)
+
+
+
+#### 线程池终止
+
+[Java线程池详解3--线程池终止](https://blog.csdn.net/WenWu_Both/article/details/107657737)
+
+shutdown：
+
+执行完shutdown，线程池状态首先会更新为shutdown，然后中断**所有空闲**线程，当**剩余工作线程执行完持有的任务**，且将阻塞队列中的任务也执行完毕，变为空闲线程时，执行tryTerminate()操作将线程池状态更新为tidying，待线程池完成terminated()操作后，线程池状态最终变为terminated。
+
+
+
+shutdownNow：
+
+执行完shutdownNow，线程池状态首先会更新为stop，接着中断**所有已启动**worker，然后执行tryTerminate()操作将线程池状态更新为tidying，待线程池完成terminated()操作后，线程池状态最终变为terminated。
+
+
+
+awaitTermination：
+
+判定当前线程池已处于terminated状态
+
+
+
+注意，一旦线程池有任务开始跑，就算任务都跑完了，也会等待`keepAliveTime`时候后才会停止。一般测试小 demo 的时候发现程序一直得不到结束，原因基本是这个。
+
+```java
+public static void main(String[] args) throws InterruptedException {
+    ExecutorService executor = Executors.newCachedThreadPool();
+    executor.execute(() -> System.err.println("executor"));
+    // TimeUnit.SECONDS.sleep(5L);
+    // executor.shutdown();
+    System.err.println("finish"); // 两个打印都输出后，程序还要等待 60s 才会结束！！
+}
+```
+
+源码分析：
+
+`java.util.concurrent.ThreadPoolExecutor#runWorker`这里会一直调用`task = getTask()`，`getTask`里会调用`workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)`或者`workQueue.take()`，因此没任务后它也会阻塞`keepAliveTime`时间 或者 永久阻塞。
+
+分析一下`shutdown()`，它里面调用了`interruptIdleWorkers()`，它会打断上述的`wait keepAliveTime`的状态，抛出中断异常，而`getTask()`会捕获这个异常，从而**打破阻塞状态**。
+
+
+
+#### 线程池异常处理
+
+java.util.concurrent.ThreadPoolExecutor#runWorker
+
+使用 execute 方法提交的任务一般没问题
+
+有需要可以重写 afterExecute
+
+但注意 sumbit 这种情况，FutureTask 自己封装处理了异常，不通过 Future 是获取不到的，看看这篇文章：
+
+[记一次线程池引发的故障 排查下来是三歪的锅](https://mp.weixin.qq.com/s/TQGtNpPiTypeKd5kUnfxEw)
+
+这篇文章其实是有点问题的，他最后的 setUncaughtExceptionHandler 是获取不到 sumbit 的异常的，但还是可以通过这篇文章了解下整体的脉络。
+
+
+
+### 协程
+
+协程，英文 Coroutines，是一种比线程更加轻量级的存在。正如一个进程可以拥有多个线程一样，一个线程也可以拥有多个协程。最重要的是，**协程不是被操作系统内核所管理，而完全是由程序所控制**（也就是在用户态执行）。
+
+Java 语言并没有对协程的原生支持，但是某些开源框架模拟出了协程的功能，有兴趣的小伙伴可以看一看 Kilim 框架的源码
+
+
+
 ### 同步互斥
 
+#### 锁分类
+
+- 可重入锁和非可重入锁
+
+  synchronized关键字就是使用的重入锁。
+
+  ReentrantLock的中文意思就是可重入锁。
+
+- 公平锁和非公平锁
+
+  一般情况下，非公平锁能提升一定的效率。但是非公平锁可能会发生线程饥饿（有一些线程长时间得不到锁）的情况。
+
+  ReentrantLock支持非公平锁和公平锁两种。
+
+- 读写锁和排他锁
+
+  synchronized用的锁和ReentrantLock，其实都是“排它锁”。
+
+  ReentrantReadWriteLock类作为读写锁的默认实现，内部维护了两个锁：一个读锁，一个写锁。通过分离读锁和写锁，使得在“读多写少”的环境下，大大地提高了性能。
+
+
+
 #### synchronized
+
+**使用**
+
+同步一个对象、一个类、一个对象方法、一个静态方法
+
+
+
+**原理**
 
 - Java 对象
 
@@ -1451,6 +1420,10 @@ JUC 包，毫无疑问的，得去学，哪怕平时编程根本不去用，但�
 
   [关于Monitor对象在sychronized实现中的应用_super_x_man的博客-CSDN博客_monitor撖寡情](https://blog.csdn.net/super_x_man/article/details/81741073)
 
+
+
+**其他**
+
 - 用户态和内核态的转换
 
   过程是很复杂的，也涉及很多值的传递；synchronized 在 1.6 之前之所以说重量级，有部分原因在这，大量的系统资源消耗。
@@ -1507,6 +1480,7 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
       <td> 追求吞吐量。同步块执行速度较长。</td>
    </tr>
 </table>
+
 
 
 
@@ -1683,7 +1657,7 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
   * [内存屏障 | 并发编程网 – ifeve.com](http://ifeve.com/memory-barriers-or-fences/)
 
   * [全面理解 Java 内存模型 (JMM) 及 volatile 关键字 - CSDN 博客](http://blog.csdn.net/javazejian/article/details/72772461)
-  
+
   * [Java内存模型（JMM）总结 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/29881777)
 
 
@@ -1709,7 +1683,7 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
 - 了解一下 **LongAdder** 与 **Striped64**
 
   LongAdder 区别于 AtomicLong ，在高并发中有更好的性能体现
-  
+
   JDK 1.8 中新增的 LongAdder，通过把原值进行拆分，最后再以 sum 的方式，减少 CAS 操作冲突的概率，性能要比 AtomicLong 高出 10 倍左右。
 
 * 链接
@@ -1912,180 +1886,6 @@ AbstractQueuedSynchronizer
 
 
 
-### 线程池
-
-介绍：[Executor 之 线程池及定时器 (novoland.github.io)](http://novoland.github.io/并发/2014/07/26/Executor 之 线程池及定时器.html)
-
-另外：
-
-《阿里巴巴 Java 开发手册》中强制线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险
-
-Executors 返回线程池对象的弊端如下：
-
-1. FixedThreadPool 和 SingleThreadExecutor ： 允许**请求的队列长度**为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
-2. CachedThreadPool 和 ScheduledThreadPool ： 允许**创建的线程数量**为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
-
-
-
-#### 主要参数
-
-- corePoolSize
-- maximumPoolSize
-- keepAliveTime
-- workQueue
-- handler
-
-
-
-#### 三种队列
-
-<table>
-   <tr>
-      <th> 队列 </th>
-      <th> 简单解释 </th>
-   </tr>
-   <tr>
-      <td>SynchrousQueue</td>
-      <td> 不会保存提交任务，超出直接 corePoolSize 个任务，直接创建新的线程来执行任务，直到 (corePoolSize＋新建线程) > maximumPoolSize。</td>
-   </tr>
-   <tr>
-      <td>LinkedBlockingQueue</td>
-      <td> 基于链表的先进先出，无界队列。超出直接 corePoolSize 个任务，则加入到该队列中，直到资源耗尽，所以 maximumPoolSize 不起作用。</td>
-   </tr>
-   <tr>
-      <td>ArrayBlockingQueue</td>
-      <td> 基于数组的先进先出，创建时必须指定大小，超出直接 corePoolSize 个任务，则加入到该队列中，只能加该 queue 设置的大小，其余的任务则创建线程，直到 (corePoolSize＋新建线程) > maximumPoolSize。</td>
-   </tr>
-</table>
-
-上表收录自：[线程池的三种缓存队列](https://blog.csdn.net/nihaomabmt/article/details/81667481)
-
-解释看起来文邹邹的，要不直接上代码：execute：
-
-```java
-public void execute(Runnable command) {
-    if (command == null)
-        throw new NullPointerException();
-    int c = ctl.get();
-    if (workerCountOf(c) < corePoolSize) {
-        if (addWorker(command, true))
-            return;
-        c = ctl.get();
-    }
-    if (isRunning(c) && workQueue.offer(command)) {
-        int recheck = ctl.get();
-        if (! isRunning(recheck) && remove(command))
-            reject(command);
-        else if (workerCountOf(recheck) == 0)
-            addWorker(null, false);
-    }
-    else if (!addWorker(command, false))
-        reject(command);
-}
-```
-
-注意：
-
-？`SynchronousQueue`误区：很多人把其认为其没有容量，不存储元素，这是错的。
-
-好好了解这个结构，并看看其核心算法`transfer`。后来实在看不懂...，先记住这句话吧：生产者线程对其的插入操作 put 必须等待消费者的移除操作 take，反过来也一样。你不能调用 peek() 方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。
-
-链接：
-
-[SynchronousQueue应用 - hongdada - 博客园 (cnblogs.com)](https://www.cnblogs.com/hongdada/p/6147834.html)
-
-
-
-#### 四种拒绝策略
-
-1. AbortPolicy // 默认，队列满了丢任务抛出异常
-2. DiscardPolicy // 队列满了丢任务不异常
-3. DiscardOldestPolicy // 将最早进入队列的任务删，之后再尝试加入队列
-4. CallerRunsPolicy // 如果添加到线程池失败，那么主线程会自己去执行该任务
-
-
-
-#### 原理
-
-ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
-
-- [Java线程池详解2--任务提交及执行](https://blog.csdn.net/WenWu_Both/article/details/107657698)
-- [ScheduledThreadPoolExecutor 原理](https://blog.csdn.net/luanmousheng/article/details/77816412)
-
-
-
-#### 线程池运行状态
-
-![thread-state](https://img-blog.csdnimg.cn/20191216171812869.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIwNzA1Ng==,size_16,color_FFFFFF,t_70)
-
-
-
-#### 线程池终止
-
-[Java线程池详解3--线程池终止](https://blog.csdn.net/WenWu_Both/article/details/107657737)
-
-shutdown：
-
-执行完shutdown，线程池状态首先会更新为shutdown，然后中断**所有空闲**线程，当**剩余工作线程执行完持有的任务**，且将阻塞队列中的任务也执行完毕，变为空闲线程时，执行tryTerminate()操作将线程池状态更新为tidying，待线程池完成terminated()操作后，线程池状态最终变为terminated。
-
-
-
-shutdownNow：
-
-执行完shutdownNow，线程池状态首先会更新为stop，接着中断**所有已启动**worker，然后执行tryTerminate()操作将线程池状态更新为tidying，待线程池完成terminated()操作后，线程池状态最终变为terminated。
-
-
-
-awaitTermination：
-
-判定当前线程池已处于terminated状态
-
-
-
-注意，一旦线程池有任务开始跑，就算任务都跑完了，也会等待`keepAliveTime`时候后才会停止。一般测试小 demo 的时候发现程序一直得不到结束，原因基本是这个。
-
-```java
-public static void main(String[] args) throws InterruptedException {
-    ExecutorService executor = Executors.newCachedThreadPool();
-    executor.execute(() -> System.err.println("executor"));
-    // TimeUnit.SECONDS.sleep(5L);
-    // executor.shutdown();
-    System.err.println("finish"); // 两个打印都输出后，程序还要等待 60s 才会结束！！
-}
-```
-
-源码分析：
-
-`java.util.concurrent.ThreadPoolExecutor#runWorker`这里会一直调用`task = getTask()`，`getTask`里会调用`workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)`或者`workQueue.take()`，因此没任务后它也会阻塞`keepAliveTime`时间 或者 永久阻塞。
-
-分析一下`shutdown()`，它里面调用了`interruptIdleWorkers()`，它会打断上述的`wait keepAliveTime`的状态，抛出中断异常，而`getTask()`会捕获这个异常，从而**打破阻塞状态**。
-
-
-
-#### 线程池异常处理
-
-java.util.concurrent.ThreadPoolExecutor#runWorker
-
-使用 execute 方法提交的任务一般没问题
-
-有需要可以重写 afterExecute
-
-但注意 sumbit 这种情况，FutureTask 自己封装处理了异常，不通过 Future 是获取不到的，看看这篇文章：
-
-[记一次线程池引发的故障 排查下来是三歪的锅](https://mp.weixin.qq.com/s/TQGtNpPiTypeKd5kUnfxEw)
-
-这篇文章其实是有点问题的，他最后的 setUncaughtExceptionHandler 是获取不到 sumbit 的异常的，但还是可以通过这篇文章了解下整体的脉络。
-
-
-
-### 协程
-
-协程，英文 Coroutines，是一种比线程更加轻量级的存在。正如一个进程可以拥有多个线程一样，一个线程也可以拥有多个协程。最重要的是，**协程不是被操作系统内核所管理，而完全是由程序所控制**（也就是在用户态执行）。
-
-Java 语言并没有对协程的原生支持，但是某些开源框架模拟出了协程的功能，有兴趣的小伙伴可以看一看 Kilim 框架的源码
-
-
-
 
 
 ## Java 虚拟机
@@ -2208,6 +2008,271 @@ Classloader 将数据加载到内存中经过的步骤：
 1. Q：同一个 Class 的**static 字段**，被不同的 ClassLoader 加载，会有产生几份？
 
    A：会是两份，也就是 JVM 里有两份内存（某次面试时问到的，但自己没试过）
+
+
+
+### 反射
+
+#### Class
+
+- Class类 与 Class 对象
+
+  Class 没有公共构造方法。Class 对象是在加载类时由 Java 虚拟机以及通过调用类加载器中的 defineClass 方法自动构造的，因此不能显式地声明一个Class对象。 
+
+  虚拟机为每种类型管理一个独一无二的Class对象。也就是说，每个类（型）都有一个Class对象。运行程序时，Java虚拟机(JVM)首先检查是否所要加载的类对应的Class对象是否已经加载。如果没有加载，JVM就会根据类名查找.class文件，并将其Class对象载入。
+
+  基本的 Java 类型（boolean、byte、char、short、int、long、float 和 double）和关键字 void 也都对应一个 Class 对象。 
+
+  每个数组属于被映射为 Class 对象的一个类，所有具有相同元素类型和维数的数组都共享该 Class 对象。
+
+- Class 对象的获取方式
+
+  1. Class.forName("类名字符串")
+  2. 类名.class
+  3. 实例对象.getClass()
+
+- 关键字 instanceof **VS** Class.isInstance（参数）
+
+  ```java
+  System.err.println(son instanceof Parent);
+  System.err.println(Parent.class.isInstance(son));
+  ```
+
+- Class 的 getSuperclass 与 getGenericSuperclass
+
+  **getGenericSuperclass 会包含该超类的泛型。**
+
+- 判断当前类是什么类
+
+  ```java
+  boolean isLocalClass(); //判断是不是局部类，也就是方法里面的类，其实现：isLocalOrAnonymousClass() && !isAnonymousClass();
+  boolean isLocalOrAnonymousClass();
+  boolean isMemberClass(); //判断是不是成员内部类，也就是一个类里面定义的类
+  boolean isAnonymousClass(); //判断当前类是不是匿名类，一般为实例化的接口或实例化的抽象类
+  boolean isAnnotation();// 判断 Class 对象是否是注解类型
+  boolean isPrimitive(); // 判断 Class 是否为原始类型（int，double 等）
+  boolean isSynthetic(); // 判断是否由 Java 编译器生成（除了像默认构造函数这一类的）的方法或者类，Method 也有这个方法
+  ```
+
+  参考：
+
+  [Java 中冷门的 synthetic 关键字原理解读 - 老白讲互联网 - 博客园 (cnblogs.com)](https://www.cnblogs.com/bethunebtj/p/7761596.html)
+
+- 返回字符串 (String) 的方法
+
+  ```java
+  String getCanonicalName(); //返回 Java Language Specification 中所定义的底层类的规范化名称
+  String getName(); //以 String 的形式返回此 Class 对象所表示的实体（类、接口、数组类、基本类型或 void）名称（全限定名：包名.类名）。
+  String getSimpleName(); //返回源代码中给出的底层类的简称。
+  String toString(); //将对象转换为字符串。
+  ```
+
+- Class.forName 和 ClassLoader 的区别
+
+  都可用来对类进行加载。
+
+  不同：
+
+  1）Class.forName() 除了将类的.class 文件加载到 jvm 中之外，**还会对类进行解释，执行类中的 static 块，还会执行给静态变量赋值的静态方法**
+
+  2）classLoader 只干一件事情，就是将.class 文件加载到 jvm 中，不会执行 static 中的内容,只有在 newInstance 才会去执行 static 块。
+
+* 使用 Class.getResource 和 ClassLoader.getResource 方法获取文件路径
+
+  对于**class.getResource(path)**方法，其中的参数 path 有两种形式，一种是以“/”开头的，另一种是不以"/"开头
+
+  **Class.getClassLoader().getResource(String path)**，该方法中的参数 path 不能以“/“开头，path 表示的是从 classpath 下获取资源的
+
+
+
+#### Method
+
+- **Method**.invoke() 的实现原理
+
+  [假笨说-从一起 GC 血案谈到反射原理](https://mp.weixin.qq.com/s/5H6UHcP6kvR2X5hTj_SBjA)
+
+  **获取 Method：**
+
+    - reflectionData，这个属性主要是 SoftReference 的
+    - 我们每次通过调用 `getDeclaredMethod` 方法返回的 Method 对象其实都是一个**新的对象**，所以不宜多调哦，如果调用频繁最好缓存起来。不过这个新的方法对象都有个 root 属性指向 `reflectionData` 里缓存的某个方法，同时其 `methodAccessor` 也是用的缓存里的那个 Method 的 `methodAccessor`。
+
+  **Method 调用：**
+
+    - 其实 `Method.invoke` 方法就是调用 `methodAccessor` 的 `invoke` 方法
+
+  **MethodAccessor 的实现：**
+
+    - 所有的方法反射都是先走 `NativeMethodAccessorImpl`，默认调了**15**次之后，才生成一个 `GeneratedMethodAccessorXXX` 类
+    - 而 `GeneratedMethodAccessorXXX` 的类加载器会 `new`  一个 `DelegatingClassLoader(var4)`，之所以搞一个新的类加载器，是为了性能考虑，在某些情况下可以卸载这些生成的类，因为**类的卸载是只有在类加载器可以被回收的情况下才会被回收的**
+
+  **并发导致垃圾类创建：**
+
+    - 假如有 1000 个线程都进入到创建 `GeneratedMethodAccessorXXX` 的逻辑里，那意味着多创建了 999 个无用的类，这些类会一直占着内存，**直到能回收 Perm 的 GC 发生才会回收**（关于元空间的回收看[JVM内存管理](#内存管理)）
+
+      后来发现JDK17加了个乐观锁判断 `U.compareAndSetInt(this, GENERATED_OFFSET, 0, 1)`，应该是修复过这个问题了（但JDK8并没有修复）
+
+  **其他 JVM 相关文章:**
+
+    - 该文章最后有其他 JVM 相关文章，感觉是干货
+
+- [反射代理类加载器的潜在内存使用问题](https://www.jianshu.com/p/20b7ab284c0a)！！
+
+  大量的类加载器 `sun/reflect/DelegatingClassLoader`，用来加载 `sun/reflect/GeneratedMethodAccessor` 类，可能导致潜在的占用大量本机内存空间问题，应用服务器进程占用的内存会显著增大。
+
+- 其他链接
+
+  [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
+
+
+
+#### MethodHandle
+
+反射获取的信息比 MethodHandle 要多。
+
+反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
+
+`MethodHandle` 和 反射 相比好处是：
+
+- 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
+- 性能好得多，类似标准的方法调用。
+- 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
+
+看 [指令集](#指令集)
+
+
+
+#### VarHandle
+
+VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
+
+
+
+#### 反射缺点
+
+1. 由于是本地方法调用，让 JVM 无法优化 (还有 JIT？)
+2. 反射方法调用还有验证过程和参数问题，参数需要装箱拆箱、需要组装成 Object[] 形式、异常的包装等等问题
+
+
+
+### 热更新
+
+- 自定义类加载器
+
+  - [探秘 Java 热部署](https://www.jianshu.com/p/731bc8293365)
+  - [CSDN·自定义 classloader 实现 JAVA 热替换](https://blog.csdn.net/puhaiyang/article/details/78165465)
+
+- java.lang.instrument
+
+  类重新定义，这是 Instrumentation 提供的基础功能之一，这个类很早就出了，redefineClasses 这个方法可以更新方法级别的代码，但是不会触发一个类的初始化方法。
+
+  - [游戏服务器之 Java 热更新](https://www.cnblogs.com/wgslucky/p/9127681.html)
+  - [动态加载 class 文件](https://zheng12tian.iteye.com/blog/1495037)
+  - [JVM 源码分析之 javaagent 原理完全解读](https://www.imooc.com/article/42736)
+  - [探秘 Java 热部署二（Java agent premain）](https://www.jianshu.com/p/0bbd79661080)
+  - [探秘 Java 热部署三（Java agent agentmain）](https://www.jianshu.com/p/6096bfe19e41)
+
+- 第三方工具
+
+  - [**Arthas**的使用](https://www.cnblogs.com/orange911/p/10583245.html)
+  - [Github · **HotswapAgent**](https://github.com/HotswapProjects/HotswapAgent)
+
+- 脚本语言
+
+  - groovy
+
+    使用 groovy 类加载器重载 java 代码 重载的 java 文件可以直接使用源文件，无需编译为 class
+
+
+
+### JVMTI
+
+JVM Tool Interface，是jvm暴露出来的一些供用户扩展的接口集合，JVMTI是基于事件驱动的，JVM每执行到一定的逻辑就会调用一些事件的回调接口（如果有的话），这些接口可以供开发者去扩展自己的逻辑。
+
+#### JVMTIAgent
+
+JVMTIAgent其实就是一个动态库，利用JVMTI暴露出来的一些接口来干一些我们想做但是正常情况下又做不到的事情，不过为了和普通的动态库进行区分，它一般会实现如下的一个或者多个函数：
+
+```c++
+JNIEXPORT jint JNICALL
+Agent_OnLoad(JavaVM *vm, char *options, void *reserved);
+
+JNIEXPORT jint JNICALL
+Agent_OnAttach(JavaVM* vm, char* options, void* reserved);
+
+JNIEXPORT void JNICALL
+Agent_OnUnload(JavaVM *vm); 
+```
+
+JVM启动参数：-agentlib:libname[=options]、-agentpath:pathname[=options]。
+
+比如：-agentlib:hprof，会搜到环境变量PATH中的dll/so库；而-agentpath会按全路径装载本地库，不再搜索PATH中的路径，其他功能和agentlib相同。
+
+
+
+#### javaagent
+
+`javaagent`是由一个叫做`instrument`的`JVMTIAgent`（linux下对应的动态库是`libinstrument.so`）来实现的，另外`instrument agent`还有个别名叫`JPLISAgent`（Java Programming Language Instrumentation Services Agent），从这名字里也完全体现了其最本质的功能：就是专门为java语言编写的插桩服务提供支持的。
+
+JVM启动参数：-javaagent:jarpath[=options]
+
+参考：[java agent基础原理_ancinsdn的博客](https://blog.csdn.net/ancinsdn/article/details/58276945)
+
+
+
+### ServiceLoader
+
+Java 中 SPI 全称为（Service Provider Interface，服务提供者接口）
+
+该类通过在资源目录 META-INF/services 中放置**提供者配置文件**来标识**服务提供者**。
+
+应用场景：
+
+1. JDBC 驱动加载
+
+   `java.sql.DriverManager#loadInitialDrivers`这里调用了`ServiceLoader.load(Driver.class);`
+
+   因此只要 pom 引入了`mysql-connector-java`这个包，就会加载`jar`包下`META-INF/services/java.sql.Driver`文件中的`com.mysql.jdbc.Driver`类，而`com.mysql.jdbc.Driver`在静态代码块里往`DriverManager`注册了自己的驱动。所以以后就不用写下面的 a 段代码啦。
+
+   ```java
+   //a.导入驱动，加载具体的驱动类
+   Class.forName("com.mysql.jdbc.Driver");
+   //b.与数据库建立连接
+   connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+   ```
+
+2. netty/Java 的 NIO 采用 SelectorProvider 创建：`io.netty.channel.nio.NioEventLoop#provider`
+
+   而`java.nio.channels.spi.SelectorProvider#provider`采用了 SPI
+
+3. Dubbo 的扩展点加载
+
+   Dubbo 的 SPI 扩展是自己实现的，在启动加载的时候会依次从以下目录中读取配置文件：
+
+   META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/
+
+   ——《高可用可伸缩微服务架构：基于 Dubbo、Spring Cloud 和 Service Mesh》3.2.3 节 Dubbo Extension 机制
+
+
+
+**Java SPI机制与Thread Context Classloader**
+
+以DriverManager为例，假设它在⾃⼰的代码⾥调⽤`Class.forName("com.mysql.cj.jdbc.driver");`
+
+我们看forName的代码
+
+```java
+@CallerSensitive 
+public static Class<?> forName(String className) throws ClassNotFoundException { 
+    Class<?> caller = Reflection.getCallerClass(); 
+    return forName0(className, true, ClassLoader.getClassLoader(caller), caller); 
+}
+```
+
+此处会寻找caller的类，然后找它的classloader，DriverManager调⽤的forName，所以此处的caller就是DriverManager.class，但是我们知道DriverManager是bootstrap加载的，那此处获取classloader就是null。forName0是native⽅法，它发现classloader是null就尝试⽤bootstrap加载，但是我们要加载的是mysql的类，bootstrap肯定是不能加载的。
+
+那怎么办呢？谁调⽤我，我就⽤谁的加载器，这个加载器放在哪呢，就跟线程绑定，也就是Thread Context ClassLoader。
+
+以上摘抄自：[Java SPI机制与Thread Context Classloader](https://blog.51cto.com/nxlhero/2697891)
 
 
 
