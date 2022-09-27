@@ -1223,25 +1223,27 @@ ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 
 [Java线程池详解3--线程池终止](https://blog.csdn.net/WenWu_Both/article/details/107657737)
 
-shutdown：
+**shutdown**
 
 执行完shutdown，线程池状态首先会更新为shutdown，然后中断**所有空闲**线程，当**剩余工作线程执行完持有的任务**，且将阻塞队列中的任务也执行完毕，变为空闲线程时，执行tryTerminate()操作将线程池状态更新为tidying，待线程池完成terminated()操作后，线程池状态最终变为terminated。
 
 
 
-shutdownNow：
+**shutdownNow**
 
 执行完shutdownNow，线程池状态首先会更新为stop，接着中断**所有已启动**worker，然后执行tryTerminate()操作将线程池状态更新为tidying，待线程池完成terminated()操作后，线程池状态最终变为terminated。
 
 
 
-awaitTermination：
+**awaitTermination**
 
 判定当前线程池已处于terminated状态
 
 
 
-注意，一旦线程池有任务开始跑，就算任务都跑完了，也会等待`keepAliveTime`时候后才会停止。一般测试小 demo 的时候发现程序一直得不到结束，原因基本是这个。
+**注意**
+
+一旦线程池有任务开始跑，就算任务都跑完了，也会等待`keepAliveTime`时候后才会停止。一般测试小 demo 的时候发现程序一直得不到结束，原因基本是这个。
 
 ```java
 public static void main(String[] args) throws InterruptedException {
@@ -1258,6 +1260,23 @@ public static void main(String[] args) throws InterruptedException {
 `java.util.concurrent.ThreadPoolExecutor#runWorker`这里会一直调用`task = getTask()`，`getTask`里会调用`workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)`或者`workQueue.take()`，因此没任务后它也会阻塞`keepAliveTime`时间 或者 永久阻塞。
 
 分析一下`shutdown()`，它里面调用了`interruptIdleWorkers()`，它会打断上述的`wait keepAliveTime`的状态，抛出中断异常，而`getTask()`会捕获这个异常，从而**打破阻塞状态**。
+
+
+
+**线程池自动关闭**
+
+除了 keepAliveTime 外，还有一个因素 corePoolSize，runWorker 的最后有个 processWorkerExit 处理，也就是当前 thread 结束后，**如果当前线程池未关闭，并且当前 workerCount 小于 corePoolSize，**还会继续 addWorker。
+
+那么我们将核心线程数设置成0，设置非核心线程存活时间，当所有非核线程空闲时间到达指定的存活时间，会消亡，那么线程池就会自动关闭了：
+
+```java
+private static ThreadPoolExecutor EXECUTOR =
+            new ThreadPoolExecutor(0, 50, 5L, TimeUnit.MINUTES, new ArrayBlockingQueue<>(10), new ThreadPoolExecutor.CallerRunsPolicy());
+```
+
+Executors.newCachedThreadPool() 也是可以的。
+
+Executors.newSingleThreadScheduledExecutor() 就不会自动关闭，除非 shutdown。
 
 
 
