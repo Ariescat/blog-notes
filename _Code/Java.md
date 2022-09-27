@@ -1825,13 +1825,9 @@ AbstractQueuedSynchronizer
 
 
 
-#### 其他组件
+#### 并发组件
 
-1. ThreadLocal
-
-   隐患：ThreadLocal 有一个 **value内存泄露** 的隐患
-
-   FastThreadLocal：
+1. FastThreadLocal：
 
    既然 Java 中有了 ThreadLocal 类了，为什么 Netty 还自己创建了一个叫作 FastThreadLocal 的结构？
 
@@ -1841,17 +1837,40 @@ AbstractQueuedSynchronizer
 
    这里重点看 ReferenceQueue，引用相关请看下面的**对象引用**小节
 
-3. Callable 和 **Future**（since1.5）
+3. Callable 和 **Future**（Since 1.5）
 
    在并发编程中，我们经常用到非阻塞的模型，在之前的多线程的三种实现中，不管是继承 thread 类还是实现 runnable 接口，都无法保证获取到之前的执行结果。通过实现 Callback 接口，并用 Future 可以来接收多线程的执行结果。
 
    Future 表示一个可能还没有完成的异步任务的结果，针对这个结果可以添加 Callback 以便在任务执行成功或失败后作出相应的操作。
+   
+   实现类：
+   
+   - CompletableFuture（Since 1.8）
+   - Guava——AbstractFuture
 
-  - Guava——AbstractFuture
+4. **ForkJoin** 和 ForkJoinPool
 
-4. **ForkJoin**
 
-5. CompletableFuture
+
+
+#### 内存泄露
+
+- ThreadLocal
+
+  隐患：ThreadLocal 有一个 **value内存泄露** 的隐患
+
+- Thread
+
+  init方法：
+
+  ```java
+  this.inheritedAccessControlContext =
+          acc != null ? acc : AccessController.getContext();
+  ```
+
+  新建线程的时候会封装上下文类保护域，即 AccessControlContext 的 ProtectionDomain，里面拥有一个 classloader 字段。如果是自定义的 classloader 加载的类，并且由该类去新建 thread，那么该 thread 就会 "keep" 住这个自定义的 classloader，只要 thread 没结束，那么自定义的 classloader 将得不到gc释放，那么加载的 class 也得不到gc释放。
+
+  例如：Executors.newSingleThreadExecutor()，单线程，因为 keepAliveTime 为 0，线程池会一直 workQueue.take() 取任务，thread 是不会结束的。
 
 
 
