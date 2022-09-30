@@ -2049,7 +2049,7 @@ Classloader 将数据加载到内存中经过的步骤：
 
 
 
-### 反射
+### 反射 Reflection
 
 #### Class
 
@@ -2160,28 +2160,6 @@ Classloader 将数据加载到内存中经过的步骤：
 - 其他链接
 
   [JDK1.8里Method.invoke()的实现原理 - 简书 (jianshu.com)](https://www.jianshu.com/p/3b311109050b)
-
-
-
-#### MethodHandle
-
-反射获取的信息比 MethodHandle 要多。
-
-反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
-
-`MethodHandle` 和 反射 相比好处是：
-
-- 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
-- 性能好得多，类似标准的方法调用。
-- 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
-
-看 [指令集](#指令集)
-
-
-
-#### VarHandle
-
-VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
 
 
 
@@ -2316,7 +2294,7 @@ public static Class<?> forName(String className) throws ClassNotFoundException {
 
 ### 指令集
 
-#### 方法调用
+#### 方法调用指令
 
 JVM提供了5种方法调用指令，其作用列举如下：
 
@@ -2330,7 +2308,119 @@ JVM提供了5种方法调用指令，其作用列举如下：
 >
 > invokedynamic：在运行时动态解析出调用点限定符所引用的方法之后，调用该方法；在JDK1.7中推出，主要用于支持JVM上的动态脚本语言（如Groovy，Jython等）。
 
+参考：
+
 [通过实例一行一行分析JVM的invokespecial和invokevirtual指令 | wxweven 梦想之家](http://wxweven.win/2017/09/15/JVM-invokespecial和invokevirtual/)，这篇文章一定要认真读一下！！
+
+
+
+#### 方法调用的本质（含重载与重写区别）
+
+`Java`中方法选择的三个步骤：
+
+**步骤1：生成符号引用（编译时）**
+
+**步骤2：解析（类加载时）**
+
+静态方法、私有实例方法、实例构造器、父类方法以及final修饰这五种方法（对应的关键字： `static、private、<init>、super、final`）可以在编译期确定版本，因为无论运行时加载多少个类，这些方法都保证唯一的版本。
+
+既然可以确定方法的版本，虚拟机在处理`invokestatic`、`invokespecial`、`invokevirtual(final)`时，就可以提前将符号引用转换为直接引用，不必延迟到方法调用时确定，具体来说，**是在类加载的解析阶段完成转换的。**
+
+**步骤3：动态分派（类使用时）**
+
+动态分派分为invokevitrual、invokeinterface 与 invokedynamic，其中动态调用invokedynamic是 JDK 1.7 新增的指令。有些同学可能会觉得方法不重写不就只有一个版本了吗？这个想法忽略了Java动态链接的特性，Java可以从任何途径加载一个class，除非解析的 5 种的情况外，无法保证方法不被重写。
+
+##### invokevirtual指令
+
+虚拟机为每个类生成虚方法表`vtable（virtual method table）`的结构，类中声明的方法的入口地址会按固定顺序存放在虚方法表中；虚方法表还会继承父类的虚方法表，顺序与父类保持一致，子类新增的方法按顺序添加到虚方法末尾（这以`Java`单继承为前提）；若子类重写父类方法，则重写方法位置的入口地址修改为子类实现；
+
+- 1）**类加载解析阶段：**解析类的继承关系，生成类的虚方法表 （包含了这个类型所有方法的入口地址）。举个例子，有`Class B`继承与`Class A`，并重写了`A`中的方法：
+  ![img](https://pic3.zhimg.com/80/v2-5ddf3d6c6374befdfc6fbe01c83a9aea_720w.webp)
+
+  `Object`是所有类的父类，所有每个类的虚方法表头部都会包含`Object`的虚方法表。另外，`B`重写了`A#printMe()`，所以对应位置的入口地址方法被修改为`B`重写方法的入口地址。
+
+  需要注意的是，被`final`、`static`或`private`修饰的方法不会出现在虚方法表中，因为这些方法无法被继承重写。
+
+- 2）**调用阶段（动态分派）：**解析阶段生成虚方法表后，每个方法在虚方法表中的索引是固定的，这是不会随着实际类型变化影响的。调用方法时，首先根据变量的实际类型获得对应的虚方法表（包含了这个类型所有方法的入口地址），然后根据索引找到方法的入口地址。
+
+##### invokeinterface指令
+
+接口方法的选择行为与类方法的选择行为略有区别，主要原因是`Java`接口是支持多继承的，就没办法像虚方法表那样直接继承父类的虚方法表。虚拟机提供了`itable（interface method table）`来支持多接口，`itable`由偏移量表`offset table`与方法表`method table`两部分组成。
+
+当需要调用某个接口方法时，虚拟机会在`offset table`查找对应的`method table`，随后在该`method table`上查找方法。
+
+##### invokedynamic指令
+
+详细看 [JDK 1.7 与动态类型](#jdk-17-与动态类型)
+
+参考：
+
+[Java | 深入理解方法调用的本质（含重载与重写区别） - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/210927959)
+
+
+
+### JDK 1.7 与动态类型
+
+#### invokedynamic指令
+
+TODO
+
+#### MethodHandle
+
+```java
+static class ClassA {
+    public void println(String s) {
+        System.out.println(s);
+    }
+}
+
+public static void main(String[] args) throws Throwable {
+    Object obj = System.currentTimeMillis() % 2 == 0 ? System.out : new ClassA();
+    // 无论obj最终是哪个实现类，下面这句都能正确调用到println方法
+    getPrintlnMH(obj).invokeExact("icyfenix");
+}
+
+private static MethodHandle getPrintlnMH(Object reveiver) throws Throwable {
+    // MethodType：代表“方法类型”，包含了方法的返回值（methodType（）的第一个参数）和具体参数（methodType（）第二个及以后的参数）
+    MethodType mt = MethodType.methodType(void.class, String.class);
+    /* lookup（）方法来自于MethodHandles.lookup，这句的作用是在指定类中查找符合给定的方法名称、方法类型，并且符合调用权限的方法句柄
+       因为这里调用的是一个虚方法，按照Java语言的规则，方法第一个参数是隐式的，代表该方法的接收者，也即是this指向的对象，
+　　　　这个参数以前是放在参数列表中进行传递的，而现在提供了bindTo（）方法来完成这件事情*/
+    return lookup().findVirtual(reveiver.getClass(), "println", mt).bindTo(reveiver);
+}
+```
+
+
+
+#### MethodHandle
+
+反射获取的信息比 MethodHandle 要多。
+
+反射是模拟 java 代码层面的调用，MethodHandle 是模拟字节码层面的调用。
+
+`MethodHandle` 和 反射 相比好处是：
+
+- 调用 invoke() 已经被 JVM 优化，类似直接调用一样。
+- 性能好得多，类似标准的方法调用。
+- 当我们创建 MethodHandle 对象时，实现方法检测，而不是调用 invoke() 时。
+
+
+
+#### VarHandle
+
+VarHandle主要用于**动态操作数组的元素或对象的成员变量**。VarHandle与MethodHandle非常类似，它也需要通过MethodHandles来获取实例。
+
+
+
+#### CallSite
+
+Groovy中方法的调用实现
+
+
+
+#### 参考
+
+[invokedynamic指令 - wade&luffy - 博客园 (cnblogs.com)](https://www.cnblogs.com/wade-luffy/p/6058087.html)
 
 [Java中MethodHandle的使用问题？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/40427344/answer/86545388)
 
