@@ -2936,3 +2936,92 @@ Groovy中方法的调用实现
 - 《深入理解 Java 虚拟机（第 3 版）（周志明）》
 - 《Java 并发编程实战》
 - 《Effective Java》
+
+
+
+
+
+
+
+## Groovy
+
+**入门：**
+
+- [30 分钟 groovy 快速入门并掌握](https://www.cnblogs.com/amosli/p/3970810.html)
+
+- [Groovy 语言快速入门](https://www.jianshu.com/p/e8dec95c4326)
+
+<br/>
+
+**Java中使用：**
+
+- [实战 Groovy，在 Java 应用程序中加一些 Groovy 进来](https://www.ibm.com/developerworks/cn/java/j-pg05245/)
+
+- [利用 SPRING 管理热加载的 GROOVY 对象](https://palexu.github.io/posts/spring-dynamic-load-groovy-bean?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
+
+- [spring + groovy 很强大](https://blog.csdn.net/qq362228416/article/details/8811136)
+
+- [Spring 动态部署 Bean/Controller/Groovy Controller](https://jinnianshilongnian.iteye.com/blog/1999284)
+
+<br/>
+
+**Gradle中使用：**
+
+Groovy as DSL 与 **Gradle**
+
+- [Gradle：新一代自动化构建工具](http://hao.jobbole.com/gradle/)
+
+- [Groovy DSL 百度搜索](https://www.baidu.com/s?ie=utf8&oe=utf8&wd=Groovy DSL&tn=98010089_dg&ch=4)
+
+- [gradle dsl](https://www.baidu.com/s?ie=utf8&oe=utf8&wd=gradle dsl&tn=98010089_dg&ch=5)
+
+
+
+
+
+
+
+## Android
+
+- UI
+
+  - [使用 NavigationUI 更新界面组件](https://developer.android.com/guide/navigation/navigation-ui#add_a_navigation_drawer)
+
+    抽屉式导航栏
+
+  - Material Design
+
+    NavigationView FlaotingActionBar SnackBar
+
+    Design Support Library
+
+    RecyclerView
+
+    SwipeRefreshLayout
+
+    控件点击水波纹
+
+
+- 权限
+
+  [Android 6.0在运行时申请权限解释与实例_Widsom的博客-CSDN博客](https://blog.csdn.net/qq_33689414/article/details/52650803)
+
+- EventBus 3事件总线
+
+  [从源码入手来学习EventBus 3事件总线机制](https://mp.weixin.qq.com/s/TEUb_2phZV5cDAQxV1hhBg)
+
+- 图表
+
+  hellocharts
+
+- 工具
+
+  [AndroidDevTools - Android 开发工具 Android SDK 下载 Android Studio 下载 Gradle 下载 SDK Tools 下载](https://www.androiddevtools.cn/)
+
+- doc
+
+  - [开发者指南 · Android 开发者 · Android Developers](https://developer.android.com/guide)
+
+  - [android-open-source-project-analysis](https://github.com/sucese/android-open-source-project-analysis)
+
+  - [henrymorgen / android-advanced-decode](https://github.com/henrymorgen/android-advanced-decode)  《Android 进阶解密》源码
