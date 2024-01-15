@@ -41,3 +41,57 @@ CPython是用C语言实现的Python解释器，也是官方的并且是最广泛
 GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。
 
 [玩转python中的GIL前世今生与核心用法剖析](https://blog.51cto.com/u_15346267/3669137)
+
+
+
+
+
+## 鸭子类型（duck typing）
+
+在鸭子类型中，关注点在于对象的行为，能作什么；而不是关注对象所属的类型。
+
+举个栗子：
+
+```python
+# 鸭子类
+class Duck:
+
+    def quack(self):
+        print("这鸭子正在嘎嘎叫")
+
+    def feathers(self):
+        print("这鸭子拥有白色和灰色的羽毛")
+
+# 人类
+class Person:
+
+    def quack(self):
+        print("这人正在模仿鸭子")
+
+    def feathers(self):
+        print("这人在地上拿起1根羽毛然后给其他人看")
+
+
+# 函数/接口
+def in_the_forest(duck):
+    duck.quack()
+    duck.feathers()
+
+
+if __name__ == '__main__':
+
+    donald = Duck()  # 创建一个Duck类的实例
+    john = Person()  # 创建一个Person类的实例
+
+    in_the_forest(donald)  # 调用函数，传入Duck的实例
+    in_the_forest(john)    # 调用函数，传入Person的实例
+```
+
+代码运行后输出：
+
+```text
+这鸭子正在嘎嘎叫
+这鸭子拥有白色和灰色的羽毛
+这人正在模仿鸭子
+这人在地上拿起1根羽毛然后给其他人看
+```

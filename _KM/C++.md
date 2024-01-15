@@ -110,6 +110,23 @@ int (*p)[3] = a;
 
 
 
+### const
+
+`const int* pInt;` 和 `int *const pInt = &someInt;`，前者是 *pInt 不能改变，而后者是 pInt 不能改变。因此指针本身是不是常量和指针所指向的对象是不是常量就是两个互相独立的问题。用**顶层**表示指针本身是个常量，**底层**表示指针所指向的对象是个常量。
+
+```c++
+int i = 0;
+int *const p1 = &i;     //  不能改变 p1 的值，这是一个顶层
+const int ci = 42;      //  不能改变 ci 的值，这是一个顶层
+const int *p2 = &ci;    //  允许改变 p2 的值，这是一个底层
+const int *const p3 = p2;   //  靠右的 const 是顶层 const，靠左的是底层 const
+const int &r = ci;      //  所有的引用本身都是顶层 const，因为引用一旦初始化就不能再改为其他对象的引用，这里用于声明引用的 const 都是底层 const
+```
+
+
+
+
+
 
 
 ## C++标准库
