@@ -348,6 +348,8 @@ int main() {
 
 ​		中文的C++ Template的教学指南。与知名书籍C++ Templates不同，该系列教程将C++ Templates作为一门图灵完备的语言来讲授，以求帮助读者对Meta-Programming融会贯通。(正在施工中)
 
+​		[Introduction · C++ Template Tutorial (gitbooks.io)](https://sg-first.gitbooks.io/cpp-template-tutorial/content/)
+
 [downdemo/Cpp-Templates-2ed (github.com)](https://github.com/downdemo/Cpp-Templates-2ed)
 
 ​		C++11/14/17/20 templates and generic programming, the most complex and difficult technical details of C++, indispensable in building infrastructure libraries.
