@@ -358,6 +358,22 @@ int main() {
 
 
 
+### 类型转换
+
+[C++ 四种强制类型转换 - 静悟生慧 - 博客园 (cnblogs.com)](https://www.cnblogs.com/Allen-rg/p/6999360.html)
+
+static_cast
+
+dynamic_cast
+
+const_cast
+
+reinterpret_cast
+
+
+
+
+
 ### 内存管理
 
 **C 的内存管理**
@@ -544,7 +560,25 @@ TestCls(TestCls &&t) : p(t.p)
 
 [什么是move？理解C++ Value categories，move， move in Rust](https://zhuanlan.zhihu.com/p/374392832)
 
-[std::move和右值引用_液压姬的博客](https://blog.csdn.net/crazty/article/details/113092170)
+[c++ - std::move()源码分析 - chenBright - SegmentFault 思否](https://segmentfault.com/a/1190000020744971)
+
+
+
+**为什么C/C++等少数编程语言要区分左右值？**
+
+参考：
+
+[为什么C/C++等少数编程语言要区分左右值？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/428340896/answer/2913419725)
+
+函数返回数据的 3 种处理方式：
+
+1. 直接存在寄存器里
+2. 直接操作用于接收返回值的变量（如果是平凡的，直接操作；如果是非平凡的，先操作好一个局部变量，然后再拷贝过来）
+3. 先放在一个临时的内存空间中，使用完后再析构掉
+
+C++按照这个特征来划分了 prvalue 和 xvalue。
+
+**本文第四个重点！！「引用本身是 lvalue」**。也就是说，函数返回值是 rvalue（有可能是 prvalue，也有可能是 xvalue），但如果你用引用来接收了，它就会变成 lvalue。
 
 
 

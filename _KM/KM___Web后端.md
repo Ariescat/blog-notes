@@ -661,9 +661,9 @@ CAP 原理：
 
   - SnowFlake
 
-    [漫画：什么是SnowFlake算法？](https://blog.csdn.net/bjweimengshu/article/details/80162731)
+    [漫画：什么是SnowFlake算法？](https://blog.csdn.net/qq_35423190/article/details/109471577)
 
-    ![](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/NtO5sialJZGovUVwFkfA0yRdCYoer9mqxdkKsBd5aD96r6ygicrXlKjwmsIBCZpF4rrkUM7FR1U1zZdL4yjEF1Fw/640?wx_fmt=png)
+    ![](https://img-blog.csdnimg.cn/img_convert/0a21ce10dd347bc195d87a35931239dd.png)
 
 
 
