@@ -2,32 +2,33 @@
 
 - [README](README.md)
 
-## KM BASE
+## Note Base
 
-- [C++](_KM/KM___C++.md)
-- [Java](_KM/KM___Java.md)
-- [Python](_KM/KM___Python.md)
-- [Web前端](_KM/KM___Web前端.md)
-- [Web后端](_KM/KM___Web后端.md)
-- [操作系统](_KM/KM___操作系统.md)
-- [数据库](_KM/KM___数据库.md)
-- [数据结构与算法](_KM/KM___数据结构与算法.md)
-- [网络](_KM/KM___网络.md)
+- [C++](Note_Base/C++.md)
+- [Java](Note_Base/Java.md)
+- [Python](Note_Base/Python.md)
+- [Web前端](Note_Base/Web前端.md)
+- [后端技术](Note_Base/后端技术.md)
+- [操作系统](Note_Base/操作系统.md)
+- [数据库](Note_Base/数据库.md)
+- [数据结构与算法](Note_Base/数据结构与算法.md)
+- [网络](Note_Base/网络.md)
 
-## KM PLUS
+## Note Plus
 
-- [Game](_KM/KM__PLUS__Game.md)
-- [数学](_KM/KM__PLUS__数学.md)
-- [图形学](_KM/KM__PLUS__图形学.md)
-- [人工智障](_KM/KM__PLUS__人工智障.md)
-- [资料收藏](_KM/KM__PLUS__资料收藏.md)
+- [Game](Note_Plus/Game.md)
+- [人工智障](Note_Plus/人工智障.md)
+- [图形学](Note_Plus/图形学.md)
+- [数学](Note_Plus/数学.md)
+- [资料收藏](Note_Plus/资料收藏.md)
 
-## KM Note
+## Note Excerpt
 
-- [鉴权接口](_KM/Note__鉴权接口.md)
+- [加密算法](Note_Excerpt/加密算法.md)
+- [鉴权接口](Note_Excerpt/鉴权接口.md)
 
-## KM Reading
+## Note Reading
 
-- [Blog](_KM/Reading__Blog.md)
-- [Effective Java](_KM/Reading__Effective Java.md)
-- [设计模式之美](_KM/Reading__设计模式之美.md)
+- [Blog](Note_Reading/Blog.md)
+- [Effective Java](Note_Reading/Effective Java.md)
+- [设计模式之美](Note_Reading/设计模式之美.md)
