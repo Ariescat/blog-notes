@@ -51,7 +51,7 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
     }
     $('.page-inner .markdown-section')
       .find('h1,h2,h3')
-      .each(function () {
+      .each(function (i) {
         if ($(this).hasClass('no-number')) return;
         var cls = 'anchor-h1';
         if ($(this).is('h2')) {
@@ -61,9 +61,11 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
           cls = 'anchor-h3';
         }
         var text = $(this).text();
-        var href = $(this).attr('id');
+        var href = `${text}_${i}`;
+        $(this).attr('id', href);
         $('.book-anchor-body').append(
           "<a id='an_" +
+            i +
             text +
             "' class='anchor-text " +
             cls +
@@ -109,7 +111,7 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
 
   // 基础设置
   function setInit() {
-    let i18nConfig = {
+    const i18nConfig = {
       'zh-cn': {
         BookSummary: '目录',
         SearchText: '搜索',
@@ -130,8 +132,9 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
       themeConfig.lang && i18nConfig[themeConfig.lang]
         ? i18nConfig[themeConfig.lang]
         : i18nConfig['zh-cn'];
+
     // 标题
-    var $title = $('.header-inner .title');
+    const $title = $('.header-inner .title');
     $title.text(gitbook.state.config.title);
 
     $('.book-summary-title').text(
@@ -142,8 +145,8 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
     );
 
     // 搜索框
-    var $search = $('#book-search-input');
-    var placeholder = themeConfig['search-placeholder'] || i18n['SearchTips'];
+    const $search = $('#book-search-input');
+    const placeholder = themeConfig['search-placeholder'] || i18n['SearchTips'];
     $search.find('input').attr('placeholder', placeholder);
     $search.append(`<span id='searchBtn'>${i18n['SearchText']}</span>`);
     $search.focus();
@@ -161,12 +164,14 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
       }
       autoNumber(titles);
     }
+
     // 隐藏的元素
     if (themeConfig['hide-elements'].length) {
       themeConfig['hide-elements'].forEach(function (elem) {
         $(elem).hide();
       });
     }
+
     // 底部版权
     if (themeConfig['copyright']) {
       let text = '';
@@ -181,10 +186,71 @@ require(['gitbook', 'jquery'], function (gitbook, $) {
     }
   }
 
+  // 微信分享链接
+  function shareWechat() {
+    const themeConfig = gitbook.state.config.pluginsConfig['theme-lou'] || {};
+    if (!themeConfig.shareWx || themeConfig.shareWx == {}) return;
+    const getSignUrl = themeConfig.shareWx.url;
+    // 不包含#后面的URL
+    let url = window.location.href.replace(/#.+/, '');
+    url = encodeURIComponent(url);
+    $.ajax({
+      url: getSignUrl,
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        url,
+      },
+    }).then((result) => {
+      if (!result || !result.status || result.status != 'success') {
+        return;
+      }
+      const appId = result.appId;
+      const timestamp = result.timestamp;
+      const nonceStr = result.nonce;
+      const signature = result.signature;
+      const apiList = [
+        'onMenuShareAppMessage', // 分享到聊天
+        'onMenuShareTimeline', // 分享到朋友圈
+      ];
+      wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: appId, // 必填，公众号的唯一标识
+        timestamp: timestamp, // 必填，生成签名的时间戳
+        nonceStr: nonceStr, // 必填，生成签名的随机串
+        signature: signature, // 必填，签名
+        jsApiList: apiList, // 必填，需要使用的JS接口列表
+      });
+    });
+    wx.ready(function () {
+      const linkStr = window.location.href;
+      const imgUrl = themeConfig.shareWx.image;
+      const pageTitle = $(document).attr('title');
+      wx.updateAppMessageShareData({
+        title: pageTitle, // 分享标题
+        desc: gitbook.state.config.title,
+        link: linkStr, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: imgUrl, // 分享图标
+        success: function (res) {
+          console.log('share app success', res);
+        },
+      });
+      wx.updateTimelineShareData({
+        title: pageTitle, // 分享标题
+        link: linkStr, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: imgUrl, // 分享图标
+        success: function (res) {
+          console.log('share time line success', res);
+        },
+      });
+    });
+  }
+
   gitbook.events.on('start', function () {});
 
   gitbook.events.on('page.change', function () {
     setInit();
     generateSectionNavigator();
+    shareWechat();
   });
 });

@@ -3,10 +3,8 @@
     display: flex;
     margin: 0 auto;
   }
-  .markdown-section img {
-    max-height: 460px;
-  }
 }
+
 @media (max-width: 500px) {
   .book-body .body-inner {
     overflow-y: unset;
@@ -62,19 +60,6 @@ body {
 .markdown-section p {
   line-height: 2;
 }
-.markdown-section img {
-  margin: 0 auto; /* 图片居中 */
-  display: flex; /* 图片居中 */
-  padding: 8px;
-  background: #e4e4e478;
-  transition: all 1s;
-  box-sizing: border-box;
-  box-shadow: 0 0 4px #dcdcdc;
-  max-width: 95%;
-}
-.markdown-section img:hover {
-  box-shadow: 0 0 10px #bbb;
-}
 
 .exc-trigger {
   color: #333333;
@@ -85,7 +70,6 @@ body {
 }
 
 /*Book inner page*/
-
 .book-summary-title {
   height: 50px;
   line-height: 50px;
@@ -473,3 +457,13 @@ body {
   --H5Color: #FF4848; 
   --H6Color: #FF4848; 
 }
+
+        .markdown-section img {
+          margin: 0 auto;display: flex;
+          
+          max-width: 80%;
+        }
+        
+          .markdown-section img:hover {
+            box-shadow: 0 0 10px #bbb;
+          }

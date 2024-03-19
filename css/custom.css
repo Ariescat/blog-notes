@@ -12,8 +12,13 @@
     padding: 0;
 }
 
+.book-anchor {
+    bottom: 50px;
+    padding: 0 10px 50px 10px;
+}
+
 .book-anchor-body {
-    max-height: 450px;
+    max-height: 100%;
 }
 
 /* theme-lou end */
