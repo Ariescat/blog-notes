@@ -42,7 +42,7 @@ jobs:
         run: echo `npm run gh-pages-dev -- -V`
 
       - name: Run module gh-pages
-        run: npm run deploy -- -r 'https://${{secrets.USER_TOKEN}}@github.com/Ariescat/Metis-Awesome.git' -u 'github-actions-bot <${{secrets.EMAIL}}>' -m 'github-actions-bot Updates'
+        run: npm run deploy -- -r 'https://${{secrets.USER_TOKEN}}@github.com/Ariescat/blog-notes.git' -u 'github-actions-bot <${{secrets.EMAIL}}>' -m 'github-actions-bot Updates'
 
       # - name: Run deploy-coding-master
         # 用户名密码中一定要转义 @符号 转码后变成了%40  See:https://blog.csdn.net/u012447791/article/details/118225605

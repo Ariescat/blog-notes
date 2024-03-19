@@ -1,5 +1,5 @@
 {
-  "homepage": "https://github.com/Ariescat/Metis-Awesome/",
+  "homepage": "https://github.com/Ariescat/blog-notes/",
   "scripts": {
     "ginstall": "gitbook install",
     "gdev": "gitbook serve",
