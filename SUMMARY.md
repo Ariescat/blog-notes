@@ -17,9 +17,9 @@
 ## Note Plus
 
 - [游戏服务端](Note_Plus/游戏服务端.md)
-- [人工智障](Note_Plus/人工智障.md)
 - [图形学](Note_Plus/图形学.md)
 - [数学](Note_Plus/数学.md)
+- [人工智障](Note_Plus/人工智障.md)
 - [资料收藏](Note_Plus/资料收藏.md)
 
 ## Note Excerpt
