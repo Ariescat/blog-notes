@@ -2,7 +2,7 @@
 
 - [README](README.md)
 
-## Note Base
+## 笔记 基础
 
 - [C++](Note_Base/C++.md)
 - [Java](Note_Base/Java.md)
@@ -14,7 +14,7 @@
 - [数据结构与算法](Note_Base/数据结构与算法.md)
 - [网络](Note_Base/网络.md)
 
-## Note Plus
+## 笔记 Plus版
 
 - [游戏服务端](Note_Plus/游戏服务端.md)
 - [图形学](Note_Plus/图形学.md)
@@ -22,12 +22,12 @@
 - [人工智障](Note_Plus/人工智障.md)
 - [资料收藏](Note_Plus/资料收藏.md)
 
-## Note Excerpt
+## 笔记 摘录
 
 - [加密算法](Note_Excerpt/加密算法.md)
 - [鉴权接口](Note_Excerpt/鉴权接口.md)
 
-## Note Reading
+## 笔记 阅读记录
 
 - [Blog](Note_Reading/Blog.md)
 - [Effective Java](Note_Reading/Effective Java.md)
