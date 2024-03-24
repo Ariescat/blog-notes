@@ -1,0 +1,71 @@
+h1 {
+    counter-reset: h2
+}
+
+h2 {
+    counter-reset: h3
+}
+
+h3 {
+    counter-reset: h4
+}
+
+h4 {
+    counter-reset: h5
+}
+
+h5 {
+    counter-reset: h6
+}
+
+h6 {
+    counter-reset: h7
+}
+
+.markdown-section h2:before {
+    counter-increment: h2;
+    content: counter(h2) ") "
+}
+
+.markdown-section h3:before {
+    counter-increment: h3;
+    content: counter(h2) "." counter(h3) ") "
+}
+
+.markdown-section h4:before {
+    counter-increment: h4;
+    content: counter(h2) "." counter(h3) "." counter(h4) ") "
+}
+
+.markdown-section h5:before {
+    counter-increment: h5;
+    content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ") "
+}
+
+.markdown-section h6:before {
+    counter-increment: h6;
+    content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ") "
+}
+
+
+.anchor-h1 {
+    counter-reset: anchor-h2
+}
+
+.anchor-h2 {
+    counter-reset: anchor-h3
+}
+
+.anchor-h3 {
+    counter-reset: anchor-h4
+}
+
+.anchor-h2:before {
+    counter-increment: anchor-h2;
+    content: counter(anchor-h2) ") "
+}
+
+.anchor-h3:before {
+    counter-increment: anchor-h3;
+    content: counter(anchor-h2) "." counter(anchor-h3) ") "
+}

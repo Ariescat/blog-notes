@@ -37,6 +37,9 @@
     }
   },
   "pluginsConfig": {
+    "theme-default": {
+      "showLevel": true
+    },
     "theme-lou": {
       "color": "#FF4848",
       "favicon": "/img/favicon.ico",
@@ -74,7 +77,8 @@
     "addcssjs": {
       "js": [],
       "css": [
-        "css/custom.css"
+        "css/custom.css",
+        "css/auto-numbering.css"
       ]
     }
   }
