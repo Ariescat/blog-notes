@@ -769,6 +769,8 @@ auto w = cj;     //变量w的类型是int
 
 - vcpkg
 
+  [microsoft/vcpkg: C++ Library Manager for Windows, Linux, and MacOS (github.com)](https://github.com/microsoft/vcpkg)
+  
   vcpkg是Microsoft的跨平台开源软件包管理器，极大地简化了 Windows、Linux 和 macOS 上第三方库的购置与安装。如果项目要使用第三方库，建议通过 vcpkg 来安装它们。
 
 
