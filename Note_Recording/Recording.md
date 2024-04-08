@@ -1,0 +1,67 @@
+# 《零散记录》
+
+
+
+
+
+## 以往的 Blog 记录
+
+
+
+### Java
+
+[happen-before原则 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2021/01/14/happen-before原则/)
+
+[单例与线程安全 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2020/06/30/单例与线程安全/)
+
+[Java内存可见性问题 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/03/18/Java内存可见性问题/)
+
+[Thread中stop(),suspend(),resume()为什么不安全 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/02/16/Thread中stop(),suspend(),resume()为什么不安全/)
+
+[List#subList和Spring#split的使用陷阱 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/02/15/List-subList和Spring-split的使用陷阱/)
+
+[Java安全管理器SecurityManager - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/01/28/Java安全管理器SecurityManager/)
+
+
+
+### Spring
+
+[Spring之properties解析 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2020/05/07/Spring之properties解析/)
+
+[Spring之AOP使用 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2020/03/06/Spring之AOP使用/)
+
+[Spring对Groovy的支持 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2020/03/04/Spring对Groovy的支持/)
+
+[(转载)Spring的BeanFactoryPostProcessor和BeanPostProcessor区别 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/03/19/(转载)Spring的BeanFactoryPostProcessor和BeanPostProcessor区别/)
+
+
+
+### 库
+
+[关于Gson的几个坑 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2020/03/12/关于Gson的几个坑/)
+
+[Java集合框架Koloboke - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/02/26/Java集合框架Koloboke/)
+
+[Joda--对时间的操作 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/02/20/Joda-对时间的操作/)
+
+[Netty之心跳与重连 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/01/30/Netty之心跳与重连/)
+
+[事件驱动编程RxJava - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/01/29/事件驱动编程RxJava/)
+
+[动态，敏捷的Groovy - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/01/24/动态-敏捷的Groovy/)
+
+[Guava使开发更简单之RangeMap - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/01/23/Guava使开发更简单之RangeMap/)
+
+
+
+### 网络
+
+[WebSocket、Socket、TCP、HTTP区别 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/03/07/WebSocket-Socket-TCP-HTTP区别/)
+
+[网络IO中的同步、异步、阻塞和非阻塞 - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2019/02/14/网络IO中的同步-异步-阻塞和非阻塞/)
+
+
+
+### 操作系统
+
+[(转)操作系统就是一个“死循环”！ - 一只白羊座的傻猫 | Ariescat Blog](https://ariescat.top/2021/09/19/操作系统就是一个-死循环/)

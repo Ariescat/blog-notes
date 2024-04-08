@@ -1509,7 +1509,11 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
 
 * 重排序（编译器重排，处理器重排）
 
-  happen-before 原则：[深入理解 happens-before 规则](https://www.jianshu.com/p/9464bf340234)
+  happen-before 原则：
+  
+  [深入理解 happens-before 规则](https://www.jianshu.com/p/9464bf340234)
+  
+  [深入理解 Happens-Before 原则-happens before原则 (51cto.com)](https://www.51cto.com/article/712408.html)
 
 - 原理
 
