@@ -1,4 +1,8 @@
-.markdown-section h2, .markdown-section h3 {
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section h5,
+.markdown-section h6 {
     margin-top: 2.5em;
     margin-bottom: 1.5em;
 }
