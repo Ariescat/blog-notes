@@ -7,7 +7,7 @@
 - [C++](Note_Base/C++.md)
 - [Java](Note_Base/Java.md)
 - [Python](Note_Base/Python.md)
-- [前端（Web）](Note_Base/Web前端.md)
+- [前端（Web）](Note_Base/前端技术.md)
 - [后端（服务器）](Note_Base/后端技术.md)
 - [操作系统](Note_Base/操作系统.md)
 - [数据库](Note_Base/数据库.md)
@@ -32,7 +32,7 @@
 
 ## 笔记 零散
 
-- [零散记录](Note_Recording/Recording.md)
+- [零散记录](Note_Recording/零散记录.md)
 
 ## 笔记 阅读
 
