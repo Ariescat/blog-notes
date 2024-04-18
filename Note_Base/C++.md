@@ -481,55 +481,55 @@ C /C++的内存管理
 
 1. `alloca()`: 在栈上分配内存，而不是在堆上。分配的内存会在函数返回时自动释放，无需手动释放。但是，`alloca()` 不是标准的 C 或 C++ 函数，因此可能在某些平台上不可用。
 
-```c
-#include <alloca.h>
-
-void func() {
-    int* arr = (int*)alloca(10 * sizeof(int));
-    // 使用 arr...
-    // 函数返回时，arr 会自动被释放
-}
-```
+   ```c++
+   #include <alloca.h>
+   
+   void func() {
+       int* arr = (int*)alloca(10 * sizeof(int));
+       // 使用 arr...
+       // 函数返回时，arr 会自动被释放
+   }
+   ```
 
 2. `malloc()`: 在堆上分配指定大小的内存。返回的是一个指向分配的内存的指针，或者如果内存分配失败，则返回 NULL。需要使用 `free()` 手动释放内存。
 
-```c
-#include <stdlib.h>
-
-int* arr = (int*)malloc(10 * sizeof(int));
-if (arr != NULL) {
-    // 使用 arr...
-    free(arr);  // 不再需要时，释放内存
-}
-```
+   ```c++
+   #include <stdlib.h>
+   
+   int* arr = (int*)malloc(10 * sizeof(int));
+   if (arr != NULL) {
+       // 使用 arr...
+       free(arr);  // 不再需要时，释放内存
+   }
+   ```
 
 3. `calloc()`: 类似于 `malloc()`，但会将分配的内存初始化为零。它需要两个参数：要分配的元素数量和每个元素的大小。
 
-```c
-#include <stdlib.h>
-
-int* arr = (int*)calloc(10, sizeof(int));
-if (arr != NULL) {
-    // 使用 arr...
-    free(arr);  // 不再需要时，释放内存
-}
-```
+   ```c++
+   #include <stdlib.h>
+   
+   int* arr = (int*)calloc(10, sizeof(int));
+   if (arr != NULL) {
+       // 使用 arr...
+       free(arr);  // 不再需要时，释放内存
+   }
+   ```
 
 4. `realloc()`: 改变已分配内存的大小。如果新的大小大于原来的大小，那么原来的内存区域将被复制到新的、更大的区域，原来的内存区域将被释放。如果新的大小小于原来的大小，那么原来的内存区域将被缩小，多余的内存将被释放。
 
-```c
-#include <stdlib.h>
-
-int* arr = (int*)malloc(10 * sizeof(int));
-if (arr != NULL) {
-    // 使用 arr...
-    arr = (int*)realloc(arr, 20 * sizeof(int));  // 扩大内存区域
-    if (arr != NULL) {
-        // 使用新的 arr...
-        free(arr);  // 不再需要时，释放内存
-    }
-}
-```
+   ```c++
+   #include <stdlib.h>
+   
+   int* arr = (int*)malloc(10 * sizeof(int));
+   if (arr != NULL) {
+       // 使用 arr...
+       arr = (int*)realloc(arr, 20 * sizeof(int));  // 扩大内存区域
+       if (arr != NULL) {
+           // 使用新的 arr...
+           free(arr);  // 不再需要时，释放内存
+       }
+   }
+   ```
 
 请注意，`malloc()`, `calloc()` 和 `realloc()` 分配的内存必须使用 `free()` 手动释放，否则会导致内存泄漏。
 
