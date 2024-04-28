@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Python · Ariescat's Note</title>
+        <title>Python,Go · Ariescat's Note</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -84,10 +84,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="前端技术.html" />
+    <link rel="next" href="后端技术.html" />
     
     
-    <link rel="prev" href="Java.html" />
+    <link rel="prev" href="C++.html" />
     
 
     </head>
@@ -159,27 +159,12 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="C++.html">
-            
-                <a href="C++.html">
-            
-                    
-                        <b>2.1.</b>
-                    
-                    C++
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.2" data-path="Java.html">
+        <li class="chapter " data-level="2.1" data-path="Java.html">
             
                 <a href="Java.html">
             
                     
-                        <b>2.2.</b>
+                        <b>2.1.</b>
                     
                     Java
             
@@ -189,14 +174,29 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.3" data-path="Python.html">
+        <li class="chapter " data-level="2.2" data-path="C++.html">
             
-                <a href="Python.html">
+                <a href="C++.html">
+            
+                    
+                        <b>2.2.</b>
+                    
+                    C++
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.3" data-path="Python,Go.html">
+            
+                <a href="Python,Go.html">
             
                     
                         <b>2.3.</b>
                     
-                    Python
+                    Python,Go
             
                 </a>
             
@@ -204,29 +204,29 @@
             
         </li>
     
-        <li class="chapter " data-level="2.4" data-path="前端技术.html">
-            
-                <a href="前端技术.html">
-            
-                    
-                        <b>2.4.</b>
-                    
-                    前端（Web）
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.5" data-path="后端技术.html">
+        <li class="chapter " data-level="2.4" data-path="后端技术.html">
             
                 <a href="后端技术.html">
             
                     
-                        <b>2.5.</b>
+                        <b>2.4.</b>
                     
                     后端（服务器）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="前端技术.html">
+            
+                <a href="前端技术.html">
+            
+                    
+                        <b>2.5.</b>
+                    
+                    前端（Web）
             
                 </a>
             
@@ -528,7 +528,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Python</a>
+        <a href=".." >Python,Go</a>
     </h1>
 </div>
 
@@ -600,8 +600,57 @@
 &#x8FD9;&#x4EBA;&#x6B63;&#x5728;&#x6A21;&#x4EFF;&#x9E2D;&#x5B50;
 &#x8FD9;&#x4EBA;&#x5728;&#x5730;&#x4E0A;&#x62FF;&#x8D77;1&#x6839;&#x7FBD;&#x6BDB;&#x7136;&#x540E;&#x7ED9;&#x5176;&#x4ED6;&#x4EBA;&#x770B;
 </code></pre>
+<p><br></p>
+<p><br></p>
+<h1 id="&#x300A;go&#x300B;">&#x300A;Go&#x300B;</h1>
+<p>Go&#x8BED;&#x8A00;&#x7684;&#x7279;&#x8272;&#xFF1A;</p>
+<ul>
+<li>&#x6CA1;&#x6709;&#x7EE7;&#x627F;&#x591A;&#x6001;&#x7684;&#x9762;&#x5411;&#x5BF9;&#x8C61;</li>
+<li>&#x5F3A;&#x4E00;&#x81F4;&#x7C7B;&#x578B;</li>
+<li>interface&#x4E0D;&#x9700;&#x8981;&#x663E;&#x5F0F;&#x58F0;&#x660E;(Duck Typing)</li>
+<li>&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#x5904;&#x7406;(Error is value)</li>
+<li>&#x57FA;&#x4E8E;&#x9996;&#x5B57;&#x6BCD;&#x7684;&#x53EF;&#x8BBF;&#x95EE;&#x7279;&#x6027;</li>
+<li>&#x4E0D;&#x7528;&#x7684;import&#x6216;&#x8005;&#x53D8;&#x91CF;&#x5F15;&#x8D77;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;</li>
+<li>&#x5B8C;&#x6574;&#x800C;&#x5353;&#x8D8A;&#x7684;&#x6807;&#x51C6;&#x5E93;&#x5305;</li>
+<li>Go&#x5185;&#x7F6E;runtime&#xFF08;&#x4F5C;&#x7528;&#x662F;&#x6027;&#x80FD;&#x76D1;&#x63A7;&#x3001;&#x5783;&#x573E;&#x56DE;&#x6536;&#x7B49;&#xFF09;</li>
+</ul>
+<h2 id="&#x534F;&#x7A0B;">&#x534F;&#x7A0B;</h2>
+<p>&#x534F;&#x7A0B;&#xFF08;Coroutines&#xFF09;&#x662F;&#x4E00;&#x79CD;&#x6BD4;&#x7EBF;&#x7A0B;&#x66F4;&#x52A0;&#x8F7B;&#x91CF;&#x7EA7;&#x7684;&#x5B58;&#x5728;&#x3002;&#x534F;&#x7A0B;&#x5B8C;&#x5168;&#x7531;&#x7A0B;&#x5E8F;&#x6240;&#x63A7;&#x5236;&#xFF08;&#x5728;&#x7528;&#x6237;&#x6001;&#x6267;&#x884C;&#xFF09;&#xFF0C;&#x5E26;&#x6765;&#x7684;&#x597D;&#x5904;&#x662F;&#x6027;&#x80FD;&#x5927;&#x5E45;&#x5EA6;&#x7684;&#x63D0;&#x5347;&#x3002;</p>
+<p> &#x4E00;&#x4E2A;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E2D;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF1B;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#xFF1B;&#x540C;&#x7406;&#xFF0C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x534F;&#x7A0B;&#x3002;</p>
+<p>&#x534F;&#x7A0B;&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x5728;&#x67D0;&#x4E2A;&#x5730;&#x65B9;&#x6302;&#x8D77;&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x5728;&#x6302;&#x8D77;&#x5904;&#x7EE7;&#x7EED;&#x8FD0;&#x884C;&#x3002;</p>
+<p> <strong>&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x5185;&#x7684;&#x591A;&#x4E2A;&#x534F;&#x7A0B;&#x7684;&#x8FD0;&#x884C;&#x662F;&#x4E32;&#x884C;&#x7684;&#xFF0C;&#x8FD9;&#x70B9;&#x548C;&#x591A;&#x8FDB;&#x7A0B;&#xFF08;&#x591A;&#x7EBF;&#x7A0B;&#xFF09;&#x5728;&#x591A;&#x6838;CPU&#x4E0A;&#x6267;&#x884C;&#x65F6;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;</strong> &#x591A;&#x8FDB;&#x7A0B;&#xFF08;&#x591A;&#x7EBF;&#x7A0B;&#xFF09;&#x5728;&#x591A;&#x6838;CPU&#x4E0A;&#x662F;&#x53EF;&#x4EE5;&#x5E76;&#x884C;&#x7684;&#x3002;<strong>&#x5F53;&#x7EBF;&#x7A0B;&#x5185;&#x7684;&#x67D0;&#x4E00;&#x4E2A;&#x534F;&#x7A0B;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x5176;&#x5B83;&#x534F;&#x7A0B;&#x5FC5;&#x987B;&#x6302;&#x8D77;&#x3002;</strong></p>
+<h3 id="&#x534F;&#x7A0B;&#x5207;&#x6362;">&#x534F;&#x7A0B;&#x5207;&#x6362;</h3>
+<p>&#x7531;&#x4E8E;&#x534F;&#x7A0B;&#x5207;&#x6362;&#x662F;&#x5728;&#x7EBF;&#x7A0B;&#x5185;&#x5B8C;&#x6210;&#x7684;&#xFF0C;&#x6D89;&#x53CA;&#x5230;&#x7684;&#x8D44;&#x6E90;&#x6BD4;&#x8F83;&#x5C11;&#x3002;&#x4E0D;&#x50CF;&#x5185;&#x6838;&#x7EA7;&#x7EBF;&#x7A0B;&#xFF08;&#x8FDB;&#x7A0B;&#xFF09;&#x5207;&#x6362;&#x90A3;&#x6837;&#xFF0C;&#x4E0A;&#x4E0B;&#x6587;&#x7684;&#x5185;&#x5BB9;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x5207;&#x6362;&#x4EE3;&#x4EF7;&#x8F83;&#x5927;&#x3002;&#x534F;&#x7A0B;&#x672C;&#x8EAB;&#x662F;&#x975E;&#x5E38;&#x8F7B;&#x5DE7;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x7B80;&#x5355;&#x7406;&#x89E3;&#x4E3A;&#x53EA;&#x662F;&#x5207;&#x6362;&#x4E86;&#x5BC4;&#x5B58;&#x5668;&#x548C;&#x534F;&#x7A0B;&#x6808;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x8FD9;&#x6837;&#x4EE3;&#x4EF7;&#x5C31;&#x975E;&#x5E38;&#x5C0F;&#x3002;</p>
+<h2 id="go&#x5E76;&#x53D1;&#x6A21;&#x578B;">Go&#x5E76;&#x53D1;&#x6A21;&#x578B;</h2>
+<p>Go&#x5B9E;&#x73B0;&#x4E86;&#x4E24;&#x79CD;&#x5E76;&#x53D1;&#x5F62;&#x5F0F;&#x3002;&#x7B2C;&#x4E00;&#x79CD;&#x662F;&#x5927;&#x5BB6;&#x666E;&#x904D;&#x8BA4;&#x77E5;&#x7684;&#xFF1A;&#x591A;&#x7EBF;&#x7A0B;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x3002;&#x5176;&#x5B9E;&#x5C31;&#x662F;Java&#x6216;&#x8005;C++&#x7B49;&#x8BED;&#x8A00;&#x4E2D;&#x7684;&#x591A;&#x7EBF;&#x7A0B;&#x5F00;&#x53D1;&#x3002;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x662F;Go&#x8BED;&#x8A00;&#x7279;&#x6709;&#x7684;&#xFF0C;&#x4E5F;&#x662F;Go&#x8BED;&#x8A00;&#x63A8;&#x8350;&#x7684;&#xFF1A;CSP&#xFF08;communicating sequential processes&#xFF09;&#x5E76;&#x53D1;&#x6A21;&#x578B;&#x3002;</p>
+<p>CSP&#x8BB2;&#x7A76;&#x7684;&#x662F;&#x201C;&#x4EE5;&#x901A;&#x4FE1;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x201D;&#x3002;</p>
+<p>Go&#x7684;CSP&#x5E76;&#x53D1;&#x6A21;&#x578B;&#xFF0C;&#x662F;&#x901A;&#x8FC7;<code>goroutine</code>&#x548C;<code>channel</code>&#x6765;&#x5B9E;&#x73B0;&#x7684;&#x3002;</p>
+<h3 id="&#x5B9E;&#x73B0;&#x539F;&#x7406;">&#x5B9E;&#x73B0;&#x539F;&#x7406;</h3>
+<p><a href="https://zhuanlan.zhihu.com/p/60613088" target="_blank">Go goroutine&#x7406;&#x89E3; - &#x77E5;&#x4E4E; (zhihu.com)</a></p>
+<p><a href="https://www.zhihu.com/question/21409296/answer/1040884859" target="_blank">&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528; Go &#x8BED;&#x8A00;&#xFF1F;Go &#x8BED;&#x8A00;&#x7684;&#x4F18;&#x52BF;&#x5728;&#x54EA;&#x91CC;&#xFF1F; - &#x77E5;&#x4E4E; (zhihu.com)</a></p>
+<p>&#x200B;    </p>
+<p>&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<p>&#x7528;&#x6237;&#x7EA7;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#xFF08;M&#xFF1A;1&#xFF09;</p>
+<p>&#x5185;&#x6838;&#x7EA7;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#xFF08;1&#xFF1A;1&#xFF09;</p>
+<p>&#x4E24;&#x7EA7;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#xFF08;M&#xFF1A;N&#xFF09;</p>
+<p>M&#x4E2A;&#x7528;&#x6237;&#x7EBF;&#x7A0B;&#x5BF9;&#x5E94;N&#x4E2A;&#x7CFB;&#x7EDF;&#x7EBF;&#x7A0B;&#xFF0C;&#x7F3A;&#x70B9;&#x589E;&#x52A0;&#x4E86;&#x8C03;&#x5EA6;&#x5668;&#x7684;&#x5B9E;&#x73B0;&#x96BE;&#x5EA6;&#x3002;</p>
+<p>Go&#x8BED;&#x8A00;&#x7684;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#x5C31;&#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684;&#x4E24;&#x7EA7;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;&#xFF08;GPM&#x8C03;&#x5EA6;&#x6A21;&#x578B;&#xFF09;&#x3002;</p>
+<h3 id="go&#x7EBF;&#x7A0B;&#x5B9E;&#x73B0;&#x6A21;&#x578B;mpg">Go&#x7EBF;&#x7A0B;&#x5B9E;&#x73B0;&#x6A21;&#x578B;MPG</h3>
+<p><code>M</code> &#x6307;&#x7684;&#x662F; <code>Machine</code>&#xFF0C;&#x4E00;&#x4E2A;<code>M</code>&#x76F4;&#x63A5;&#x5173;&#x8054;&#x4E86;&#x4E00;&#x4E2A;&#x5185;&#x6838;&#x7EBF;&#x7A0B;&#x3002;&#x7531;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7BA1;&#x7406;&#x3002;</p>
+<p><code>P</code> &#x6307;&#x7684;&#x662F; <code>processor</code>&#xFF0C;&#x4EE3;&#x8868;&#x4E86;<code>M</code>&#x6240;&#x9700;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x73AF;&#x5883;&#xFF0C;&#x4E5F;&#x662F;&#x5904;&#x7406;&#x7528;&#x6237;&#x7EA7;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#x7684;&#x5904;&#x7406;&#x5668;&#x3002;&#x5B83;&#x8D1F;&#x8D23;&#x8854;&#x63A5;M&#x548C;G&#x7684;&#x8C03;&#x5EA6;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5C06;&#x7B49;&#x5F85;&#x6267;&#x884C;&#x7684;G&#x4E0E;M&#x5BF9;&#x63A5;&#x3002;</p>
+<p><code>G</code> &#x6307;&#x7684;&#x662F; <code>Goroutine</code>&#xFF0C;&#x5176;&#x5B9E;&#x672C;&#x8D28;&#x4E0A;&#x4E5F;&#x662F;&#x4E00;&#x79CD;&#x8F7B;&#x91CF;&#x7EA7;&#x7684;&#x7EBF;&#x7A0B;&#x3002;&#x5305;&#x62EC;&#x4E86;&#x8C03;&#x7528;&#x6808;&#xFF0C;&#x91CD;&#x8981;&#x7684;&#x8C03;&#x5EA6;&#x4FE1;&#x606F;&#xFF0C;&#x4F8B;&#x5982;channel&#x7B49;&#x3002;</p>
+<h3 id="goroutine&#x4F18;&#x7F3A;&#x70B9;">Goroutine&#x4F18;&#x7F3A;&#x70B9;</h3>
+<p><strong>&#x4F18;&#x70B9;&#xFF1A;</strong></p>
+<p>1&#x3001;&#x5F00;&#x9500;&#x5C0F;</p>
+<p>POSIX&#x7684;thread API&#x867D;&#x7136;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x4E30;&#x5BCC;&#x7684;API&#xFF0C;&#x4F8B;&#x5982;&#x914D;&#x7F6E;&#x81EA;&#x5DF1;&#x7684;CPU&#x4EB2;&#x548C;&#x6027;&#xFF0C;&#x7533;&#x8BF7;&#x8D44;&#x6E90;&#x7B49;&#x7B49;&#xFF0C;&#x7EBF;&#x7A0B;&#x5728;&#x5F97;&#x5230;&#x4E86;&#x5F88;&#x591A;&#x4E0E;&#x8FDB;&#x7A0B;&#x76F8;&#x540C;&#x7684;&#x63A7;&#x5236;&#x6743;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x5F00;&#x9500;&#x4E5F;&#x975E;&#x5E38;&#x7684;&#x5927;&#xFF0C;&#x5728;Goroutine&#x4E2D;&#x5219;&#x4E0D;&#x9700;&#x8FD9;&#x4E9B;&#x989D;&#x5916;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x4E2A;Golang&#x7684;&#x7A0B;&#x5E8F;&#x4E2D;&#x53EF;&#x4EE5;&#x652F;&#x6301;10w&#x7EA7;&#x522B;&#x7684;Goroutine&#x3002;</p>
+<p>&#x6BCF;&#x4E2A; goroutine (&#x534F;&#x7A0B;) &#x9ED8;&#x8BA4;&#x5360;&#x7528;&#x5185;&#x5B58;&#x8FDC;&#x6BD4; Java &#x3001;C &#x7684;&#x7EBF;&#x7A0B;&#x5C11;&#xFF08;<em>goroutine&#xFF1A;</em>2KB &#xFF0C;&#x7EBF;&#x7A0B;&#xFF1A;8MB&#xFF09;</p>
+<p>2&#x3001;&#x8C03;&#x5EA6;&#x6027;&#x80FD;&#x597D;</p>
+<p>&#x5728;Golang&#x7684;&#x7A0B;&#x5E8F;&#x4E2D;&#xFF0C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7EA7;&#x522B;&#x7684;&#x7EBF;&#x7A0B;&#x8C03;&#x5EA6;&#xFF0C;&#x901A;&#x5E38;&#x4E0D;&#x4F1A;&#x505A;&#x51FA;&#x5408;&#x9002;&#x7684;&#x8C03;&#x5EA6;&#x51B3;&#x7B56;&#x3002;&#x4F8B;&#x5982;&#x5728;GC&#x65F6;&#xFF0C;&#x5185;&#x5B58;&#x5FC5;&#x987B;&#x8981;&#x8FBE;&#x5230;&#x4E00;&#x4E2A;&#x4E00;&#x81F4;&#x7684;&#x72B6;&#x6001;&#x3002;&#x5728;Goroutine&#x673A;&#x5236;&#x91CC;&#xFF0C;Golang&#x53EF;&#x4EE5;&#x63A7;&#x5236;Goroutine&#x7684;&#x8C03;&#x5EA6;&#xFF0C;&#x4ECE;&#x800C;&#x5728;&#x4E00;&#x4E2A;&#x5408;&#x9002;&#x7684;&#x65F6;&#x95F4;&#x8FDB;&#x884C;GC&#x3002;</p>
+<p>&#x5728;&#x5E94;&#x7528;&#x5C42;&#x6A21;&#x62DF;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x5B83;&#x907F;&#x514D;&#x4E86;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;&#x7684;&#x989D;&#x5916;&#x8017;&#x8D39;&#xFF0C;&#x517C;&#x987E;&#x4E86;&#x591A;&#x7EBF;&#x7A0B;&#x7684;&#x4F18;&#x70B9;&#x3002;&#x7B80;&#x5316;&#x4E86;&#x9AD8;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+<p><strong>&#x7F3A;&#x70B9;&#xFF1A;</strong></p>
+<p>&#x534F;&#x7A0B;&#x8C03;&#x5EA6;&#x673A;&#x5236;&#x65E0;&#x6CD5;&#x5B9E;&#x73B0;&#x516C;&#x5E73;&#x8C03;&#x5EA6;&#x3002; </p>
 <p></p><footer class="page-footer"><span class="copyright">Copyright &#xA9; Ariescat all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#xFF1A;
-2024-04-25 16:28
+2024-04-28 16:13
 </span></footer><div id="gitalk-container"></div><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script><p></p>
  
           </section>
@@ -629,17 +678,17 @@
 
      
     <a
-      href="Java.html"
+      href="C++.html"
       class="navigation navigation-prev "
-      aria-label="Previous page: Java"
+      aria-label="Previous page: C++"
     >
       <i class="fa fa-angle-left"></i>
     </a>
      
     <a
-      href="前端技术.html"
+      href="后端技术.html"
       class="navigation navigation-next "
-      aria-label="Next page: 前端（Web）"
+      aria-label="Next page: 后端（服务器）"
     >
       <i class="fa fa-angle-right"></i>
     </a>
@@ -673,7 +722,7 @@
 
     var gitbook = gitbook || [];
     gitbook.push(function () {
-      gitbook.page.hasChanged({"page":{"title":"Python","level":"2.3","depth":1,"next":{"title":"前端（Web）","level":"2.4","depth":1,"path":"Note_Base/前端技术.md","ref":"Note_Base/前端技术.md","articles":[]},"previous":{"title":"Java","level":"2.2","depth":1,"path":"Note_Base/Java.md","ref":"Note_Base/Java.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-lou","-lunr","-search","-sharing","search-pro","code","lightbox","tbfed-pagefooter","expandable-chapters","gittalk","addcssjs"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Ariescat","modify_label":"最后修改时间：","modify_format":"YYYY-MM-DD HH:mm"},"search-pro":{},"addcssjs":{"css":["css/custom.css","css/auto-numbering.css"],"js":[]},"code":{"copyButtons":true},"theme-lou":{"hide-elements":[".summary .gitbook-link",".summary .divider",".copyright"],"color":"#FF4848","book-anchor-title":"本篇章节：","logo":"/img/logo.png","book-summary-title":"目录","search-placeholder":"在下想搜些啥呢......","imgStyle":{"isCenter":true,"isBox":false,"otherStyle":"max-width: 80%;"},"favicon":"/img/favicon.ico","appleTouchIconPrecomposed152":"/img/apple-touch-icon.png"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"lightbox":{"jquery":true,"sameUuid":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"gittalk":{"clientID":"ac995666edfcde8e6079","clientSecret":"0e981d5d0c91bbb33cf33a356ea4962d137aafdc","repo":"blog-notes","owner":"Ariescat","admin":["Ariescat"],"id":"gittalk-comment"},"expandable-chapters":{}},"theme":"default","author":"Ariescat","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"themeLou":{"nav":[{"target":"_blank","url":"https://home.ariescat.top/","name":"Home"},{"target":"_blank","url":"https://ariescat.top/","name":"Blog"},{"target":"_blank","url":"https://github.com/ariescat/","name":"Github"}]}},"title":"Ariescat's Note","gitbook":"*","description":"记录一些令人头秃的知识"},"file":{"path":"Note_Base/Python.md","mtime":"2024-04-25T16:28:26.690Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-04-25T16:29:14.600Z"},"basePath":"..","book":{"language":""}});
+      gitbook.page.hasChanged({"page":{"title":"Python,Go","level":"2.3","depth":1,"next":{"title":"后端（服务器）","level":"2.4","depth":1,"path":"Note_Base/后端技术.md","ref":"Note_Base/后端技术.md","articles":[]},"previous":{"title":"C++","level":"2.2","depth":1,"path":"Note_Base/C++.md","ref":"Note_Base/C++.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-lou","-lunr","-search","-sharing","search-pro","code","lightbox","tbfed-pagefooter","expandable-chapters","gittalk","addcssjs"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Ariescat","modify_label":"最后修改时间：","modify_format":"YYYY-MM-DD HH:mm"},"search-pro":{},"addcssjs":{"css":["css/custom.css","css/auto-numbering.css"],"js":[]},"code":{"copyButtons":true},"theme-lou":{"hide-elements":[".summary .gitbook-link",".summary .divider",".copyright"],"color":"#FF4848","book-anchor-title":"本篇章节：","logo":"/img/logo.png","book-summary-title":"目录","search-placeholder":"在下想搜些啥呢......","imgStyle":{"isCenter":true,"isBox":false,"otherStyle":"max-width: 80%;"},"favicon":"/img/favicon.ico","appleTouchIconPrecomposed152":"/img/apple-touch-icon.png"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"lightbox":{"jquery":true,"sameUuid":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"gittalk":{"clientID":"ac995666edfcde8e6079","clientSecret":"0e981d5d0c91bbb33cf33a356ea4962d137aafdc","repo":"blog-notes","owner":"Ariescat","admin":["Ariescat"],"id":"gittalk-comment"},"expandable-chapters":{}},"theme":"default","author":"Ariescat","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"themeLou":{"nav":[{"target":"_blank","url":"https://home.ariescat.top/","name":"Home"},{"target":"_blank","url":"https://ariescat.top/","name":"Blog"},{"target":"_blank","url":"https://github.com/ariescat/","name":"Github"}]}},"title":"Ariescat's Note","gitbook":"*","description":"记录一些令人头秃的知识"},"file":{"path":"Note_Base/Python,Go.md","mtime":"2024-04-28T16:13:51.075Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-04-28T16:14:39.201Z"},"basePath":"..","book":{"language":""}});
     });
   </script>
 </div>
