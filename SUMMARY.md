@@ -4,11 +4,11 @@
 
 ## 笔记 基础
 
-- [C++](Note_Base/C++.md)
 - [Java](Note_Base/Java.md)
-- [Python](Note_Base/Python.md)
-- [前端（Web）](Note_Base/前端技术.md)
+- [C++](Note_Base/C++.md)
+- [Python,Go](Note_Base/Python,Go.md)
 - [后端（服务器）](Note_Base/后端技术.md)
+- [前端（Web）](Note_Base/前端技术.md)
 - [操作系统](Note_Base/操作系统.md)
 - [数据库](Note_Base/数据库.md)
 - [网络](Note_Base/网络.md)

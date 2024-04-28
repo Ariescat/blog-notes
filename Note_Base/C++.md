@@ -220,7 +220,9 @@ STL的代码从广义上讲分为三类：algorithm（算法）、container（�
 
 `#include<bits/stdc++.h>`包含C++的全部头文件
 
-附：STL标准入门汇总 http://www.cnblogs.com/shiyangxt/archive/2008/09/11/1289493.html
+[C++:STL标准入门汇总 - 施杨 - 博客园 (cnblogs.com)](https://www.cnblogs.com/shiyangxt/archive/2008/09/11/1289493.html)
+
+[C++ - STL常见容器及其常见操作_c++ set pop-CSDN博客](https://blog.csdn.net/bailang_zhizun/article/details/118938955)
 
 
 
