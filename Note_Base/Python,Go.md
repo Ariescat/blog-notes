@@ -20,6 +20,74 @@
 
 
 
+## 运算符重载
+
+判断两个字典是否相同
+
+一个一个key比较过去？
+
+**可以直接用==进行判断**！！！
+
+```python
+a = dict(one=1, two=2, three=3)
+b = {'one': 1, 'two': 2, 'three': 3}
+c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+d = dict([('two', 2), ('one', 1), ('three', 3)])
+e = dict({'three': 3, 'one': 1, 'two': 2})
+print(a == b == c == d == e)
+```
+
+​    
+
+**Python内部对==进行了重载，帮你实现了对key和value进行判断。**
+
+怎样在两个字典中寻找相同点（比如相同的键、相同的值等）？
+
+解决方案
+
+考虑下面两个字典：
+
+```python
+a = {
+  'x' : 1,
+  'y' : 2,
+  'z' : 3
+}
+b = {
+  'w' : 10,
+  'x' : 11,
+  'y' : 2
+}
+```
+
+寻找两个字典的相同点，可以在两字典的 keys()或者 items() 方法返回结果上执行集合操作。例如：
+
+```python
+# Find keys in common
+a.keys() & b.keys() # Return { 'x', 'y' }
+# Find keys in a that are not in b
+a.keys() - b.keys() # Return { 'z' }
+# Find (key,value) pairs in common
+a.items() & b.items() # Return { ('y', 2) }
+```
+
+​    
+
+**Python中的比较运算符重载：**
+
+| 操作符         | 表达式   | 内部               |
+| :------------- | :------- | :----------------- |
+| 小于（<）      | p1 <p2   | p1 .__ lt __（p2） |
+| 小于等于（<=） | p1 <= p2 | p1 .__ le __（p2） |
+| 等于（==）     | p1 == p2 | p1 .__ eq __（p2） |
+| 不等于（!=）   | p1！= p2 | p1 .__ ne __（p2） |
+| 大于（>）      | p1> p2   | p1 .__ gt __（p2） |
+| 大于等于（>=） | p1> = p2 | p1 .__ ge __（p2） |
+
+
+
+
+
 ## Cython 与 CPython
 
 CPython是用C语言实现的Python解释器，也是官方的并且是最广泛使用的Python解释器。
