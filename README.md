@@ -10,15 +10,15 @@
 
 ## 关于 Notes
 
-这是我利用 [GitBook](https://www.gitbook.com/) 搭建的笔记记录：📖 [Ariescat's Notes](https://awesome.ariescat.top/)
+这是我利用 Markdown 和 [GitBook](https://www.gitbook.com/) 搭建的笔记记录。
 
-**此非大而全的知识图谱**，是踏上编程的不归路后，陆陆续续把学到的重要知识记录于此
+**此非大而全的知识图谱**，是踏上编程的不归路后，陆陆续续把学到的重要知识记录于此。
 
 **可能有些知识现在不记得了，但曾经记录过，就说明会过（doge**
 
-好记性不如烂笔头，也便于温故知新
+好记性不如烂笔头，温故知新也很重要。
 
-（我还搭建了个小Blog网页 [Ariescat's Blog](https://ariescat.top/)，偶尔想起来的时候也会写写博客的）
+（我还搭建了个小Blog网页 [Ariescat's Blog](https://ariescat.top/)，偶尔想起来的时候也会写写博客的
 
 <br>
 
