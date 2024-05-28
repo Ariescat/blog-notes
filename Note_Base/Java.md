@@ -1696,6 +1696,8 @@ JDK1.6 后对锁进行的优化，轻量级锁，偏向锁，锁消除，适应�
   * [全面理解 Java 内存模型 (JMM) 及 volatile 关键字 - CSDN 博客](http://blog.csdn.net/javazejian/article/details/72772461)
 
   * [Java内存模型（JMM）总结 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/29881777)
+  
+  * [一文带你深入了解JMM（Java内存模型）_java 内存模型-CSDN博客](https://blog.csdn.net/xjx666666/article/details/132132231)
 
 
 
