@@ -546,7 +546,8 @@ public final class MySingleton implements Serializable {
 也就是说
 
 ```java
-Fu f = new Zi();System.out.println(f.age);
+Fu f = new Zi();
+System.out.println(f.age);
 ```
 
 打印的还是父类的值。
@@ -794,7 +795,7 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
   所谓 Emoji 就是一种在 Unicode 位于\u1F601–\u1F64F 区段的字符。这个显然超过了目前常用的 UTF-8 字符集的编码范围\u0000–\uFFFF。Emoji 表情随着 IOS 的普及和微信的支持越来越常见。
 
-  ![字符编码·图 3](https://img-blog.csdnimg.cn/20181119221259676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3podXNvbmd6aXll,size_16,color_FFFFFF,t_70)
+  ![字符编码·图 3](../img/code/UTF8.png)
 
   那么 Emoji 字符表情会对我们平时的开发运维带来什么影响呢？最常见的问题就在于将他存入 MySQL 数据库的时候。一般来说 MySQL 数据库的默认字符集都会配置成 UTF-8，mysql 支持的 utf8 编码最大字符长度为 **3 字节**，而 utf8mb4 在 5.5 以后才被支持，也很少会有 DBA 主动将系统默认字符集改成 utf8mb4。那么问题就来了，当我们把一个需要 4 字节 UTF-8 编码才能表示的字符存入数据库的时候就会报错：ERROR 1366: Incorrect string value: '\xF0\x9D\x8C\x86' for column 。 如果认真阅读了上面的解释，那么这个报错也就不难看懂了。我们试图将一串 Bytes 插入到一列中，而这串 Bytes 的第一个字节是\xF0 意味着这是一个四字节的 UTF-8 编码。但是当 MySQL 表和列字符集配置为 UTF-8 的时候是无法存储这样的字符的，所以报了错。
 
@@ -811,28 +812,26 @@ JMX 是 Java Management Extensions，它是一个 Java 平台的管理和监控�
 
 
 
-### System#exit
+### System.exit
 
 1. 注册的关闭勾子会在以下几种时机被调用到
-
-- 程序正常退出
-  - 最后一个非守护线程执行完毕退出时
-  - System.exit 方法被调用时
-- 程序响应外部事件
-  - 程序响应用户输入事件，例如在控制台按 ctrl+c(^+c)
-  - 程序响应系统事件，如用户注销、系统关机等
+   - 程序正常退出
+     - 最后一个非守护线程执行完毕退出时
+     - System.exit 方法被调用时
+   - 程序响应外部事件
+     - 程序响应用户输入事件，例如在控制台按 ctrl+c(^+c)
+     - 程序响应系统事件，如用户注销、系统关机等
 
 2. 这种方法永远不会正常返回。
 
    意味着该方法不会返回；一旦一个线程进入那里，就不会再回来了。
-
-链接：
-
-- [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
-
-- [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
-
-  最后一楼说了：将 A 线程变为 while(true) 一直执行，就会发现 A 线程也会中止。两个线程各自执行，之前都循环十次，A 线程可能在 B 线程调用 System.exit(0) 之前就执行完了
+   
+   链接：
+   
+   - [Java System#exit 无法退出程序的问题探索](https://blog.csdn.net/qq271859852/article/details/106596524)
+   - [java System.exit(0) 结束不了其他线程?](https://bbs.csdn.net/topics/392009252)
+   
+   最后一楼说了：将 A 线程变为 while(true) 一直执行，就会发现 A 线程也会中止。两个线程各自执行，之前都循环十次，A 线程可能在 B 线程调用 System.exit(0) 之前就执行完了
 
 
 
@@ -1229,7 +1228,7 @@ ThreadPoolExecutor 和 ScheduledThreadPoolExecutor 原理
 
 #### 线程池运行状态
 
-![thread-state](https://img-blog.csdnimg.cn/20191216171812869.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIwNzA1Ng==,size_16,color_FFFFFF,t_70)
+![thread-state](../img/code/java_thread_pool.png)
 
 
 
@@ -1974,11 +1973,11 @@ AbstractQueuedSynchronizer
 
   1.7之前：
 
-  ![1-7](https://image-static.segmentfault.com/234/102/2341028142-93fdd749b30a7515_fix732)
+  ![1-7](../img/code/java_jmm_memory.webp)
 
   1.8之后：
 
-  ![1-8](http://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/JVM%20%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%2032%20%E8%AE%B2%EF%BC%88%E5%AE%8C%EF%BC%89/assets/b8e25a80-71db-11ea-964d-61a29639fe46)
+  ![1-8](../img/code/java_jmm_memory_1_8.png)
 
   注意：Metaspace 使用的是本地内存（native memory），所以它的最大内存可以达到机器内存的极限
 
@@ -2355,7 +2354,7 @@ JVM提供了5种方法调用指令，其作用列举如下：
 虚拟机为每个类生成虚方法表`vtable（virtual method table）`的结构，类中声明的方法的入口地址会按固定顺序存放在虚方法表中；虚方法表还会继承父类的虚方法表，顺序与父类保持一致，子类新增的方法按顺序添加到虚方法末尾（这以`Java`单继承为前提）；若子类重写父类方法，则重写方法位置的入口地址修改为子类实现；
 
 - 1）**类加载解析阶段：**解析类的继承关系，生成类的虚方法表 （包含了这个类型所有方法的入口地址）。举个例子，有`Class B`继承与`Class A`，并重写了`A`中的方法：
-  ![img](https://pic3.zhimg.com/80/v2-5ddf3d6c6374befdfc6fbe01c83a9aea_720w.webp)
+  ![img](../img/code/java_invokevirtual.webp)
 
   `Object`是所有类的父类，所有每个类的虚方法表头部都会包含`Object`的虚方法表。另外，`B`重写了`A#printMe()`，所以对应位置的入口地址方法被修改为`B`重写方法的入口地址。
 
@@ -2760,6 +2759,18 @@ Groovy中方法的调用实现
 - Q&A
   - static 会被 GC 回收吗？static 的在内存中的存放位置？
   - 永久代不够会触发 Full GC 吗
+
+
+
+### OOM
+
+[面试官：说下平时开发中怎么解决OOM的？ 我：..._51CTO博客_oom面试题](https://blog.51cto.com/zhongmayisheng/5224602)
+
+案例：
+
+[生产事故-记一次特殊的OOM排查 - 程语有云 - 博客园 (cnblogs.com)](https://www.cnblogs.com/mylibs/p/production-accident-0002.html#0x00-大纲)
+
+[记一次线上服务器oom 排查过程 - 掘金 (juejin.cn)](https://juejin.cn/post/6918668597715795975)
 
 
 

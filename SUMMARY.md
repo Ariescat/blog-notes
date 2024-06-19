@@ -27,8 +27,8 @@
 
 ## 笔记 摘录
 
-- [加密算法](Note_Excerpt/加密算法.md)
-- [鉴权接口](Note_Excerpt/鉴权接口.md)
+- [加密算法](Note_Excerpt/labuladong/加密算法/加密算法.md)
+- [鉴权接口](Note_Excerpt/KM/鉴权接口/鉴权接口.md)
 
 ## 笔记 零散
 

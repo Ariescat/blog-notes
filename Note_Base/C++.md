@@ -63,8 +63,9 @@ C++中没有直接提供求数组长度的方法，提供了sizeof(),begin(),end
 #### begin(),end()
 
 - C++11标准库函数
-
 - C++ STL 迭代器的成员函数
+
+​    
 
 C++标准库函数 end 的实现原理：
 
@@ -155,7 +156,7 @@ int (*p)[3] = a;
 
 ### const
 
-`const int* pInt;` 和 `int *const pInt = &someInt;`，前者是 *pInt 不能改变，而后者是 pInt 不能改变。因此指针本身是不是常量和指针所指向的对象是不是常量就是两个互相独立的问题。用**顶层**表示指针本身是个常量，**底层**表示指针所指向的对象是个常量。
+`const int* pInt;` 和 `int *const pInt = &someInt;`，前者是 `*pInt` 不能改变，而后者是 `pInt` 不能改变。因此指针本身是不是常量和指针所指向的对象是不是常量就是两个互相独立的问题。用**顶层**表示指针本身是个常量，**底层**表示指针所指向的对象是个常量。
 
 ```c++
 int i = 0;
@@ -172,31 +173,31 @@ const int &r = ci;      //  所有的引用本身都是顶层 const，因为引�
 
 1. 全局变量：全局变量在整个程序中都是可见的，可以在任何函数中使用。全局变量在程序的生命周期内一直存在，直到程序结束才被销毁。全局变量在定义时可以不初始化，系统会自动初始化为0。
 
-```c
-int global_var; // 全局变量
-```
+   ```c
+   int global_var; // 全局变量
+   ```
 
 2. 静态全局变量：静态全局变量的作用范围仅限于当前文件，其他文件不能访问。静态全局变量在程序的生命周期内一直存在，直到程序结束才被销毁。静态全局变量在定义时可以不初始化，系统会自动初始化为0。
 
-```c
-static int static_global_var; // 静态全局变量
-```
+    ```c
+    static int static_global_var; // 静态全局变量
+    ```
 
 3. 静态局部变量：静态局部变量只在定义它的函数内部可见，但它的生命周期和全局变量一样，直到程序结束才被销毁。静态局部变量在定义时可以不初始化，系统会自动初始化为0。
 
-```c
-void func() {
-    static int static_local_var; // 静态局部变量
-}
-```
+    ```c
+    void func() {
+        static int static_local_var; // 静态局部变量
+    }
+    ```
 
 4. 局部变量：局部变量只在定义它的函数内部可见，当函数返回时，局部变量就会被销毁。局部变量在定义时必须初始化，否则其值是不确定的。
 
-```c
-void func() {
-    int local_var; // 局部变量
-}
-```
+    ```c
+    void func() {
+        int local_var; // 局部变量
+    }
+    ```
 
 总结：全局变量和静态全局变量的区别在于作用范围，全局变量在整个程序中都可见，而静态全局变量只在当前文件中可见。静态局部变量和局部变量的区别在于生命周期，静态局部变量在程序结束时才销毁，而局部变量在函数返回时就销毁。
 
@@ -549,6 +550,24 @@ C /C++的内存管理
 ### 虚函数
 
 [C++中的虚函数（涉及函数重载，重写， 隐藏！！！）_非虚函数可以重写吗-CSDN博客](https://blog.csdn.net/xukang95/article/details/106397411)
+
+[C++ 中的虚函数表及虚函数执行原理 - Er_HU - 博客园 (cnblogs.com)](https://www.cnblogs.com/Steven-HU/p/14486011.html)
+
+
+
+
+
+### 定位内存泄漏
+
+#### CRT 库
+
+Visual Studio 调试器和 C 运行时库 (CRT) 可帮助检测和确定内存泄漏。
+
+
+
+#### valgrind
+
+你可以在它的环境中运行你的程序来监视内存的使用情况，比如C 语言中的malloc和free或者 C++中的new和 delete。使用Valgrind的工具包，你可以自动的检测许多内存管理和线程的bug，避免花费太多的时间在bug寻找上，使得你的程序更加稳固。
 
 
 
@@ -917,6 +936,14 @@ auto w = cj;     //变量w的类型是int
 
 
 
+### atomic
+
+[浅析C++ atomic - icysky - 博客园 (cnblogs.com)](https://www.cnblogs.com/icysky/p/17745846.html)
+
+
+
+
+
 
 
 ## 其他
@@ -960,6 +987,8 @@ auto w = cj;     //变量w的类型是int
 - 网络库
   - libevent
 
+    [Libevent 编程指南 | Senlin's Blog (senlinzhan.github.io)](https://senlinzhan.github.io/2017/08/12/libevent/)
+
   - boost 的 asio
 
     一个很强大的实现socket通讯方式的跨平台（windows、linux、solaris、mac os x）解决方案，能同时支持数千个并发的连接。
@@ -971,7 +1000,7 @@ auto w = cj;     //变量w的类型是int
     [浅谈 Boost.Asio 的多线程模型 - Boblim - 博客园 (cnblogs.com)](https://www.cnblogs.com/fnlingnzb-learner/p/10402276.html)
 
   - zeromq
-
+  
     七大消息模式：
   
     [重头戏！带你全览ZeroMQ的七大消息模式_董哥的黑板报的博客-CSDN博客](https://blog.csdn.net/qq_41453285/article/details/106865539)
