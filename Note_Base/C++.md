@@ -30,11 +30,17 @@ C风格字符串就是最后一位为'\0'的**字符数组**！C语言通过字�
 
 `#include <string.h>` 和 `#include <cstring>` 是相同作用的，而`#include <string>`是C++字符串变量 string 必须要的头文件（包含一些操作符的重载等）。
 
-一些重要的方法：
+**string .h** 头文件一些重要的方法：
 
 - memcpy
 
 - memset
+
+- strcpy
+
+  `strncpy`多了一个`size_t`的参数，用于避免缓冲区溢出。
+
+  如果`src`和`dest`的内存地址有重叠，第一种情况：`dest < src < dest+n`，此时并不需要特殊的处理；第二种情况，`src < dest <src+n`，需要从尾部开始拷贝。
 
 [C 标准库 –  | 菜鸟教程 (runoob.com)](https://www.runoob.com/cprogramming/c-standard-library-string-h.html)
 
@@ -131,7 +137,7 @@ C++标准库函数 end 的实现原理：
 
   > `malloc`返回的其实是`void *`，所以其需要强转，`void *`的用处还有`memcpy`，`memset`等
 
-<br/>
+​    
 
 #### 指针数组&数组指针
 
@@ -151,6 +157,22 @@ int (*p)[3] = a;
 > `a[i][j] == p[i][j] == *(a[i]+j) == *(p[i]+j) == *(*(a+i)+j) == *(*(p+i)+j)`
 
 
+
+### map/set
+
+有序组合，两者都是使用红黑树作为底层的数据结构。红黑树是一种自动平衡的二叉树，它确保插入、删除和查找操作的时间复杂度都是`O(log n)`。
+
+因为`set/map被`称为有序容器，所以对插入进去的`key`有排序的要求。一般需要为类型实现`<`比较方法。
+
+`set/map`类模板的第二个模板参数可以传入比较类型，默认比较类型是`std::less<_Key>`，我们可以传入`std::greater<T>`，此时需要实现`bool operator>(const T&, const T&)`函数。
+
+​    
+
+不同于`set/map`，`unordered_set/unordered_map`都是无序容器。
+
+两者底层使用哈希表实现，因此插入、删除和查找操作的平均时间复杂度为常数时间`O(1)`。
+
+因为`unordered_set/unordered_map`底层采用哈希表，所以在使用自定义类型作为`key`的时候，需要告诉编译器如何计算此类型的`hash`值，同时还要告诉编译器如何判断两个自定义类型的对象是否相等。
 
 
 
@@ -359,6 +381,23 @@ int main() {
 
 类成员函数指针指向类的成员函数的指针。
 
+<br/>
+
+**空指针、野指针**
+
+什么是空指针？
+
+一般我们将等于`0`/`NULL`/`nullptr`的指针称为空指针。空指针不能被解引用，但是可以对空指针取地址。
+
+什么是野指针？
+
+野指针突出一个野字，这个野就是状态未知的。它可能指向一块未知的区域：
+
+```c++
+int* p;        //野指针，指针未初始化
+*p = 42;    //对野指针解引用，未定义的操作
+```
+
 
 
 
@@ -449,6 +488,35 @@ dynamic_cast
 const_cast
 
 reinterpret_cast
+
+
+
+
+
+### RAII
+
+C++中的一种重要的资源管理技术。通过RAII，资源在对象初始化时被获取，资源的释放工作则交给对象的析构函数来完成，从而确保资源的及时释放，避免资源泄漏。RAII技术是C++中用于资源管理的一种高效且安全的方式。
+
+```c++
+void readFile(const string& filename) {
+    std::ifstream file(filename); // 在构造函数中打开文件
+    if (!file.is_open()) {
+        // 处理打开文件失败的情况
+        return;
+    }
+
+    // 读取文件内容的代码
+    string line;
+    while (std::getline(file, line)) {
+        // 处理读取到的内容
+    }
+    // 文件会在`file`对象销毁时自动关闭
+}
+```
+
+在这个例子中,std::ifstream对象在构造时打开文件,在对象被销毁(比如函数返回)时,文件会自动被关闭。这就是RAII的典型应用,它确保了资源的正确管理,避免了资源泄漏的问题。
+
+
 
 
 
@@ -566,6 +634,8 @@ Visual Studio 调试器和 C 运行时库 (CRT) 可帮助检测和确定内存�
 
 
 #### valgrind
+
+`Valgrind`（在Linux上）或`Dr. Memory`（在Windows上）等内存调试工具来检测内存泄漏。
 
 你可以在它的环境中运行你的程序来监视内存的使用情况，比如C 语言中的malloc和free或者 C++中的new和 delete。使用Valgrind的工具包，你可以自动的检测许多内存管理和线程的bug，避免花费太多的时间在bug寻找上，使得你的程序更加稳固。
 
@@ -939,6 +1009,52 @@ auto w = cj;     //变量w的类型是int
 ### atomic
 
 [浅析C++ atomic - icysky - 博客园 (cnblogs.com)](https://www.cnblogs.com/icysky/p/17745846.html)
+
+
+
+
+
+### 锁
+
+在C++11之前，C++便准层面并没有定义锁，锁的应用要依赖于平台。Linux下使用`pthread`库中的`mutex`；
+
+```c++
+#include <pthread.h>
+pthread_mutex_t mutex_ = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_lock(&mutex_);
+//被保护的区域
+pthread_mutex_unlock(&mutex_);
+```
+
+C++11引入了`std::mutex`，统一了各个平台上互斥锁的使用：
+
+```c++
+#include <mutex>
+std::mutex mutex_;
+mutex_.lock();
+//被保护的区域
+mutex_.unlock();
+```
+
+​    
+
+std::lock_guard和std::unique_lock
+
+相同点是两者都使用`RAII`（资源获取即初始化）技术实现的锁，支持自动上锁，自动解锁。
+
+不同点主要包括三个方面：
+
+1.灵活性：`std::unqiue_lock`的灵活性要高于`std::lock_gurad`，`std::unique_lock`可以在任何时间解锁和锁定，而`std::lock_guard`在构造时锁定，在析构时解锁，不能手动控制。
+
+2.所有权：`std::unique_lock`支持所有权转移，而`std::lock_gurad`不支持。
+
+3.性能：由于`std::unique_lock`的灵活性更高，它的性能可能会稍微低一些。
+
+​    
+
+adopt_lock_t/defer_lock_t/try_to_lock_t
+
+主要表示`std::lock_gurad`和`std::unqiue_lock`的默认构造中的操作
 
 
 
